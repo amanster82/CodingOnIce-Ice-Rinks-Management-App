@@ -1,0 +1,23 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="coi-splash">
+  <template>
+    <style include="shared-styles">
+      :host {
+      }
+    </style>
+
+    <div>
+    Splash page
+    </div>
+  </template>
+
+  <script>
+    class COISplash extends Polymer.Element {
+      static get is() { return 'coi-splash'; }
+    }
+
+    window.customElements.define(COISplash.is, COISplash);
+  </script>
+</dom-module>
