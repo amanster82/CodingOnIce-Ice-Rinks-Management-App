@@ -35,7 +35,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         display: block;
       }
+
+      app-header {
+        color: #fff;
+        background-color: var(--app-primary-color);
+      }
     </style>
+
 
     <app-location
         route="{{route}}"
@@ -48,6 +54,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         data="{{routeData}}"
         tail="{{subroute}}">
     </app-route>
+
+    <app-header reveals>
+      <app-toolbar>
+        <div main-title>My app</div>
+      </app-toolbar>
+    </app-header>
 
     <!-- 
       Router
