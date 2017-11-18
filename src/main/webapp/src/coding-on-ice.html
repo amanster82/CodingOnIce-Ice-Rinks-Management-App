@@ -23,7 +23,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="coi-icons.html">
 
 <link rel="lazy-import" href="pages/coi-splash.html">
-<link rel="lazy-import" href="coi-view404.html">
+<link rel="lazy-import" href="pages/coi-auth.html">
+<link rel="lazy-import" href="pages/coi-view404.html">
 
 <dom-module id="coding-on-ice">
   <template>
@@ -102,6 +103,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         ];
       }
 
+      static get routeMapping() {
+        return {
+          'login': 'auth'
+        };
+      }
+
       _routePageChanged(page) {
         // If no page was found in the route data, page will be an empty string.
         // Default to 'view1' in that case.
@@ -109,8 +116,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       _pageChanged(page) {
+        const mapping = CodingOnIce.routeMapping[page] || page;
         // Load page import on demand. Show 404 page if fails
-        var resolvedPageUrl = this.resolveUrl('pages/coi-' + page + '.html');
+        var resolvedPageUrl = this.resolveUrl('pages/coi-' + mapping + '.html');
         Polymer.importHref(
             resolvedPageUrl,
             null,
