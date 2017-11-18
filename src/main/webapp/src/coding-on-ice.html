@@ -41,6 +41,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: #fff;
         background-color: var(--app-primary-color);
       }
+
+      .app-container {
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        height: 100vh;
+        max-height: 100vh;
+      }
+
+      .content-container {
+        flex: 1;
+      }
     </style>
 
 
@@ -56,26 +68,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         tail="{{subroute}}">
     </app-route>
 
-    <app-header reveals>
-      <app-toolbar>
-        <div main-title>My app</div>
-      </app-toolbar>
-    </app-header>
-
     <!-- 
       Router
       Each tag is given a name. When the page selected matches the name of that tag,
       that tag is displayed and the rest are ignored. The [[page]] variable is used to determine
       the current page
     -->
-    <iron-pages
-        selected="[[page]]"
-        attr-for-selected="name"
-        fallback-selection="view404"
-        role="main">
-      <coi-splash name="splash"></coi-splash>
-      <coi-view404 name="view404"></coi-view404>
-    </iron-pages>
+    <div class="app-container">
+      <app-header reveals>
+        <app-toolbar>
+          <div main-title>My app</div>
+        </app-toolbar>
+      </app-header>
+      <div class="content-container">
+        <iron-pages
+            selected="[[page]]"
+            attr-for-selected="name"
+            fallback-selection="view404"
+            role="main">
+          <coi-splash name="splash"></coi-splash>
+          <coi-auth name="login"></coi-auth>
+          <coi-auth name="register"></coi-auth>
+          <coi-view404 name="view404"></coi-view404>
+        </iron-pages>
+      </div>
+    </div>
+
+    </div>
   </template>
 
   <script>
