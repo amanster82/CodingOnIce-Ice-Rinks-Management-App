@@ -8,7 +8,8 @@ public class ForwardingController {
 
     @RequestMapping({
       "/login",
-      "/register"
+      "/register",
+      "/rinks"
     })
     public String forward() {
         return "forward:/";
