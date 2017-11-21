@@ -38,26 +38,25 @@ The project can now be started by using spring boot.
 ```
 
 The web server will start and be accessible from *http://localhost:8080*
-To view the full web app, the project must be set up by following the next Polymer instructions
+To view the full web app, the project must be set up by following the next React instructions
 
-### Polymer
+### React
 
-The following commands will set up the web app using Bower.
-To follow these steps you need to install bower globally.
+Navigate to the web app folder *src/main/webapp*
 
-```
-npm install -g bower
-```
-
-Then navigate to the web app folder *src/main/webapp*
-
-Now use Bower to download project dependencies.
+Now use NPM to download project dependencies.
 
 ```
-bower install
+npm install
 ```
 
-One that is complete the web app should be fully accessible when served by Spring.
+One that is complete the web app should be fully accessible by using:
+
+```
+npm start
+```
+
+This will run the project on *http://localhost:3000* for development with hot module reloading.
 
 ## Deployment
 
@@ -83,10 +82,9 @@ Style guides can be useful for following best practices and writing maintainable
 ## Built With
 
 * [Spring](https://spring.io) - The backend framework
-* [Polymer](https://www.polymer-project.org/) - The frontend framework
 * [Maven](https://maven.apache.org/) -Java dependency management
 * [NPM](https://npmjs.org/) - Node.js dependency management
-* [Bower](https://bower.io/) - Web app dependency management
+* [React](https://reactjs.org/) - Web app frontend
 
 ## Authors
 
