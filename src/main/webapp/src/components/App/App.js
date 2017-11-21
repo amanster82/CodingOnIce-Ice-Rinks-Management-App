@@ -1,21 +1,26 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import RootLayout from "routes/RootLayout";
+import { withStyles } from "material-ui/styles";
+import AppBar from "material-ui/AppBar";
+import Toolbar from "material-ui/Toolbar";
+import Typography from "material-ui/Typography";
+import RootNav from "components/Navigation/RootNav";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-}
+const styles = theme => ({
+  container: {},
+  title: {}
+});
 
-export default App;
+export default withStyles(styles)(({ classes: c }) => (
+  <div className={c.container}>
+    <AppBar position="static">
+      <Toolbar>
+        <Typography type="title" color="inherit" className={c.title}>
+          Title
+        </Typography>
+        <RootNav />
+      </Toolbar>
+    </AppBar>
+    <RootLayout />
+  </div>
+));
