@@ -7,8 +7,15 @@ import Typography from "material-ui/Typography";
 import RootNav from "components/Navigation/RootNav";
 
 const styles = theme => ({
-  container: {},
-  title: {}
+  container: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  title: {},
+  layout: {
+    flex: 1
+  }
 });
 
 export default withStyles(styles)(({ classes: c }) => (
@@ -21,6 +28,8 @@ export default withStyles(styles)(({ classes: c }) => (
         <RootNav />
       </Toolbar>
     </AppBar>
-    <RootLayout />
+    <div className={c.layout}>
+      <RootLayout />
+    </div>
   </div>
 ));
