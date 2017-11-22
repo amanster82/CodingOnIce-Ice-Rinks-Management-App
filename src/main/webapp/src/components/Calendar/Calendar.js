@@ -47,7 +47,8 @@ const styles = theme => ({
     backgroundColor: theme.palette.common.white,
     boxShadow: theme.shadows[2],
     display: "flex",
-    flex: 1
+    flex: 1,
+    position: 'relative'
   }
 });
 
@@ -71,7 +72,7 @@ export default enhanced(
           name={weekDay}
           days={daysForWeekDay(currentMonth, i)}
           setSelection={selectSlot}
-          selected={selectedWeek === weekDay}
+          selected={selectedWeek === null ? null : selectedWeek === weekDay}
           selectedSlot={selectedSlot}
         />
       ))}

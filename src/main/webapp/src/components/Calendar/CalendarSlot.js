@@ -4,40 +4,40 @@ import cx from "classnames";
 
 const styles = theme => ({
   container: {
-    
+    padding: "0.5rem",
     alignItems: "center",
     justifyContent: "center",
     display: "flex",
-    borderTopSize: "1px",
+    borderTopWidth: "1px",
     borderTopStyle: "solid",
-    borderTopColor: theme.palette.grey[300],
-    borderLeftSize: "1px",
+    borderTopColor: theme.palette.grey[400],
+    borderLeftWidth: "1px",
     borderLeftStyle: "solid",
-    borderLeftColor: theme.palette.grey[300],
+    borderLeftColor: theme.palette.grey[400],
     transition: theme.transitions.create(["flex"], {
       duration: theme.transitions.duration.complex
     }),
-    '&:last-child': {
-      borderBottomSize: "1px",
+    "&:last-child": {
+      borderBottomWidth: "1px",
       borderBottomStyle: "solid",
-      borderBottomColor: theme.palette.grey[300],
+      borderBottomColor: theme.palette.grey[400]
     }
   },
   borderRight: {
-    borderRightSize: "1px",
+    borderRightWidth: "1px",
     borderRightStyle: "solid",
-    borderRightColor: theme.palette.grey[300],
+    borderRightColor: theme.palette.grey[400]
   },
   full: {
-    flex: 1,
+    flex: 1
   },
   expand: {
-    flex: 1,
+    flex: 1
   },
   date: {
     cursor: "pointer",
-    width: "2rem",
-    height: "2rem",
+    width: "1rem",
+    height: "1rem",
     padding: "1.5rem",
     fontSize: theme.typography.title.fontSize,
     borderRadius: "50%",
@@ -52,13 +52,29 @@ const styles = theme => ({
     transition: theme.transitions.create(["background-color", "color"], {
       duration: theme.transitions.duration.short
     })
+  },
+  contract: {
+    width: "1rem",
+    height: "1rem",
+    padding: "1rem"
   }
 });
 
 export default withStyles(styles)(
-  ({ classes: c, index, day, week, selected, setSelection }) => (
-    <div className={cx(c.container, { [c.full]: selected === null, [c.expand]: selected, [c.borderRight]: week === "Sat" })}>
-      <div className={c.date} onClick={() => setSelection(week, index)}>
+  ({ classes: c, index, day, week, selected, selectedWeek, setSelection }) => (
+    <div
+      className={cx(c.container, {
+        [c.full]: selected === null,
+        [c.expand]: selected,
+        [c.borderRight]: week === "Sat"
+      })}
+    >
+      <div
+        className={cx(c.date, {
+          [c.contract]: selected !== null && !selected && selectedWeek
+        })}
+        onClick={() => setSelection(week, index)}
+      >
         {day}
       </div>
     </div>
