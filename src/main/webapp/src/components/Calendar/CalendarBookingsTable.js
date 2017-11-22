@@ -40,7 +40,8 @@ const styles = theme => ({
   bubbles: {
     position: "relative",
     flex: 1,
-    width: "100%"
+    width: "100%",
+    display: "flex"
   },
   bubble: {
     position: "absolute",
@@ -57,6 +58,12 @@ const styles = theme => ({
     ...theme.typography.body1,
     color: theme.palette.common.white,
     padding: "0 0 0 0.25rem"
+  },
+  progress: {
+    alignItems: "center",
+    flex: 1,
+    display: "flex",
+    justifyContent: "center"
   }
 });
 
@@ -132,7 +139,9 @@ class CalendarBookingsTable extends React.PureComponent {
         </div>
         <div className={c.bubbles}>
           {!containerRef ? (
-            <CircularProgress />
+            <div className={c.progress}>
+              <CircularProgress />
+            </div>
           ) : (
             bookings.slice(0, 3).map(({ name }, i) => (
               <div
