@@ -34,8 +34,7 @@ const styles = theme => ({
   time: {
     ...theme.typography.caption,
     flex: 1,
-    display: "flex",
-    alignItems: "center"
+    display: "flex"
   },
   bubbles: {
     position: "relative",
