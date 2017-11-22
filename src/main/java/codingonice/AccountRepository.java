@@ -1,19 +1,23 @@
+package codingonice;
+
+import java.util.ArrayList;
+
 public class AccountRepository {
 
     public ArrayList<Account> findAll() {
-        return ArrayList<Account>;
+        return new ArrayList<Account>();
     }
 
     public Account findById(int id) {
 
-        return Account;
+        return null;
     }
         
-    public ArrayList<Bill> findBillsByAccount(int id) {
-      return ArrayList<Bill>;
+    public ArrayList<Bill> findBillsByAccount(Account account) {
+      return new ArrayList<Bill>();
     }
 
-    public save(Account account) {
+    public void save(Account account) {
         
       }
 }

@@ -1,14 +1,19 @@
+package codingonice;
+
+import java.util.ArrayList;
+
 public class RinkRepository {
 
     public ArrayList<Rink> findAll() {
 
+        return new ArrayList<Rink>();
     }
     public Rink findById(int id) {
 
-        return Rink;
+        return null;
     }
         
     public Rink save() {
-        return Rink;
+        return null;
     }
 }
