@@ -69,10 +69,10 @@ const styles = theme => ({
 
 // start is the starting hour for an event in 24 hr time
 const getOffset = (ref, day, times, start) => {
-  const comparison = new Date(2017, curMonth, day, start, 0, 0, 0).getTime();
-  const end = new Date(2017, curMonth, day, start + 1, 0, 0, 0).getTime();
-  const first = times[0].getTime();
-  const last = times[times.length - 1].getTime();
+  const comparison = start;
+  const end = start + 1;
+  const first = 9;
+  const last = 18;
 
   const pixelDiff = ref.clientHeight - 0;
   const timeDiff = last - first;
