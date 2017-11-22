@@ -12,7 +12,14 @@ const styles = theme => ({
     flexDirection: "column",
     transition: theme.transitions.create(["flex"], {
       duration: theme.transitions.duration.complex
-    })
+    }),
+    padding: "1rem 0",
+    "&:last-child": {
+      paddingRight: "1rem"
+    },
+    "&:first-child": {
+      paddingLeft: "1rem"
+    }
   },
   name: {
     padding: "0 0 1rem 0",
@@ -29,19 +36,20 @@ const styles = theme => ({
   contract: {
     flex: 0.5
   },
-  expand: {}
+  expand: {
+    boxShadow: theme.shadows[3]
+  }
 });
 
 export default withStyles(styles)(
   ({ classes: c, name, days, selected, selectedSlot, setSelection }) => (
     <div
       className={cx(c.container, {
-        [c.contract]: selected !== null && !selected,
-        [c.expand]: selected
+        [c.contract]: selected !== null && !selected
       })}
     >
       <div className={c.name}>{name.slice(0, 3)}</div>
-      <div className={c.days}>
+      <div className={cx(c.days, { [c.expand]: selected })}>
         {days.map((day, i) => (
           <CalendarSlot
             day={day}

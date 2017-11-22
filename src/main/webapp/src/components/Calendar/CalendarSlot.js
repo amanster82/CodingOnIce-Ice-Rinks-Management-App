@@ -5,8 +5,6 @@ import cx from "classnames";
 const styles = theme => ({
   container: {
     padding: "0.5rem",
-    alignItems: "center",
-    justifyContent: "center",
     display: "flex",
     borderTopWidth: "1px",
     borderTopStyle: "solid",
@@ -38,7 +36,7 @@ const styles = theme => ({
     cursor: "pointer",
     width: "1rem",
     height: "1rem",
-    padding: "1.5rem",
+    padding: "1rem",
     fontSize: theme.typography.title.fontSize,
     borderRadius: "50%",
     display: "flex",
@@ -49,7 +47,21 @@ const styles = theme => ({
 
       color: theme.palette.common.white
     },
-    transition: theme.transitions.create(["background-color", "color"], {
+    transition: theme.transitions.create(
+      ["background-color", "color", "fontSize"],
+      {
+        duration: theme.transitions.duration.short
+      }
+    )
+  },
+  expandedDate: {
+    ...theme.typography.display2,
+    color: theme.palette.primary[700],
+    "&:hover": {
+      backgroundColor: theme.palette.common.white,
+      color: theme.palette.primary[700]
+    },
+    transition: theme.transitions.create(["color", "fontSize"], {
       duration: theme.transitions.duration.short
     })
   },
@@ -71,7 +83,8 @@ export default withStyles(styles)(
     >
       <div
         className={cx(c.date, {
-          [c.contract]: selected !== null && !selected && selectedWeek
+          [c.contract]: selected !== null && !selected && selectedWeek,
+          [c.expandedDate]: selected
         })}
         onClick={() => setSelection(week, index)}
       >
