@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles } from "material-ui/styles";
 import { CircularProgress } from "material-ui/Progress";
+import throttle from "lodash/throttle";
 
 const currentDate = new Date();
 const curMonth = currentDate.getMonth();
@@ -84,6 +85,28 @@ const tagThemes = ["#27a9e8", "#63c799", "#f16737"];
 
 class CalendarBookingsTable extends React.PureComponent {
   containerRef = null;
+
+  componentDidMount() {
+    this.update();
+    this.update.flush();
+
+    window.addEventListener("resize", this.update);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.update);
+    this.update.cancel();
+  }
+
+  update = throttle(() => {
+    const root = this.containerRef;
+
+    if (!root) {
+      return;
+    }
+
+    this.forceUpdate();
+  }, 32);
 
   updateRef(ref) {
     // The timeout accounts for the time it takes for the table element
