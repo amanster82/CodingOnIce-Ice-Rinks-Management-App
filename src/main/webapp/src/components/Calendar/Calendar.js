@@ -39,7 +39,10 @@ const daysForWeekDay = (month, weekDay) =>
 const styles = theme => ({
   container: {
     padding: "1rem",
-    backgroundColor: theme.palette.common.white
+    backgroundColor: theme.palette.common.white,
+    boxShadow: theme.shadows[2],
+    display: 'flex',
+    flex: 1
   }
 });
 
