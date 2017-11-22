@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles } from "material-ui/styles";
 import CalendarColumn from "./CalendarColumn";
+import { compose, withStateHandlers } from "recompose";
 
 const calendarWeekDays = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
 
@@ -29,11 +30,15 @@ const prevMonth =
     : Array.from(Array(daysInPrevMonth))
         .map((_val, day) => day + 1)
         .slice(daysInPrevMonth - offset, daysInPrevMonth);
+const nextMonth = 35 - prevMonth.length - daysInCurMonth;
+
+console.log(nextMonth);
 
 const daysForWeekDay = (month, weekDay) =>
   [
     ...prevMonth,
-    ...Array.from(Array(daysInCurMonth)).map((_val, day) => day + 1)
+    ...Array.from(Array(daysInCurMonth)).map((_val, day) => day + 1),
+    ...Array.from(Array(nextMonth)).map((_val, day) => day + 1),
   ].filter((_day, i) => i % 7 === weekDay);
 
 const styles = theme => ({
@@ -41,19 +46,34 @@ const styles = theme => ({
     padding: "1rem",
     backgroundColor: theme.palette.common.white,
     boxShadow: theme.shadows[2],
-    display: 'flex',
+    display: "flex",
     flex: 1
   }
 });
 
-export default withStyles(styles)(({ classes: c }) => (
-  <div className={c.container}>
-    {calendarWeekDays.map((weekDay, i) => (
-      <CalendarColumn
-        key={weekDay}
-        name={weekDay}
-        days={daysForWeekDay(currentMonth, i)}
-      />
-    ))}
-  </div>
-));
+const enhanced = compose(
+  withStyles(styles),
+  withStateHandlers(() => ({ selectedWeek: null, selectedSlot: null }), {
+    selectSlot: () => (week, slot) => ({
+      selectedWeek: week,
+      selectedSlot: slot
+    })
+  })
+);
+
+export default enhanced(
+  ({ classes: c, selectedWeek, selectedSlot, selectSlot }) => (
+    <div className={c.container}>
+      {calendarWeekDays.map((weekDay, i) => (
+        <CalendarColumn
+          key={weekDay}
+          name={weekDay}
+          days={daysForWeekDay(currentMonth, i)}
+          setSelection={selectSlot}
+          selected={selectedWeek === weekDay}
+          selectedSlot={selectedSlot}
+        />
+      ))}
+    </div>
+  )
+);

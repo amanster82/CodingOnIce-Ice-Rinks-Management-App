@@ -11,7 +11,7 @@ const styles = theme => ({
     flexDirection: "column"
   },
   name: {
-    padding: "1rem 0",
+    padding: "0 0 1rem 0",
     fontSize: theme.typography.headline.fontSize,
     color: theme.palette.grey[600]
   },
@@ -22,11 +22,22 @@ const styles = theme => ({
   }
 });
 
-export default withStyles(styles)(({ classes: c, name, days }) => (
-  <div className={c.container}>
-    <div className={c.name}>{name}</div>
-    <div className={c.days}>
-      {days.map((day, i) => <CalendarSlot day={day} key={i} />)}
+export default withStyles(styles)(
+  ({ classes: c, name, days, selected, selectedSlot, setSelection }) => (
+    <div className={c.container}>
+      <div className={c.name}>{name}</div>
+      <div className={c.days}>
+        {days.map((day, i) => (
+          <CalendarSlot
+            day={day}
+            key={i}
+            index={i}
+            week={name}
+            selected={!selected ? null : i === selectedSlot}
+            setSelection={setSelection}
+          />
+        ))}
+      </div>
     </div>
-  </div>
-));
+  )
+);
