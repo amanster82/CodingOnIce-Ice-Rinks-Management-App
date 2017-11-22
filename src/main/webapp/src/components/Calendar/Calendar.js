@@ -38,7 +38,7 @@ const daysForWeekDay = (month, weekDay) =>
   [
     ...prevMonth,
     ...Array.from(Array(daysInCurMonth)).map((_val, day) => day + 1),
-    ...Array.from(Array(nextMonth)).map((_val, day) => day + 1),
+    ...Array.from(Array(nextMonth)).map((_val, day) => day + 1)
   ].filter((_day, i) => i % 7 === weekDay);
 
 const styles = theme => ({
@@ -54,9 +54,10 @@ const styles = theme => ({
 const enhanced = compose(
   withStyles(styles),
   withStateHandlers(() => ({ selectedWeek: null, selectedSlot: null }), {
-    selectSlot: () => (week, slot) => ({
-      selectedWeek: week,
-      selectedSlot: slot
+    selectSlot: ({ selectedWeek, selectedSlot }) => (week, slot) => ({
+      selectedWeek:
+        selectedWeek === week && selectedSlot === slot ? null : week,
+      selectedSlot: selectedWeek === week && selectedSlot === slot ? null : slot
     })
   })
 );
