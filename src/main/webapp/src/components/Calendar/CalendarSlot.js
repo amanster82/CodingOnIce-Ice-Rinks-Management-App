@@ -8,12 +8,25 @@ const styles = theme => ({
     alignItems: "center",
     justifyContent: "center",
     display: "flex",
-    borderSize: "1px",
-    borderStyle: "solid",
-    borderColor: theme.palette.grey[300],
+    borderTopSize: "1px",
+    borderTopStyle: "solid",
+    borderTopColor: theme.palette.grey[300],
+    borderLeftSize: "1px",
+    borderLeftStyle: "solid",
+    borderLeftColor: theme.palette.grey[300],
     transition: theme.transitions.create(["flex"], {
       duration: theme.transitions.duration.complex
-    })
+    }),
+    '&:last-child': {
+      borderBottomSize: "1px",
+      borderBottomStyle: "solid",
+      borderBottomColor: theme.palette.grey[300],
+    }
+  },
+  borderRight: {
+    borderRightSize: "1px",
+    borderRightStyle: "solid",
+    borderRightColor: theme.palette.grey[300],
   },
   full: {
     flex: 1,
@@ -44,7 +57,7 @@ const styles = theme => ({
 
 export default withStyles(styles)(
   ({ classes: c, index, day, week, selected, setSelection }) => (
-    <div className={cx(c.container, { [c.full]: selected === null, [c.expand]: selected })}>
+    <div className={cx(c.container, { [c.full]: selected === null, [c.expand]: selected, [c.borderRight]: week === "Sat" })}>
       <div className={c.date} onClick={() => setSelection(week, index)}>
         {day}
       </div>
