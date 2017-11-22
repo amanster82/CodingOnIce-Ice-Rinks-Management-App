@@ -48,6 +48,6 @@ const renderBookings = (bookings, max, c) => (
   </div>
 );
 
-export default withStyles(styles)(({ classes: c, bookings, theme, contract }) => (
+export default withStyles(styles)(({ classes: c, bookings, contract }) => (
   contract ? null : <div className={c.container}>{renderBookings(bookings, 3, c)}</div>
 ));

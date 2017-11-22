@@ -110,6 +110,8 @@ export default withStyles(styles)(
           bookings={bookings}
           timeTable={selected}
           contract={selected !== null && !selected && selectedWeek}
+          day={day}
+          week={week}
         />
       </div>
     </div>
