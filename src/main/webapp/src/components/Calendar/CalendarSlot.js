@@ -26,9 +26,6 @@ const styles = theme => ({
     borderRightStyle: "solid",
     borderRightColor: theme.palette.grey[400]
   },
-  full: {
-    flex: 1
-  },
   expand: {
     flex: 1
   },
@@ -49,20 +46,22 @@ const styles = theme => ({
       color: theme.palette.common.white
     },
     transition: theme.transitions.create(
-      ["background-color", "color", "font-size"],
+      ["background-color", "color", "font-size", "font-weight"],
       {
         duration: theme.transitions.duration.short
       }
     )
   },
   expandedDate: {
-    ...theme.typography.display2,
-    color: theme.palette.primary[700],
+    ...theme.typography.display3,
+    marginLeft: "0.25rem",
+    fontWeight: 700,
+    color: theme.palette.primary[500],
     "&:hover": {
       backgroundColor: theme.palette.common.white,
-      color: theme.palette.primary[700]
+      color: theme.palette.primary[500]
     },
-    transition: theme.transitions.create(["color", "font-size"], {
+    transition: theme.transitions.create(["color", "font-size", "font-weight"], {
       duration: theme.transitions.duration.short
     })
   },
@@ -77,8 +76,7 @@ export default withStyles(styles)(
   ({ classes: c, index, day, week, selected, selectedWeek, setSelection }) => (
     <div
       className={cx(c.container, {
-        [c.full]: selected === null,
-        [c.expand]: selected,
+        [c.expand]: selected || selected === null,
         [c.borderRight]: week === "Sat"
       })}
     >
