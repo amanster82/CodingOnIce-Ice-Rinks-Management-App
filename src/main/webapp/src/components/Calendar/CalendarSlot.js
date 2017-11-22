@@ -1,11 +1,20 @@
 import React from "react";
 import { withStyles } from "material-ui/styles";
 import cx from "classnames";
+import CalendarBookings from "./CalendarBookings";
+
+const bookings = [
+  { start: new Date(), duration: 1, name: "Some event 1" },
+  { start: new Date(), duration: 1, name: "Some event 2" },
+  { start: new Date(), duration: 1, name: "Some event 3" },
+  { start: new Date(), duration: 1, name: "Some event 4" }
+];
 
 const styles = theme => ({
   container: {
     padding: "0.5rem",
     display: "flex",
+    flexDirection: "column",
     borderTopWidth: "1px",
     borderTopStyle: "solid",
     borderTopColor: theme.palette.grey[400],
@@ -61,14 +70,21 @@ const styles = theme => ({
       backgroundColor: theme.palette.common.white,
       color: theme.palette.primary[500]
     },
-    transition: theme.transitions.create(["color", "font-size", "font-weight"], {
-      duration: theme.transitions.duration.short
-    })
+    transition: theme.transitions.create(
+      ["color", "font-size", "font-weight"],
+      {
+        duration: theme.transitions.duration.short
+      }
+    )
   },
   contract: {
     width: "1rem",
     height: "1rem",
     padding: "0.75rem"
+  },
+  bookings: {
+    flex: 1,
+    display: "flex"
   }
 });
 
@@ -88,6 +104,13 @@ export default withStyles(styles)(
         onClick={() => setSelection(week, index)}
       >
         {day}
+      </div>
+      <div className={c.bookings}>
+        <CalendarBookings
+          bookings={bookings}
+          contract={selected !== null && !selected && selectedWeek}
+          timeTable={selected}
+        />
       </div>
     </div>
   )
