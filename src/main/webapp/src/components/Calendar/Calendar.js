@@ -32,8 +32,6 @@ const prevMonth =
         .slice(daysInPrevMonth - offset, daysInPrevMonth);
 const nextMonth = 35 - prevMonth.length - daysInCurMonth;
 
-console.log(nextMonth);
-
 const daysForWeekDay = (month, weekDay) =>
   [
     ...prevMonth,
