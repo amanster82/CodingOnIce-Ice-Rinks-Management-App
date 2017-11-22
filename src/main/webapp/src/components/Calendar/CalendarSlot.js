@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "material-ui/styles";
 import cx from "classnames";
-import CalendarBookings from "./CalendarBookings";
+import CalendarBookingsContainer from "./CalendarBookingsContainer";
 
 const bookings = [
   { start: new Date(), duration: 1, name: "Some event 1" },
@@ -106,10 +106,10 @@ export default withStyles(styles)(
         {day}
       </div>
       <div className={c.bookings}>
-        <CalendarBookings
+        <CalendarBookingsContainer
           bookings={bookings}
-          contract={selected !== null && !selected && selectedWeek}
           timeTable={selected}
+          contract={selected !== null && !selected && selectedWeek}
         />
       </div>
     </div>

@@ -38,6 +38,7 @@ const renderBookings = (bookings, max, c) => (
           <CalendarBookingTag
             {...booking}
             color={tagThemes[i % tagThemes.length]}
+            key={i}
           />
         ))}
     </div>
@@ -47,10 +48,6 @@ const renderBookings = (bookings, max, c) => (
   </div>
 );
 
-export default withStyles(styles)(
-  ({ classes: c, bookings, contract, timeTable, theme }) => (
-    <div className={c.container}>
-      {!contract && !timeTable && renderBookings(bookings, 3, c)}
-    </div>
-  )
-);
+export default withStyles(styles)(({ classes: c, bookings, theme, contract }) => (
+  contract ? null : <div className={c.container}>{renderBookings(bookings, 3, c)}</div>
+));
