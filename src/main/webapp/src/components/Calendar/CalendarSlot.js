@@ -42,13 +42,14 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    color: theme.palette.grey[700],
     "&:hover": {
       backgroundColor: theme.palette.primary[500],
 
       color: theme.palette.common.white
     },
     transition: theme.transitions.create(
-      ["background-color", "color", "fontSize"],
+      ["background-color", "color", "font-size"],
       {
         duration: theme.transitions.duration.short
       }
@@ -61,14 +62,14 @@ const styles = theme => ({
       backgroundColor: theme.palette.common.white,
       color: theme.palette.primary[700]
     },
-    transition: theme.transitions.create(["color", "fontSize"], {
+    transition: theme.transitions.create(["color", "font-size"], {
       duration: theme.transitions.duration.short
     })
   },
   contract: {
     width: "1rem",
     height: "1rem",
-    padding: "1rem"
+    padding: "0.75rem"
   }
 });
 
