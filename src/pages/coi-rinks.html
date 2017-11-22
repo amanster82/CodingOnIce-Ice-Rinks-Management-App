@@ -1,0 +1,23 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="coi-rinks">
+  <template>
+    <style include="shared-styles">
+      :host {
+      }
+    </style>
+
+    <div>
+    Rinks page
+    </div>
+  </template>
+
+  <script>
+    class COIRinks extends Polymer.Element {
+      static get is() { return 'coi-rinks'; }
+    }
+
+    window.customElements.define(COIRinks.is, COIRinks);
+  </script>
+</dom-module>
