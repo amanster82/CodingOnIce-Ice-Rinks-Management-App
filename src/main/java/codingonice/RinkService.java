@@ -7,19 +7,22 @@ public class RinkService {
     private RinkRepository rinkRepository;
     private static RinkService instance;
 
-    private RinkService() {
+    private RinkService(RinkRepository repository) {
+        this.rinkRepository = repository;
+    }
 
-        this.rinkRepository = new RinkRepository();
+    public static void createInstance(RinkRepository repository) {
+        if (instance == null) {
+            instance = new RinkService(repository);
+        }
     }
 
     public static RinkService getInstance() {
-        if (instance == null) {
-            instance = new RinkService();
-        }
         return instance;
     }
 
     public RinkRepository getRepository() {
+        System.out.println("repository");
         return this.rinkRepository;
     }
         

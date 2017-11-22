@@ -14,11 +14,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class RinkController {
 
     @Autowired
-    RinkController() {
+    private final RinkRepository rinkRepository;
+
+    @Autowired
+    RinkController(RinkRepository repository) {
+
+        this.rinkRepository = repository;
+
+        RinkService.createInstance(this.rinkRepository);
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public ArrayList<Rink> getRinks() {
+
+        System.out.print(RinkService.getInstance());
 
         return RinkService.getInstance().getRepository().findAll();
     }

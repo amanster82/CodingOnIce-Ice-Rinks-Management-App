@@ -1,19 +1,10 @@
 package codingonice;
 
 import java.util.ArrayList;
+import org.springframework.data.repository.CrudRepository;
 
-public class RinkRepository {
+public interface RinkRepository extends CrudRepository<Rink, Long> {
 
-    public ArrayList<Rink> findAll() {
+    public ArrayList<Rink> findAll();
 
-        return new ArrayList<Rink>();
-    }
-    public Rink findById(int id) {
-
-        return null;
-    }
-        
-    public Rink save() {
-        return null;
-    }
 }
