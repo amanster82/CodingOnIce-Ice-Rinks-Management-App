@@ -1,22 +1,29 @@
+package codingonice;
+
+import java.util.ArrayList;
+
 public class RinkController {
 
-    public getRinks() {
+    public ArrayList<Rink> getRinks() {
+
+        return new ArrayList<Rink>();
+    }
+
+    public Rink getRink(int id) {
+
+        return null;
+    }
+
+    public boolean isUnderMaintenance(int id) {
+
+        return false;
+    }
+
+    public void startMaintenance(int id) {
 
     }
 
-    public getRink(int id) {
-
-    }
-
-    public isUnderMaintenance(int id) {
-
-    }
-
-    public startMaintenance(int id) {
-
-    }
-
-    public stopMaintenance(int id) {
+    public void stopMaintenance(int id) {
         
     }
     

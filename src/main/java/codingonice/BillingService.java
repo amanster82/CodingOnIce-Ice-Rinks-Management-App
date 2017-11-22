@@ -1,13 +1,16 @@
-public class AccountRepository {
+package codingonice;
+
+public class BillingService {
 
     private BillingService instance;
 
-    private BillingService billingService() {
-        return BillingService;
+    private BillingService() {
     }
 
     public BillingService getInstance() {
-        return BillingService;
+        if (instance == null) {
+            instance = new BillingService();
+        }
+        return instance;
     }
-    
 }

@@ -1,3 +1,5 @@
+package codingonice;
+
 public class BookingService {
 
     private BookingService instance;

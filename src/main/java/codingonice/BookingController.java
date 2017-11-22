@@ -1,18 +1,24 @@
+package codingonice;
+
+import java.util.ArrayList;
+
 public class BookingController {
 
-    public getBookingsByRink(int id) {
+    public ArrayList<Booking> getBookingsByRink(int id) {
 
+        return new ArrayList<Booking>();
     }
 
-    public getBookingsById(int id) {
+    public ArrayList<Booking> getBookingsById(int id) {
 
+        return new ArrayList<Booking>();
     }
 
     // public createBooking(...) {
 
     // }
 
-    public cancelBooking(int id) {
+    public void cancelBooking(int id) {
 
     }
     

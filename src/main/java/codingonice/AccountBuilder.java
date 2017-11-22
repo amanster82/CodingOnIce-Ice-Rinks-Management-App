@@ -1,3 +1,5 @@
+package codingonice;
+
 public class AccountBuilder {
     private Account account;
 
@@ -7,22 +9,22 @@ public class AccountBuilder {
 
     public Account build() {
         //Hmmmm
-        return Account;
+        return null;
     }
        
-    public setName(String name) {
+    public void setName(String name) {
 
     }
 
-    public setEmail( String email) {
+    public void setEmail( String email) {
 
     }
 
-    public setPassword(String pass) {
+    public void setPassword(String pass) {
 
     }
 
-    public setApproved(Boolean approved) {
+    public void setApproved(boolean approved) {
 
     }
 }

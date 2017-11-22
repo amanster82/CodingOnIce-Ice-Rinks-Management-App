@@ -1,3 +1,5 @@
+package codingonice;
+
 public class RinkService {
 
     private RinkRepository rinkRepository;
@@ -15,6 +17,6 @@ public class RinkService {
     }
         
     public Rink save() {
-        return Rink;
+        return null;
     }
 }

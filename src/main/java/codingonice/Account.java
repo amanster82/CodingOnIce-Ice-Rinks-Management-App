@@ -1,3 +1,8 @@
+package codingonice;
+
+import java.util.Date;
+import java.util.ArrayList;
+
 public class Account {
     private int id;
     private String email;
@@ -11,7 +16,8 @@ public class Account {
 
     }
 
-    public builder() {
+    public AccountBuilder builder() {
         //AccountBuilder?
+        return null;
     }
 }

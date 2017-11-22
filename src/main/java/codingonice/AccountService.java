@@ -1,3 +1,5 @@
+package codingonice;
+
 public class AccountService {
     private AccountRepository accountRepository;
     private AccountService instance;
