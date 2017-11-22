@@ -25,18 +25,18 @@ const styles = theme => ({
     backgroundColor: theme.palette.grey[300],
     height: "100%",
     display: "flex",
-    flexDirection: "column",
-    
+    flexDirection: "column"
   },
   month: {
     fontSize: theme.typography.display1.fontSize,
     padding: "1rem",
-    color: theme.palette.primary[700]
+    color: theme.palette.primary[700],
+    marginLeft: "2rem"
   },
   calendar: {
     padding: "0 1rem 1rem 1rem",
     flex: 1,
-    display: 'flex'
+    display: "flex"
   }
 });
 
