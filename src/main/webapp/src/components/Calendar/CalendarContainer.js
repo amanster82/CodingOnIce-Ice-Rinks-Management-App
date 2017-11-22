@@ -28,8 +28,8 @@ const styles = theme => ({
     flexDirection: "column"
   },
   month: {
-    fontSize: theme.typography.display1.fontSize,
-    padding: "1rem",
+    ...theme.typography.headline,
+    padding: "0.75rem",
     color: theme.palette.primary[700],
     marginLeft: "2rem"
   },
