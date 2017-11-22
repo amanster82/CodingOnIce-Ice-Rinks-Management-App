@@ -28,8 +28,7 @@ const styles = theme => ({
     borderRightWidth: "1px",
     borderRightStyle: "solid",
     borderRightColor: theme.palette.grey[500],
-    paddingRight: "0.5rem",
-    marginRight: "0.5rem"
+    paddingRight: "0.5rem"
   },
   time: {
     ...theme.typography.caption,
@@ -44,7 +43,19 @@ const styles = theme => ({
   },
   bubble: {
     position: "absolute",
-    textAlign: "left"
+    textAlign: "left",
+    width: "100%"
+  },
+  name: {
+    ...theme.typography.caption,
+    color: theme.palette.common.white,
+    textTransform: "uppercase",
+    padding: "0.25rem 0 0 0.25rem"
+  },
+  eventTime: {
+    ...theme.typography.body1,
+    color: theme.palette.common.white,
+    padding: "0 0 0 0.25rem"
   }
 });
 
@@ -69,6 +80,7 @@ const getOffset = (ref, day, times, start) => {
 };
 
 const startTimes = [10, 13, 15];
+const tagThemes = ["#27a9e8", "#63c799", "#f16737"];
 
 class CalendarBookingsTable extends React.PureComponent {
   containerRef = null;
@@ -109,10 +121,14 @@ class CalendarBookingsTable extends React.PureComponent {
                       .top + "px",
                   height:
                     getOffset(containerRef, day, times(day), startTimes[i % 3])
-                      .height + "px"
+                      .height + "px",
+                  backgroundColor: tagThemes[i % 3]
                 }}
               >
-                {name}
+                <div className={c.name}>{name}</div>
+                <div className={c.eventTime}>
+                  {startTimes[i % 3]}:00 - {startTimes[i % 3] + 1}:00
+                </div>
               </div>
             ))
           )}
