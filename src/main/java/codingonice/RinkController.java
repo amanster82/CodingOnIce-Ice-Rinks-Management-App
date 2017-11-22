@@ -2,11 +2,25 @@ package codingonice;
 
 import java.util.ArrayList;
 
+import codingonice.RinkService;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+
+@RestController
+@RequestMapping("/rinks")
 public class RinkController {
 
+    @Autowired
+    RinkController() {
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
     public ArrayList<Rink> getRinks() {
 
-        return new ArrayList<Rink>();
+        return RinkService.getInstance().getRepository().findAll();
     }
 
     public Rink getRink(int id) {
@@ -24,7 +38,7 @@ public class RinkController {
     }
 
     public void stopMaintenance(int id) {
-        
+
     }
-    
+
 }
