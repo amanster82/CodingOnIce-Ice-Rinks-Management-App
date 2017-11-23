@@ -59,7 +59,10 @@ export default withStyles(styles)(
       </DialogContent>
       <DialogActions>
         <Button onClick={() => setShowDialog(false)} color="primary">
-          Close
+          Create
+        </Button>
+        <Button onClick={() => setShowDialog(false)} color="primary">
+          Cancel
         </Button>
       </DialogActions>
     </Dialog>
