@@ -2,6 +2,10 @@ import React from "react";
 import { withStyles } from "material-ui/styles";
 import cx from "classnames";
 import CalendarBookingsContainer from "./CalendarBookingsContainer";
+import { withState, compose } from "recompose";
+import CalendarBookingCreation from "./CalendarBookingCreation";
+import Button from "material-ui/Button";
+import AddIcon from "material-ui-icons/Add";
 
 const bookings = [
   { start: new Date(), duration: 1, name: "Some event 1" },
@@ -12,6 +16,7 @@ const bookings = [
 
 const styles = theme => ({
   container: {
+    position: "relative",
     padding: "0.5rem",
     display: "flex",
     flexDirection: "column",
@@ -85,17 +90,44 @@ const styles = theme => ({
   bookings: {
     flex: 1,
     display: "flex"
+  },
+  createButton: {
+    position: "absolute",
+    height: 36,
+    width: 36,
+    top: "1rem",
+    right: "1rem"
   }
 });
 
-export default withStyles(styles)(
-  ({ classes: c, index, day, week, selected, selectedWeek, setSelection }) => (
+const enhance = compose(
+  withStyles(styles),
+  withState("showDialog", "setShowDialog", false)
+);
+
+export default enhance(
+  ({
+    classes: c,
+    index,
+    day,
+    week,
+    selected,
+    selectedWeek,
+    setSelection,
+    showDialog,
+    setShowDialog
+  }) => (
     <div
       className={cx(c.container, {
         [c.expand]: selected || selected === null,
         [c.borderRight]: week === "Sat"
       })}
     >
+      {selected && (
+        <Button fab color="primary" aria-label="add" className={c.createButton} onClick={() => setShowDialog(true)}>
+          <AddIcon />
+        </Button>
+      )}
       <div
         className={cx(c.date, {
           [c.contract]: selected !== null && !selected && selectedWeek,
@@ -114,6 +146,11 @@ export default withStyles(styles)(
           week={week}
         />
       </div>
+      <CalendarBookingCreation
+        day={day}
+        showDialog={showDialog}
+        setShowDialog={setShowDialog}
+      />
     </div>
   )
 );
