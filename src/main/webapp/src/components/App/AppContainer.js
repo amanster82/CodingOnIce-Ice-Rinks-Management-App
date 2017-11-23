@@ -9,6 +9,7 @@ import { MuiThemeProvider, createMuiTheme } from "material-ui/styles";
 import "typeface-roboto";
 import "./normalize.css";
 import "./global.css";
+import "./animate.css";
 import blue from "material-ui/colors/blue";
 
 const jss = create(preset());
