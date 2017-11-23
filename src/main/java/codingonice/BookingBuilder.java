@@ -4,22 +4,34 @@ import java.util.Date;
 
 public class BookingBuilder {
 
-    private Booking booking;
+    private Booking booking = new Booking();
 
-    public BookingBuilder bookingBuilder() {
-        return new BookingBuilder();
+    public BookingBuilder() {
+
     }
 
     public Booking build() {
 
-        return null;
-    }
-        
-    public void setStartTime(Date date) {
-      
+        return booking;
     }
 
-    public void setLength(int length) {
-        
-      }
+    public BookingBuilder setStartTime(Date date) {
+        booking.startTime = date;
+        return this;
+    }
+
+    public BookingBuilder setLength(int length) {
+        booking.length = length;
+        return this;
+    }
+
+    public BookingBuilder setRink(Rink rink) {
+        booking.rink = rink;
+        return this;
+    }
+
+    public BookingBuilder setAccount(Account account) {
+        booking.account = account;
+        return this;
+    }
 }

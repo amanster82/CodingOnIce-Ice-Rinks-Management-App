@@ -1,11 +1,13 @@
 package codingonice;
 
-import java.util.ArrayList;
-
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -14,17 +16,19 @@ import javax.persistence.Table;
 public class Rink {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private boolean underMaintenance;
-    
+
     private String name;
 
-    private ArrayList<Booking> bookings;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "rink_id")
+    private List<Booking> bookings;
 
     @OneToMany
-    public ArrayList<Booking> getBookings() {
+    public List<Booking> getBookings() {
         return bookings;
     }
 
@@ -40,11 +44,11 @@ public class Rink {
         return underMaintenance;
     }
 
-    public void setBookings(ArrayList<Booking> bookings) {
+    public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
     }
 
     private Rink() {
-        
+
     }
 }
