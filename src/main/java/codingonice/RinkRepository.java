@@ -7,4 +7,5 @@ public interface RinkRepository extends CrudRepository<Rink, Long> {
 
     public ArrayList<Rink> findAll();
 
+    public Rink findById(Integer id);
 }

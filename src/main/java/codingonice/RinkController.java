@@ -3,6 +3,8 @@ package codingonice;
 import java.util.ArrayList;
 
 import codingonice.RinkService;
+
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,9 +34,10 @@ public class RinkController {
         return RinkService.getInstance().getRepository().findAll();
     }
 
-    public Rink getRink(int id) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Rink getRink(@PathVariable("id") Integer id) {
 
-        return null;
+        return RinkService.getInstance().getRepository().findById(id);
     }
 
     public boolean isUnderMaintenance(int id) {
