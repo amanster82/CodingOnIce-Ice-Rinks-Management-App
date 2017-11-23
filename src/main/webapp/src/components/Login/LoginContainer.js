@@ -70,16 +70,54 @@ export default enhance(({ classes: c, toggle, setToggle }) => (
       <Tab label="Sign Up" />
       <Tab label="Login" />
     </Tabs>
+
     {toggle === 0 && (
+
       <TextField
-        id="name"
-        label="Name"
+        id="firstName"
+        label="First Name"
         className={c.textField}
-        value="hello"
-        onChange="hello"
+        onChange={(ev, value) => setToggle(value)}
         margin="normal"
       />
     )}
+
+    {toggle === 0 && (
+      <TextField
+        id="lastName"
+        label="Last Name"
+        className={c.textField}
+        onChange={(ev, value) => setToggle(value)}
+        margin="normal"
+      />
+
+    )}
+
+    {toggle === 0 && (      
+      <TextField
+        id="email"
+        label="Email"
+        className={c.textField}
+        onChange={(ev, value) => setToggle(value)}
+        fullWidth
+        margin="normal"
+      />
+    )}
+
+
+
+    {toggle === 0 && (
+      <TextField
+        id="password"
+        label="Set a Password"
+        className={c.textField}
+        onChange={(ev, value) => setToggle(value)}
+        fullWidth
+        margin="normal"
+      />
+    )}
+
+
 
     {toggle === 1 && (
       <TextField
