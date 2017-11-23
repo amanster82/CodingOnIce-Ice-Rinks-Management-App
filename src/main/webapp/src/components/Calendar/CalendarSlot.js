@@ -124,7 +124,13 @@ export default enhance(
       })}
     >
       {selected && (
-        <Button fab color="primary" aria-label="add" className={c.createButton} onClick={() => setShowDialog(true)}>
+        <Button
+          fab
+          color="primary"
+          aria-label="add"
+          className={c.createButton}
+          onClick={() => setShowDialog(true)}
+        >
           <AddIcon />
         </Button>
       )}

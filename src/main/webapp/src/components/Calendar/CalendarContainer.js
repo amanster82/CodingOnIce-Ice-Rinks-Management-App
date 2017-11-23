@@ -1,24 +1,7 @@
 import React from "react";
 import { withStyles } from "material-ui/styles";
 import Calendar from "./Calendar";
-
-const CalendarMonths = {
-  1: "January",
-  2: "February",
-  3: "March",
-  4: "April",
-  5: "May",
-  6: "June",
-  7: "July",
-  8: "August",
-  9: "September",
-  10: "October",
-  11: "November",
-  12: "December"
-};
-
-const currentDate = new Date();
-const currentMonth = currentDate.getMonth() + 1;
+import { currentMonth, currentDate, calendarMonths } from "lib/calendar";
 
 const styles = theme => ({
   container: {
@@ -43,7 +26,7 @@ const styles = theme => ({
 export default withStyles(styles)(({ classes: c }) => (
   <div className={c.container}>
     <div className={c.month}>
-      {CalendarMonths[currentMonth]} {currentDate.getFullYear()}
+      {calendarMonths[currentMonth]} {currentDate.getFullYear()}
     </div>
     <div className={c.calendar}>
       <Calendar />

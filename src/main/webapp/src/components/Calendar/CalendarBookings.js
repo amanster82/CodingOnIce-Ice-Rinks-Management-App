@@ -1,8 +1,7 @@
 import React from "react";
 import { withStyles } from "material-ui/styles";
 import CalendarBookingTag from "./CalendarBookingTag";
-
-const tagThemes = ["#27a9e8", "#63c799", "#f16737"];
+import { tagThemes } from "lib/calendar";
 
 const styles = theme => ({
   container: {
@@ -48,6 +47,9 @@ const renderBookings = (bookings, max, c) => (
   </div>
 );
 
-export default withStyles(styles)(({ classes: c, bookings, contract }) => (
-  contract ? null : <div className={c.container}>{renderBookings(bookings, 3, c)}</div>
-));
+export default withStyles(styles)(
+  ({ classes: c, bookings, contract }) =>
+    contract ? null : (
+      <div className={c.container}>{renderBookings(bookings, 3, c)}</div>
+    )
+);

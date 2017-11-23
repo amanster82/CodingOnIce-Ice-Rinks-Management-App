@@ -16,7 +16,7 @@ import Select from "material-ui/Select";
 const styles = theme => ({
   timeField: {},
   field: {
-    marginTop: '1rem'
+    marginTop: "1rem"
   }
 });
 

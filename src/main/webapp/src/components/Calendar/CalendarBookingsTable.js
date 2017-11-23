@@ -2,9 +2,7 @@ import React from "react";
 import { withStyles } from "material-ui/styles";
 import { CircularProgress } from "material-ui/Progress";
 import throttle from "lodash/throttle";
-
-const currentDate = new Date();
-const curMonth = currentDate.getMonth();
+import { currentMonth, tagThemes } from "lib/calendar";
 
 const formatTime = date =>
   `${date.getHours() > 12 ? date.getHours() - 12 : date.getHours()}${
@@ -13,7 +11,7 @@ const formatTime = date =>
 
 const times = day =>
   [9, 10, 11, 12, ...Array.from(Array(5)).map((_v, i) => i + 13)].map(hour => {
-    return new Date(2017, curMonth, day, hour, 0, 0, 0);
+    return new Date(2017, currentMonth, day, hour, 0, 0, 0);
   });
 
 const styles = theme => ({
@@ -87,7 +85,6 @@ const getOffset = (ref, day, times, start) => {
 };
 
 const startTimes = [10, 13, 15];
-const tagThemes = ["#27a9e8", "#63c799", "#f16737"];
 
 class CalendarBookingsTable extends React.PureComponent {
   containerRef = null;
