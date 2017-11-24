@@ -166,8 +166,7 @@ export default enhance(({ classes: c, toggle, setToggle }) => (
       />
     )}
 
-
-{toggle === 1 && <div style={{ height: "25px" }} />}
+    {toggle === 1 && <div style={{ height: "25px" }} />}
 
     {toggle === 1 && (
       <div className={c.submit}>
@@ -176,6 +175,5 @@ export default enhance(({ classes: c, toggle, setToggle }) => (
         </Button>
       </div>
     )}
-
   </form>
 ));
