@@ -4,6 +4,7 @@ import { withStyles } from "material-ui/styles";
 import cx from "classnames";
 import { withState, compose } from "recompose";
 import Login from "components/Login/LoginContainer";
+import $ from 'jquery';
 
 document.body.style.overflow = "hidden";
 
@@ -29,16 +30,23 @@ const styles = theme => ({
     alignItems: "center",
     display: "flex",
     justifyContent: "center",
-    height: "100%"
+    height: "100%",
   },
 
   login: {
+    position: "absolute",
     textAlign: "center",
     alignItems: "center",
     display: "flex",
     justifyContent: "center",
-    height: "100%"
-  }
+    height: "100%",
+    left: 0,
+    right: 0,
+    top: 0,
+    zIndex: 100
+  },
+
+
 });
 
 const enhance = compose(
@@ -46,23 +54,43 @@ const enhance = compose(
   withState("toggle", "setToggle", false)
 );
 
+
+
+     
+var hello = false;
+
+const timeMeOut = setTimeout(
+        function () {
+          console.log("it ran");
+          hello = true;
+          console.log(hello)
+        }, 3000);
+
+
+
+
 export default enhance(({ classes: c, toggle, setToggle }) => (
+
   <div className={c.container}>
+
     <div className={cx(c.buttons, "animated", { fadeOut: toggle === true })}>
-      <Button color="primary" raised onClick={() => setToggle(true)}>
+      <Button color="primary" raised onClick={() => setToggle(true) && timeMeOut}>
         Reserve a Rink
       </Button>
       <Button color="primary" raised style={{ left: 10 }}>
         View Rinks
       </Button>
     </div>
-    <div className={c.login}>
-      {toggle && (
+
+
+  {hello && (
+      <div className={cx(c.login, "animated", "zoomIn")}>
         <div>
           <Login />
         </div>
-      )}
-    </div>
+      </div>
+    )}
+
 
     <video
       autoplay=""

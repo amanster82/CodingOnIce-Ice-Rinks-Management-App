@@ -98,7 +98,6 @@ export default enhance(({ classes: c, toggle, setToggle }) => (
           id="firstName"
           label="First Name"
           className={c.firstName}
-          onChange={(ev, value) => setToggle(value)}
           margin="normal"
         />
 
@@ -106,7 +105,6 @@ export default enhance(({ classes: c, toggle, setToggle }) => (
           id="lastName"
           label="Last Name"
           className={c.lastName}
-          onChange={(ev, value) => setToggle(value)}
           margin="normal"
         />
       </div>
@@ -116,7 +114,6 @@ export default enhance(({ classes: c, toggle, setToggle }) => (
       <TextField
         id="email"
         label="Email"
-        onChange={(ev, value) => setToggle(value)}
         fullWidth
         margin="normal"
       />
@@ -128,7 +125,6 @@ export default enhance(({ classes: c, toggle, setToggle }) => (
       <TextField
         id="password"
         label="Set a Password"
-        onChange={(ev, value) => setToggle(value)}
         fullWidth
         margin="normal"
       />
@@ -148,7 +144,6 @@ export default enhance(({ classes: c, toggle, setToggle }) => (
       <TextField
         id="email"
         label="Email"
-        onChange={(ev, value) => setToggle(value)}
         fullWidth
         margin="normal"
       />
@@ -160,7 +155,6 @@ export default enhance(({ classes: c, toggle, setToggle }) => (
       <TextField
         id="password"
         label="Password"
-        onChange={(ev, value) => setToggle(value)}
         fullWidth
         margin="normal"
       />
