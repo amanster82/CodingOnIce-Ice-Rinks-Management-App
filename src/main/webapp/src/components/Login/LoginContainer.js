@@ -7,6 +7,8 @@ import AppBar from "material-ui/AppBar";
 import Tabs, { Tab } from "material-ui/Tabs";
 import cx from "classnames";
 import { withState, compose } from "recompose";
+import Button from "material-ui/Button";
+import Send from "material-ui-icons/Send";
 
 const styles = theme => ({
   container: {
@@ -43,13 +45,32 @@ const styles = theme => ({
     transition: ".5s ease"
   },
 
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200
+  placeHolder: {
+    display: "flex",
+    flexDirection: "row"
   },
+
+  firstName: {
+    flex: 1
+  },
+
+  lastName: {
+    flex: 1,
+    marginLeft: theme.spacing.unit
+  },
+
+  button: {
+    margin: theme.spacing.unit
+  },
+
   menu: {
     width: 200
+  },
+
+  submit: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
 
@@ -72,45 +93,73 @@ export default enhance(({ classes: c, toggle, setToggle }) => (
     </Tabs>
 
     {toggle === 0 && (
+      <div className={c.placeHolder}>
+        <TextField
+          id="firstName"
+          label="First Name"
+          className={c.firstName}
+          onChange={(ev, value) => setToggle(value)}
+          margin="normal"
+        />
 
-      <TextField
-        id="firstName"
-        label="First Name"
-        className={c.textField}
-        onChange={(ev, value) => setToggle(value)}
-        margin="normal"
-      />
+        <TextField
+          id="lastName"
+          label="Last Name"
+          className={c.lastName}
+          onChange={(ev, value) => setToggle(value)}
+          margin="normal"
+        />
+      </div>
     )}
 
     {toggle === 0 && (
       <TextField
-        id="lastName"
-        label="Last Name"
-        className={c.textField}
-        onChange={(ev, value) => setToggle(value)}
-        margin="normal"
-      />
-
-    )}
-
-    {toggle === 0 && (      
-      <TextField
         id="email"
         label="Email"
-        className={c.textField}
         onChange={(ev, value) => setToggle(value)}
         fullWidth
         margin="normal"
       />
     )}
 
-
+    {toggle === 0 && <div />}
 
     {toggle === 0 && (
       <TextField
         id="password"
         label="Set a Password"
-        className={c.textField}
+        onChange={(ev, value) => setToggle(value)}
+        fullWidth
+        margin="normal"
+      />
+    )}
+
+    {toggle === 0 && <div style={{ height: "25px" }} />}
+
+    {toggle === 0 && (
+      <div className={c.submit}>
+        <Button className={c.button} raised color="primary">
+          Get Started
+        </Button>
+      </div>
+    )}
+
+    {toggle === 1 && (
+      <TextField
+        id="email"
+        label="Email"
+        onChange={(ev, value) => setToggle(value)}
+        fullWidth
+        margin="normal"
+      />
+    )}
+
+    {toggle === 1 && <div />}
+
+    {toggle === 1 && (
+      <TextField
+        id="password"
+        label="Password"
         onChange={(ev, value) => setToggle(value)}
         fullWidth
         margin="normal"
@@ -118,18 +167,15 @@ export default enhance(({ classes: c, toggle, setToggle }) => (
     )}
 
 
+{toggle === 1 && <div style={{ height: "25px" }} />}
 
     {toggle === 1 && (
-      <TextField
-        id="name"
-        label="login"
-        className={c.textField}
-        value="hello"
-        onChange="hello"
-        margin="normal"
-      />
+      <div className={c.submit}>
+        <Button className={c.button} raised color="primary">
+          Log in
+        </Button>
+      </div>
     )}
-
 
   </form>
 ));
