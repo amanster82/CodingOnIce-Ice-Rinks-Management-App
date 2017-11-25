@@ -26,7 +26,6 @@ public class AccountController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ArrayList<Account> getAccounts() {
-
         System.out.print(AccountService.getInstance());
 
         return AccountService.getInstance().getAccountRepository().findAll();
@@ -37,5 +36,20 @@ public class AccountController {
         //do authentication here
         return AccountService.getInstance().getAccountRepository().findById(id);
     }
-    
+
+    public void login(String email, String password) {
+
+    }
+
+//    public void register(...) {
+//
+//    }
+
+    public void getBills(int id) {
+
+    }
+
+    public void approve(int id) {
+
+    }
 }
