@@ -1,6 +1,10 @@
 import React from "react";
 import RinkCard from "./RinkCard";
 import { withStyles } from "material-ui/styles";
+import { compose, lifecycle, branch, renderComponent } from "recompose";
+import { getAllRinks } from "lib/api/rinks";
+import { CircularProgress } from "material-ui/Progress";
+
 import rink1Image from "./images/rink1.jpg";
 import rink2Image from "./images/rink2.jpg";
 import rink3Image from "./images/rink3.jpg";
@@ -105,10 +109,35 @@ const styles = theme => ({
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr",
     backgroundColor: theme.palette.grey[300]
+  },
+  loading: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%"
   }
 });
 
-export default withStyles(styles)(({ classes: c }) => (
+const enhance = compose(
+  withStyles(styles),
+  lifecycle({
+    componentDidMount() {
+      getAllRinks().then((res, rinks) => {
+        this.setState({ rinks });
+      });
+    }
+  }),
+  branch(
+    ({ rinks }) => !rinks,
+    renderComponent(({ classes: c }) => (
+      <div className={c.loading}>
+        <CircularProgress />
+      </div>
+    ))
+  )
+);
+
+export default enhance(({ classes: c }) => (
   <div className={c.container}>
     {rinks.map(rink => (
       <RinkCard
