@@ -1,8 +1,6 @@
 import React from "react";
 import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
-import { withStateHandlers, compose } from "recompose";
-import { withStyles } from "material-ui/styles";
 import { createAccount } from "lib/api/accounts";
 import { Redirect } from "react-router-dom";
 import enhance from "./Helper";
