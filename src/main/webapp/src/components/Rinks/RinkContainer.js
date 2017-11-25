@@ -151,6 +151,7 @@ export default compose(
         {rinks.map((rink, i) => (
           <RinkCard
             key={rink.id}
+            rinkId={rink.id}
             rinkName={rink.name}
             rinkImage={images[i % images.length]}
             rinkDescription={rink.description}

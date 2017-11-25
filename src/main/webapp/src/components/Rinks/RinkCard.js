@@ -3,6 +3,8 @@ import { withStyles } from "material-ui/styles";
 import Card, { CardActions, CardContent, CardMedia } from "material-ui/Card";
 import Button from "material-ui/Button";
 import Typography from "material-ui/Typography";
+import { withState, compose } from "recompose";
+import { Redirect } from "react-router-dom";
 
 const styles = {
   card: {
@@ -24,7 +26,10 @@ function RinkCard(props) {
     rinkInfo,
     rinkCapacity,
     rinkStartHour,
-    rinkEndHour
+    rinkEndHour,
+    rinkId,
+    redirect,
+    setRedirect
   } = props;
 
   return (
@@ -52,13 +57,19 @@ function RinkCard(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button dense color="primary">
+          <Button dense color="primary" onClick={() => setRedirect(true)}>
             Calendar
           </Button>
         </CardActions>
       </Card>
+      {redirect && <Redirect to="/calendar" />}
     </div>
   );
 }
 
-export default withStyles(styles)(RinkCard);
+const enhance = compose(
+  withStyles(styles),
+  withState('redirect', 'setRedirect', false)
+);
+
+export default enhance(RinkCard);
