@@ -1,7 +1,7 @@
 package codingonice;
 
 import java.util.Date;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -24,7 +24,7 @@ public class Account {
     private boolean isAdmin;
 
     @OneToMany
-    private ArrayList<Bill> bills;
+    private List<Bill> bills;
 
     protected Account() {
 
@@ -54,7 +54,7 @@ public class Account {
         return isAdmin;
     }
 
-    public ArrayList<Bill> getBills() {
+    public List<Bill> getBills() {
         return bills;
     }
 
