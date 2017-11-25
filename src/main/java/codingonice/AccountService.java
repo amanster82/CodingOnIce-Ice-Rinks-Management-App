@@ -2,17 +2,24 @@ package codingonice;
 
 public class AccountService {
     private AccountRepository accountRepository;
-    private AccountService instance;
+    private static AccountService instance;
 
-    private AccountService() {
-
+    private AccountService(AccountRepository repository) {
+        this.accountRepository = repository;
     }
 
-    public AccountService getInstance() {
+    public static void createInstance(AccountRepository repository) {
         if (instance == null) {
-            instance = new AccountService();
+            instance = new AccountService(repository);
         }
+    }
+
+    public static AccountService getInstance() {
         return instance;
     }
-    
+
+    public AccountRepository getAccountRepository() {
+        System.out.print("account repository");
+        return accountRepository;
+    }
 }
