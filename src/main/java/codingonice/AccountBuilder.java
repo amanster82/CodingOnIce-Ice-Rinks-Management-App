@@ -1,30 +1,36 @@
 package codingonice;
 
+import java.util.Date;
+
 public class AccountBuilder {
-    private Account account;
+    private Account account = new Account();
 
     public AccountBuilder() {
 
     }
 
     public Account build() {
-        //Hmmmm
-        return null;
-    }
-       
-    public void setName(String name) {
-
+        return account;
     }
 
-    public void setEmail( String email) {
-
+    public AccountBuilder setName(String name) {
+        account.name = name;
+        return this;
     }
 
-    public void setPassword(String pass) {
-
+    public AccountBuilder setEmail(String email) {
+        account.email = email;
+        return this;
     }
 
-    public void setApproved(boolean approved) {
+    public AccountBuilder setPassword(String password) {
+        //authentication
+        account.password = password;
+        return this;
+    }
 
+    public AccountBuilder setApproved(boolean approved) {
+        account.isApproved = approved;
+        return this;
     }
 }

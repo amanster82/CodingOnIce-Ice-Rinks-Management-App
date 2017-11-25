@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -55,12 +57,27 @@ public class BookingController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public @ResponseBody Booking createBooking(@RequestBody BookingCreateEntity booking) {
+    public ResponseEntity<Booking> createBooking(@RequestBody BookingCreateEntity booking) {
 
         Rink rink = RinkService.getInstance().getRepository().findById(booking.rinkId);
 
         if (rink == null) {
-            return null;
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+        Date endTime = (Date)booking.startTime.clone();
+        endTime.setHours(booking.startTime.getHours() + booking.length);
+
+        List<Booking> conflictedBookings = RinkService.getInstance().getRepository().findBookingsByRinkAndDateInbetween(rink.getId(), booking.startTime, endTime);
+
+        if (conflictedBookings.size() > 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+        List<Booking> bookings = new LinkedList<Booking>();
+
+        if (rink.getBookings() != null) {
+            bookings = rink.getBookings();
         }
 
         Booking newBooking = Booking.builder()
@@ -69,19 +86,13 @@ public class BookingController {
             .setStartTime(booking.startTime)
             .build();
 
-        List<Booking> bookings = new LinkedList<Booking>();
-
-        if (rink.getBookings() != null) {
-            bookings = rink.getBookings();
-        }
-
         bookings.add(newBooking);
 
         rink.setBookings(bookings);
 
         RinkService.getInstance().getRepository().save(rink);
 
-        return newBooking;
+        return ResponseEntity.ok(newBooking);
     }
 
     public void cancelBooking(int id) {
