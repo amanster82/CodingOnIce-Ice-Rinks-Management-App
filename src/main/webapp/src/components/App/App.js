@@ -14,7 +14,8 @@ const styles = theme => ({
   },
   title: {},
   layout: {
-    flex: 1
+    flex: 1,
+    overflowY: 'auto'
   }
 });
 
