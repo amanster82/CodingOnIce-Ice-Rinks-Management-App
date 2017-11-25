@@ -5,8 +5,6 @@ import cx from "classnames";
 import { withState, compose } from "recompose";
 import Login from "components/Login/LoginContainer";
 
-document.body.style.overflow = "hidden";
-
 const styles = theme => ({
   container: {
     overflow: "hidden !important",
