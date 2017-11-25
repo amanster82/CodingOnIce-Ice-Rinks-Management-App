@@ -15,6 +15,18 @@ import rink7Image from "./images/rink7.jpg";
 import rink9Image from "./images/rink9.jpg";
 import rink10Image from "./images/rink10.jpg";
 
+const images = [
+  rink1Image,
+  rink2Image,
+  rink3Image,
+  rink4Image,
+  rink5Image,
+  rink6Image,
+  rink7Image,
+  rink9Image,
+  rink10Image
+];
+
 const rinks = [
   {
     name: "Dogwood Rink",
@@ -118,12 +130,12 @@ const styles = theme => ({
   }
 });
 
-const enhance = compose(
+export default compose(
   withStyles(styles),
   lifecycle({
     componentDidMount() {
-      getAllRinks().then((res, rinks) => {
-        this.setState({ rinks });
+      getAllRinks().then(({res, json}) => {
+        this.setState({ rinks: json });
       });
     }
   }),
@@ -133,22 +145,23 @@ const enhance = compose(
       <div className={c.loading}>
         <CircularProgress />
       </div>
+    )),
+    renderComponent(({ classes: c, rinks }) => (
+      <div className={c.container}>
+        {rinks.map((rink, i) => (
+          <RinkCard
+            key={rink.id}
+            rinkName={rink.name}
+            rinkImage={images[i % images.length]}
+            rinkDescription={rink.description}
+            rinkAddress={rink.address}
+            rinkInfo={rink.info}
+            rinkCapacity={rink.capacity}
+            rinkStartHour={rink.startHour}
+            rinkEndHour={rink.endHour}
+          />
+        ))}
+      </div>
     ))
   )
-);
-
-export default enhance(({ classes: c }) => (
-  <div className={c.container}>
-    {rinks.map(rink => (
-      <RinkCard
-        rinkName={rink.name}
-        rinkImage={rink.image}
-        rinkDescription={rink.description}
-        rinkAddress={rink.address}
-        rinkInfo={rink.info}
-        rinkCapacity={rink.capacity}
-        rinkHours={rink.hours}
-      />
-    ))}
-  </div>
-));
+)();
