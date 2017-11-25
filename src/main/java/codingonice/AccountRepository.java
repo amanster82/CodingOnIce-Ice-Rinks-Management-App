@@ -6,10 +6,11 @@ import java.util.ArrayList;
 
 public interface AccountRepository extends CrudRepository<Account, Long> {
 
-    public ArrayList<Account> findAll();
+    ArrayList<Account> findAll();
 
-    public Account findById(int id);
+    Account findById(int id);
 
-    //public ArrayList<Bill> findBillsByAccount(Account account);
+    //ArrayList<Bill> findBillsByAccount(Account account);
 
+//    Account save();
 }
