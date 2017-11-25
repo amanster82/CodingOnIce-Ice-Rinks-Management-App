@@ -48,8 +48,8 @@ const renderBookings = (bookings, max, c) => (
 );
 
 export default withStyles(styles)(
-  ({ classes: c, bookings, contract }) =>
+  ({ classes: c, contract, rink }) =>
     contract ? null : (
-      <div className={c.container}>{renderBookings(bookings, 3, c)}</div>
+      <div className={c.container}>{renderBookings(rink.bookings, 3, c)}</div>
     )
 );

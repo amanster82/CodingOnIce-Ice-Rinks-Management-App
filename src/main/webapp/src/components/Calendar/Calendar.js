@@ -27,7 +27,7 @@ const enhanced = compose(
 );
 
 export default enhanced(
-  ({ classes: c, selectedWeek, selectedSlot, selectSlot }) => (
+  ({ classes: c, selectedWeek, selectedSlot, selectSlot, rink }) => (
     <div className={c.container}>
       {calendarWeekDays.map((weekDay, i) => (
         <CalendarColumn
@@ -37,6 +37,7 @@ export default enhanced(
           setSelection={selectSlot}
           selected={selectedWeek === null ? null : selectedWeek === weekDay}
           selectedSlot={selectedSlot}
+          rink={rink}
         />
       ))}
     </div>

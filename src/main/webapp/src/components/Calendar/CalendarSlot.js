@@ -109,7 +109,7 @@ export default enhance(
     setSelection,
     showDialog,
     setShowDialog,
-    bookings
+    rink
   }) => (
     <div
       className={cx(c.container, {
@@ -139,7 +139,7 @@ export default enhance(
       </div>
       <div className={c.bookings}>
         <CalendarBookingsContainer
-          bookings={bookings || []}
+          rink={rink}
           timeTable={selected}
           contract={selected !== null && !selected && selectedWeek}
           day={day}

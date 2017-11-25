@@ -65,9 +65,9 @@ const styles = theme => ({
 });
 
 // start is the starting hour for an event in 24 hr time
-const getOffset = (ref, day, times, start) => {
+const getOffset = (ref, day, times, start, length) => {
   const comparison = start;
-  const end = start + 1;
+  const end = start + length;
   const first = 9;
   const last = 18;
 
@@ -135,18 +135,18 @@ const allFreeTimes = (bookings, day) => {
   return allFree;
 };
 
-const renderTimeBlock = (block, ref, day, c, i) => (
+const renderTimeBlock = (booking, ref, day, c, i) => (
   <div
     className={c.bubble}
     style={{
-      top: getOffset(ref, day, times(day), startTimes[i % 3]).top + "px",
-      height: getOffset(ref, day, times(day), startTimes[i % 3]).height + "px",
+      top: getOffset(ref, day, times(day), booking.start, booking.length).top + "px",
+      height: getOffset(ref, day, times(day), booking.length, booking.length).height + "px",
       backgroundColor: tagThemes[i % 3]
     }}
   >
-    <div className={c.name}>{block.name}</div>
+    <div className={c.name}>{booking.name}</div>
     <div className={c.eventTime}>
-      {startTimes[i % 3]}:00 - {startTimes[i % 3] + 1}:00
+      {booking.start}:00 - {booking.start + booking.length}:00
     </div>
   </div>
 );
@@ -187,7 +187,7 @@ class CalendarBookingsTable extends React.PureComponent {
 
   render() {
     const containerRef = this.containerRef;
-    const { classes: c, bookings, day } = this.props;
+    const { classes: c, rink, day } = this.props;
 
     return (
       <div className={c.container} ref={ref => this.updateRef(ref)}>
@@ -205,10 +205,10 @@ class CalendarBookingsTable extends React.PureComponent {
             </div>
           ) : (
             [
-              bookings.map((block, i) =>
+              rink.bookings.map((block, i) =>
                 renderTimeBlock(block, containerRef, day, c, i)
               ),
-              allFreeTimes(bookings, 1).map((block, i) =>
+              allFreeTimes(rink.bookings, 1).map((block, i) =>
                 renderTimeBlock({...block, start: block.start.getHours()}, containerRef, day, c, i)
               )
             ]
