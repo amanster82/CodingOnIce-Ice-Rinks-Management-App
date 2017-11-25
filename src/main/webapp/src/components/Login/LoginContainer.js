@@ -6,9 +6,10 @@ import TextField from "material-ui/TextField";
 import AppBar from "material-ui/AppBar";
 import Tabs, { Tab } from "material-ui/Tabs";
 import cx from "classnames";
-import { withState, compose } from "recompose";
+import { withState, compose, withStateHandlers } from "recompose";
 import Button from "material-ui/Button";
 import Send from "material-ui-icons/Send";
+import { createAccount } from "lib/api/accounts";
 
 const styles = theme => ({
   container: {
@@ -76,6 +77,7 @@ class LoginContainer extends React.Component {
   state = {
     toggle: 0,
     submit: false,
+    check: false,
     name: "",
     last: "",
     email: "",
@@ -91,18 +93,36 @@ class LoginContainer extends React.Component {
     }));
   };
 
-
-
   setToggle = toggle => this.setState(() => ({ toggle }));
-  setSubmit = submit => this.setState(() => ({ submit }));
+
+
+  handleSubmit = (name) => {
+    this.setState(() => ({submit: true}), () => {
+        console.log("wtf name:");
+        console.log(name);
+        if(name === ""){
+          this.setState(() => ({check: true}));
+          this.setState(() => ({submit: true}));
+        }
+
+      createAccount({
+        firstName: this.name,
+        lastName: this.last,
+        email: this.email,
+        password: this.pass
+
+      }).then(({res, account}) => {
+  
+      });
+    });
+  };
 
   render() {
-    const { submit } = this.state;
-    const { toggle, name, last, email, pass, logPass, logEmail } = this.state;
+    const { toggle, name, last, email, pass, logPass, logEmail, submit, check } = this.state;
     const { classes: c } = this.props;
 
     return (
-      <form className={c.container} noValidate autoComplete="off">
+      <form className={cx(c.container, "animated", {shake: check===true})} noValidate autoComplete="off">
         <Tabs
           value={toggle}
           onChange={(ev, value) => this.setToggle(value)}
@@ -163,7 +183,7 @@ class LoginContainer extends React.Component {
 
         {toggle === 0 && (
           <div className={c.submit}>
-            <Button className={c.button} raised color="primary">
+            <Button className={c.button} raised color="primary" onClick={() => this.handleSubmit(name)} disabled={submit}>
               Get Started
             </Button>
           </div>
