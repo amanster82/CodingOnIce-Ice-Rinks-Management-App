@@ -7,7 +7,8 @@ import Typography from 'material-ui/Typography';
 
 const styles = {
   card: {
-    maxWidth: 425,
+    margin: '1rem',
+    height: 'auto'
   },
   media: {
     height: 300,
@@ -16,7 +17,7 @@ const styles = {
 
 function RinkCard(props) {
     const { classes, rinkName, rinkImage, rinkDescription, rinkAddress, rinkInfo, rinkCapacity, rinkHours } = props;
-    console.log(rinkImage);
+
     return (
       <div>
         <Card className={classes.card}>
@@ -53,9 +54,5 @@ function RinkCard(props) {
       </div>
     );
 }
-
-RinkCard.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(RinkCard);
