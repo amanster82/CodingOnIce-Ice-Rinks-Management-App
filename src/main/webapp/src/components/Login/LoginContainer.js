@@ -44,12 +44,10 @@ const styles = theme => ({
     cursor: "pointer",
     transition: ".5s ease"
   },
-
   placeHolder: {
     display: "flex",
     flexDirection: "row"
   },
-
   firstName: {
     flex: 1
   },
@@ -74,100 +72,125 @@ const styles = theme => ({
   }
 });
 
-const enhance = compose(
-  withStyles(styles),
-  withState("toggle", "setToggle", 0)
-);
+class LoginContainer extends React.Component {
+  state = {
+    toggle: 0,
+    submit: false,
+    name: "",
+    last: "",
+    email: "",
+    pass: "",
+    logPass: "",
+    logEmail: ""
+  };
 
-export default enhance(({ classes: c, toggle, setToggle }) => (
-  <form className={c.container} noValidate autoComplete="off">
-    <Tabs
-      value={toggle}
-      onChange={(ev, value) => setToggle(value)}
-      indicatorColor="primary"
-      textColor="primary"
-      centered
-    >
-      <Tab label="Sign Up" />
-      <Tab label="Login" />
-    </Tabs>
+  handleChange = field => event => {
+    const value = event.target.value;
+    this.setState(() => ({
+      [field]: value
+    }));
+  };
 
-    {toggle === 0 && (
-      <div className={c.placeHolder}>
-        <TextField
-          id="firstName"
-          label="First Name"
-          className={c.firstName}
-          margin="normal"
-        />
 
-        <TextField
-          id="lastName"
-          label="Last Name"
-          className={c.lastName}
-          margin="normal"
-        />
-      </div>
-    )}
 
-    {toggle === 0 && (
-      <TextField
-        id="email"
-        label="Email"
-        fullWidth
-        margin="normal"
-      />
-    )}
+  setToggle = toggle => this.setState(() => ({ toggle }));
+  setSubmit = submit => this.setState(() => ({ submit }));
 
-    {toggle === 0 && <div />}
+  render() {
+    const { submit } = this.state;
+    const { toggle, name, last, email, pass, logPass, logEmail } = this.state;
+    const { classes: c } = this.props;
 
-    {toggle === 0 && (
-      <TextField
-        id="password"
-        label="Set a Password"
-        fullWidth
-        margin="normal"
-      />
-    )}
+    return (
+      <form className={c.container} noValidate autoComplete="off">
+        <Tabs
+          value={toggle}
+          onChange={(ev, value) => this.setToggle(value)}
+          indicatorColor="primary"
+          textColor="primary"
+          centered
+        >
+          <Tab label="Sign Up" />
+          <Tab label="Login" />
+        </Tabs>
 
-    {toggle === 0 && <div style={{ height: "25px" }} />}
+        {toggle === 0 && (
+          <div className={c.placeHolder}>
+            <TextField
+              id="firstName"
+              label="First Name"
+              className={c.firstName}
+              margin="normal"
+              onChange={this.handleChange("name")}
+              value={name}
+            />
 
-    {toggle === 0 && (
-      <div className={c.submit}>
-        <Button className={c.button} raised color="primary">
-          Get Started
-        </Button>
-      </div>
-    )}
+            <TextField
+              id="lastName"
+              label="Last Name"
+              className={c.lastName}
+              margin="normal"
+              onChange={this.handleChange("last")}
+              value={last}
+            />
+          </div>
+        )}
 
-    {toggle === 1 && (
-      <TextField
-        id="email"
-        label="Email"
-        fullWidth
-        margin="normal"
-      />
-    )}
+        {toggle === 0 && (
+          <TextField
+            id="email"
+            label="Email"
+            fullWidth
+            margin="normal"
+            onChange={this.handleChange("email")}
+          />
+        )}
 
-    {toggle === 1 && <div />}
+        {toggle === 0 && <div />}
 
-    {toggle === 1 && (
-      <TextField
-        id="password"
-        label="Password"
-        fullWidth
-        margin="normal"
-      />
-    )}
+        {toggle === 0 && (
+          <TextField
+            id="password"
+            label="Set a Password"
+            fullWidth
+            margin="normal"
+            type="password"
+            onChange={this.handleChange("pass")}            
+          />
+        )}
 
-    {toggle === 1 && <div style={{ height: "25px" }} />}
+        {toggle === 0 && <div style={{ height: "25px" }} />}
 
-    {toggle === 1 && (
-      <div className={c.submit}>
-        <Button className={c.button} raised color="primary">
-          Log in
-        </Button>
-      </div>
-    )}
-  </form>
-));
+        {toggle === 0 && (
+          <div className={c.submit}>
+            <Button className={c.button} raised color="primary">
+              Get Started
+            </Button>
+          </div>
+        )}
+
+        {toggle === 1 && (
+          <TextField id="email" label="Email" fullWidth margin="normal" onChange={this.handleChange("logEmail")} />
+        )}
+
+        {toggle === 1 && <div />}
+
+        {toggle === 1 && (
+          <TextField id="password" label="Password" fullWidth margin="normal" type="password" onChange={this.handleChange("logPass")} />
+        )}
+
+        {toggle === 1 && <div style={{ height: "25px" }} />}
+
+        {toggle === 1 && (
+          <div className={c.submit}>
+            <Button className={c.button} raised color="primary">
+              Log in
+            </Button>
+          </div>
+        )}
+      </form>
+    );
+  }
+}
+
+export default withStyles(styles)(LoginContainer);
