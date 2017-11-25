@@ -5,68 +5,7 @@ import { withStateHandlers, compose } from "recompose";
 import { withStyles } from "material-ui/styles";
 import { createAccount } from "lib/api/accounts";
 import { Redirect } from "react-router-dom";
-
-const styles = theme => ({
-  inline: {
-    display: "flex"
-  },
-  flexed: {
-    flex: 1,
-    "&:not(:last-child)": {
-      marginRight: "0.5rem"
-    }
-  },
-  button: {
-    marginTop: "1rem"
-  },
-  alert: {
-    ...theme.typography.headline,
-    marginTop: "1rem",
-    color: theme.palette.error[700]
-  }
-});
-
-const enhance = compose(
-  withStyles(styles),
-  withStateHandlers(
-    ({
-      name = "",
-      last = "",
-      email = "",
-      password = "",
-      submit = false,
-      first = true,
-      alert = "",
-      success = false
-    }) => ({
-      name,
-      last,
-      email,
-      password,
-      submit,
-      first,
-      alert,
-      success
-    }),
-    {
-      handleChange: () => (key, value) => ({
-        [key]: value
-      }),
-      reset: () => message => ({ submit: false, alert: message }),
-      redirect: () => () => ({ success: true }),
-      requestCreation: ({ name, last, email, password }) => (
-        reset,
-        redirect
-      ) => {
-        createAccount({ firstName: name, lastName: last, email, password })
-          .then(({ res, obj }) => redirect())
-          .catch(exc => reset("Server is unavailable"));
-
-        return { submit: true, first: false, alert: "" };
-      }
-    }
-  )
-);
+import enhance from "./Helper";
 
 function validate(name, last, email, password) {
   return name === "" || last === "" || email === "" || password === "";
@@ -81,7 +20,7 @@ export default enhance(
     password,
     submit,
     handleChange,
-    requestCreation,
+    request,
     reset,
     first,
     alert,
@@ -137,7 +76,7 @@ export default enhance(
         raised
         color="primary"
         disabled={validate(name, last, email, password) || submit}
-        onClick={() => requestCreation(reset, redirect)}
+        onClick={() => request(createAccount, reset, redirect)}
       >
         Get Started
       </Button>
