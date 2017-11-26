@@ -34,4 +34,9 @@ public class BookingBuilder {
         booking.account = account;
         return this;
     }
+
+    public BookingBuilder setName(String name) {
+        booking.name = name;
+        return this;
+    }
 }

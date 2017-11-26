@@ -10,6 +10,9 @@ import { FormControl } from "material-ui/Form";
 import Select from "material-ui/Select";
 import Button from "material-ui/Button";
 import TextField from "material-ui/TextField";
+import { createBooking } from "lib/api/bookings";
+import { Redirect } from "react-router-dom";
+import { currentMonth } from "lib/calendar";
 
 // start is the starting hour for an event in 24 hr time
 const getOffset = (ref, day, times, start, length, rink) => {
@@ -77,6 +80,11 @@ const styles = theme => ({
   },
   button: {
     marginLeft: "1rem"
+  },
+  alert: {
+    ...theme.typography.body4,
+    marginTop: "1rem",
+    color: theme.palette.error[700]
   }
 });
 
@@ -89,7 +97,10 @@ const enhance = compose(
       formLength: Math.min(3, booking.length),
       formName: "New event",
       booking,
-      rink
+      rink,
+      success: false,
+      alert: "",
+      sending: false
     }),
     {
       setSelected: () => select => ({ selected: select }),
@@ -121,10 +132,34 @@ const enhance = compose(
             : 3
         )
       }),
-      setName: () => name => ({ formName: name })
+      setName: () => name => ({ formName: name }),
+      setSending: () => sending => ({ sending }),
+      queryResult: () => (res, message) => {
+        return {
+          success: res,
+          alert: message,
+          sending: false
+        };
+      }
     }
   )
 );
+
+const sendRequest = (params, blocker, resulter) => {
+  blocker(true);
+
+  createBooking(params.rink, new Date(2017, currentMonth - 1, params.day, params.start, 0, 0, 0), params.length)
+    .then(({ res, json }) => {
+      if (res.status === 200) {
+        resulter(true, "Booking has been created")
+      } else {
+        resulter(false, "Wrong parameters")
+      }
+    })
+    .catch(() => {
+      resulter(false, "Unable to create booking at this time")
+    });
+};
 
 export default enhance(
   ({
@@ -142,7 +177,12 @@ export default enhance(
     formName,
     setStart,
     setLength,
-    setName
+    setName,
+    alert,
+    success,
+    queryResult,
+    sending,
+    setSending
   }) => (
     <div
       className={cx(c.bubble, { [c.free]: free, [c.selected]: selected })}
@@ -231,7 +271,18 @@ export default enhance(
               </FormControl>
             </div>
             <div className={c.field}>
-              <Button onClick={() => {}} color="primary" raised>
+              <Button
+                onClick={() =>
+                  sendRequest(
+                    { start: formStart, length: formLength, rink: rink.id, day },
+                    setSending,
+                    queryResult
+                  )
+                }
+                color="primary"
+                raised
+                disabled={sending}
+              >
                 Create
               </Button>
               <Button
@@ -245,6 +296,8 @@ export default enhance(
               >
                 Cancel
               </Button>
+              {alert !== "" && <div className={c.alert}>{alert}</div>}
+              {success && <Redirect to={"/calendar/"+rink.id} />}
             </div>
           </div>
         </Popover>

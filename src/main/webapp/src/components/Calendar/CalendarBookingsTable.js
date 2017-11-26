@@ -46,7 +46,7 @@ const styles = theme => ({
 });
 
 const freeTime = (day, startHour, length) => ({
-  start: new Date(2017, currentMonth, day, startHour, 0, 0, 0),
+  start: new Date(2017, currentMonth - 1, day, startHour, 0, 0, 0),
   length,
   name: "Free time"
 });
@@ -57,10 +57,14 @@ const allFreeTimes = (bookings, day, startHour, endHour) => {
 
   for (var i = 0; i < bookings.length; i++) {
     const booking = bookings[i];
+    const bookingDate = new Date(booking.startTime);
+    const bookingTime = bookingDate.getHours();
     const idx = allFree.findIndex(el => {
+
+      console.log(bookingDate, el.start, bookingTime, el.length);
       return (
-        booking.start >= el.start &&
-        booking.start.getHours() < el.start.getHours() + el.length
+        bookingDate >= el.start &&
+        bookingTime < el.start.getHours() + el.length
       );
     });
 
@@ -68,19 +72,21 @@ const allFreeTimes = (bookings, day, startHour, endHour) => {
       continue;
     }
 
+    console.log('passed');
+
     const time = allFree.splice(idx, 1)[0];
 
     const first = {
       start: new Date(time.start),
-      length: booking.start.getHours() - time.start.getHours(),
+      length: bookingTime - time.start.getHours(),
       name: "Free time"
     };
     const second = {
-      start: new Date(booking.start),
+      start: bookingDate,
       length: time.length - first.length - booking.length,
       name: "Free time"
     };
-    second.start.setHours(booking.start.getHours() + booking.length);
+    second.start.setHours(bookingTime + booking.length);
 
     if (first.length > 0) {
       allFree.push(first);
@@ -132,6 +138,8 @@ class CalendarBookingsTable extends React.PureComponent {
     const containerRef = this.containerRef;
     const { classes: c, rink, day } = this.props;
 
+    console.log(rink);
+
     return (
       <div className={c.container} ref={ref => this.updateRef(ref)}>
         <div className={c.times}>
@@ -148,9 +156,12 @@ class CalendarBookingsTable extends React.PureComponent {
             </div>
           ) : (
             [
-              rink.bookings.map((block, i) => (
+              rink.bookings.filter(b => {
+                const t = new Date(b.startTime).getHours();
+                return t >= rink.startHour && t+b.length <= rink.endHour;
+              }).map((block, i) => (
                 <CalendarBookingsTableBlock
-                  booking={block}
+                  booking={{ ...block, start: new Date(block.startTime).getHours() }}
                   container={containerRef}
                   day={day}
                   rink={rink}
