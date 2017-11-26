@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "accounts")
+@Table(name = "accounts", uniqueConstraints = {@UniqueConstraint(columnNames="email")})
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,6 +18,7 @@ public class Account {
     //PUBLIC - For authentication to compare with server
     public String password;
 
+    @Column(name = "email", unique = true)
     protected String email;
     protected Date creationDate;
     protected boolean isApproved;

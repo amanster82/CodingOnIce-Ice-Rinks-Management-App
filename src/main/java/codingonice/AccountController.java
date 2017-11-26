@@ -36,6 +36,11 @@ public class AccountController {
         public String password;
     }
 
+    private static class AccountLoginEntity {
+        public String email;
+        public String password;
+    }
+
     @Autowired
     AccountController(AccountRepository repository) {
 
@@ -57,8 +62,19 @@ public class AccountController {
         return AccountService.getInstance().getAccountRepository().findById(id);
     }
 
-    public void login(String email, String password) {
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity<Account> login(@RequestBody AccountLoginEntity account) {
 
+        Account check = AccountService.getInstance().getAccountRepository().findByEmail(account.email);
+
+        if (check instanceof Account) {
+            Boolean verify = passwordEncoder.matches(account.password, check.password);
+            if (verify == false) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            }
+        }
+
+        return ResponseEntity.ok(check);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -67,12 +83,15 @@ public class AccountController {
         if (account.firstName == null || account.lastName == null || account.email == null || account.password == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         } else {
+            // Check if email exists
+            if (AccountService.getInstance().getAccountRepository().findByEmail(account.email) instanceof Account)  {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            }
             // Sanitize
             account.firstName = Jsoup.clean(account.firstName, Whitelist.simpleText());
             account.lastName = Jsoup.clean(account.lastName, Whitelist.simpleText());
             account.email = Jsoup.clean(account.email, Whitelist.simpleText());
         }
-
 
         List<Account> accounts = new LinkedList<Account>();
 
