@@ -207,7 +207,7 @@ export default enhance(
           ).height + "px",
         backgroundColor: free ? "rgba(0,0,0,0)" : tagThemes[i % 3]
       }}
-      onClick={() => setSelected(true)}
+      onClick={() => setSelected(free && true)}
     >
       <div className={c.name}>{selected ? formName : booking.name}</div>
       <div className={c.eventTime}>
