@@ -38,10 +38,13 @@ const styles = theme => ({
     //flex: 1,
     width: 0,
     overflow: 'hidden',
-    transition: theme.transitions.create(["width"])
+    transition: theme.transitions.create(["width"]),
+    transitionTimingFunction: 'ease-in',
+    whiteSpace: 'nowrap'
   },
   slide: {
-    width: '100%'
+    width: '35%',
+    overflow: 'inherit'
   },
 });
 var time = new Date(2017, 11, 2, 23, 15, 2, 0);
@@ -97,91 +100,6 @@ const enhance = compose(
   withState("cancel", "setCancel", false)
 );
 
-/*
-setTimeout(function() {
-  setSlide(false);
-  setCancel(false);
-}, 3000);
-*/
-
-/*
-export default enhance(({ classes: c, slide, setSlide, cancel, setCancel }) => (
-  <List className={c.root}>
-    <ListItem>
-      <Avatar>
-        <EventIcon />
-      </Avatar>
-      <ListItemText primary="Skating Party" secondary="Jan 28, 2014" />
-      {cancel &&
-        !slide && setTimeout(() => {setSlide(false), setCancel(false); }, 10000) && [
-            <div className={cx("animated slideOutRight")}>
-              <Button raised color="accent" className={c.button}>
-                Confirm
-              </Button>
-              <Button
-                raised
-                color="accent"
-                className={c.button}
-                style={{ left: 10 }}
-              >
-                , Cancel
-              </Button>
-            </div>,
-            <ListItemText primary={`Starts in: ${prettyDate(time)}`} />,
-            <IconButton aria-label="Comments">
-              <Close
-                onClick={() => {
-                  setSlide(true);
-                  setCancel(false);
-                }}
-              />
-            </IconButton>
-         
-        ]}
-      {slide && (
-        <div className={cx("animated slideInRight")}>
-          <Button raised color="accent" className={c.button}>
-            Confirm
-          </Button>
-          <Button
-            raised
-            color="accent"
-            className={c.button}
-            style={{ left: 10 }}
-            onClick={() => {
-              setCancel(true);
-              setSlide(false);
-            }}
-          >
-            Cancel
-          </Button>
-        </div>
-      )}
-      {!slide &&
-        !cancel && [
-          <ListItemText primary={`Starts in: ${prettyDate(time)}`} />,
-          <IconButton aria-label="Comments">
-            <Close onClick={() => setSlide(true)} />
-          </IconButton>
-        ]}
-    </ListItem>
-    <Divider inset />
-    <ListItem>
-      <Avatar>
-        <Star style={{ color: "yellow" }} />
-      </Avatar>
-      <ListItemText primary="Hockey Game" secondary="Jan 20, 2014" />
-    </ListItem>
-    <ListItem>
-      <Avatar>
-        <EventAvailable />
-      </Avatar>
-      <ListItemText primary="Birthday" secondary="Jan 20, 2014" />
-    </ListItem>
-  </List>
-));
-*/
-
 export default enhance(({ classes: c, slide, setSlide, cancel, setCancel }) => (
   <List className={c.root}>
     <ListItem>
@@ -191,10 +109,15 @@ export default enhance(({ classes: c, slide, setSlide, cancel, setCancel }) => (
         </Avatar>
         <ListItemText primary="Skating Party" secondary="Jan 28, 2014" />
         <ListItemText primary={`Starts in: ${prettyDate(time)}`} />
-        <IconButton aria-label="Comments">
-          <Close onClick={() => setSlide(true)} />
+        
+     {!slide && (
+        <IconButton onClick={() => setSlide(true) }>
+          <Close/>
         </IconButton>
+      )}
       </div>
+
+
       <div className={cx(c.right, {[c.slide]: slide})}>
         <Button raised color="accent" className={c.button}>
           Confirm
