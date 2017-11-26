@@ -28,6 +28,8 @@ public class Booking {
 
     protected int length;
 
+    protected String name;
+
     protected Booking() {
 
     }
@@ -46,5 +48,9 @@ public class Booking {
 
     public int getLength() {
         return length;
+    }
+
+    public String getName() {
+        return name;
     }
 }

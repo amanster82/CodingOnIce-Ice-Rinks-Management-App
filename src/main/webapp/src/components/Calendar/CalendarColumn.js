@@ -42,7 +42,7 @@ const styles = theme => ({
 });
 
 export default withStyles(styles)(
-  ({ classes: c, name, days, selected, selectedSlot, setSelection }) => (
+  ({ classes: c, name, days, selected, selectedSlot, setSelection, rink }) => (
     <div
       className={cx(c.container, {
         [c.contract]: selected !== null && !selected
@@ -59,6 +59,7 @@ export default withStyles(styles)(
             selected={!selected ? null : i === selectedSlot}
             selectedWeek={selected}
             setSelection={setSelection}
+            rink={rink}
           />
         ))}
       </div>

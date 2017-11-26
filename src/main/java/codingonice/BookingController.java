@@ -51,6 +51,7 @@ public class BookingController {
         public int rinkId;
         public int accountId;
         public int length;
+        public String name;
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "GMT")
         public Date startTime;
@@ -84,6 +85,7 @@ public class BookingController {
             .setLength(booking.length)
             .setRink(rink)
             .setStartTime(booking.startTime)
+            .setName(booking.name)
             .build();
 
         bookings.add(newBooking);
