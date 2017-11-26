@@ -13,8 +13,9 @@ public class AccountBuilder {
         return account;
     }
 
-    public AccountBuilder setName(String name) {
-        account.name = name;
+    public AccountBuilder setName(String firstName, String lastName) {
+        account.firstName = firstName;
+        account.lastName = lastName;
         return this;
     }
 
