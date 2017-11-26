@@ -4,6 +4,7 @@ import Landing from "routes/Landing";
 import Rinks from "routes/Rinks";
 import Profile from "routes/Profile";
 import CalendarContainer from "components/Calendar/CalendarContainer";
+import Info from "routes/Info";
 import Login from "routes/Login";
 
 export default () => (
@@ -12,6 +13,7 @@ export default () => (
     <Route exact path="/rinks" component={Rinks} />
     <Route exact path="/profile" component={Profile} />
     <Route path="/calendar/:id" component={CalendarContainer} />
+    <Route exact path="/info" component={Info} />
     <Route exact path="/login" component={Login} />
   </Switch>
 );
