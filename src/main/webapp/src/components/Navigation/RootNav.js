@@ -25,6 +25,7 @@ export default withStyles(styles)(({classes: c}) => (
   <div className={c.nav}>
     <Link to="/" className={c.link}>Home</Link>
     <Link to="/rinks" className={c.link}>Rinks</Link>
+    <Link to="/info" className={c.link}>Info</Link>
     <Link to="/login" className={c.link}>Login</Link>
   </div>
 ));
