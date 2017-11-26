@@ -2,7 +2,7 @@ import React from "react";
 import { withStyles } from "material-ui/styles";
 import { CircularProgress } from "material-ui/Progress";
 import throttle from "lodash/throttle";
-import { currentMonth, tagThemes, times } from "lib/calendar";
+import { currentMonth, tagThemes, times, calendarWeekDays } from "lib/calendar";
 import CalendarBookingsTableBlock from "./CalendarBookingsTableBlock";
 
 const formatTime = date =>
@@ -51,20 +51,23 @@ const freeTime = (day, startHour, length) => ({
   name: "Free time"
 });
 
-const allFreeTimes = (bookings, day, startHour, endHour) => {
-  const free = freeTime(day, startHour, endHour-startHour);
+const allFreeTimes = (allBookings, day, week, startHour, endHour) => {
+  const free = freeTime(day, startHour, endHour - startHour);
   const allFree = [free];
+
+  const bookings = allBookings.filter(el => {
+    const t = new Date(el.startTime);
+    return t.getDate() === day && calendarWeekDays[t.getDay()] === week;
+  });
 
   for (var i = 0; i < bookings.length; i++) {
     const booking = bookings[i];
     const bookingDate = new Date(booking.startTime);
     const bookingTime = bookingDate.getHours();
     const idx = allFree.findIndex(el => {
-
       console.log(bookingDate, el.start, bookingTime, el.length);
       return (
-        bookingDate >= el.start &&
-        bookingTime < el.start.getHours() + el.length
+        bookingDate >= el.start && bookingTime < el.start.getHours() + el.length
       );
     });
 
@@ -72,7 +75,7 @@ const allFreeTimes = (bookings, day, startHour, endHour) => {
       continue;
     }
 
-    console.log('passed');
+    console.log("passed");
 
     const time = allFree.splice(idx, 1)[0];
 
@@ -136,7 +139,7 @@ class CalendarBookingsTable extends React.PureComponent {
 
   render() {
     const containerRef = this.containerRef;
-    const { classes: c, rink, day } = this.props;
+    const { classes: c, rink, day, week } = this.props;
 
     console.log(rink);
 
@@ -156,28 +159,41 @@ class CalendarBookingsTable extends React.PureComponent {
             </div>
           ) : (
             [
-              rink.bookings.filter(b => {
-                const t = new Date(b.startTime).getHours();
-                return t >= rink.startHour && t+b.length <= rink.endHour;
-              }).map((block, i) => (
-                <CalendarBookingsTableBlock
-                  booking={{ ...block, start: new Date(block.startTime).getHours() }}
-                  container={containerRef}
-                  day={day}
-                  rink={rink}
-                  i={i}
-                />
-              )),
-              allFreeTimes(rink.bookings, 1, rink.startHour, rink.endHour).map((block, i) => (
-                <CalendarBookingsTableBlock
-                  booking={{ ...block, start: block.start.getHours() }}
-                  container={containerRef}
-                  day={day}
-                  rink={rink}
-                  i={i}
-                  free
-                />
-              ))
+              rink.bookings
+                .filter(b => {
+                  const t = new Date(b.startTime);
+                  const h = t.getHours();
+                  return (
+                    h >= rink.startHour &&
+                    h + b.length <= rink.endHour &&
+                    t.getDate() === day &&
+                    calendarWeekDays[t.getDay()] === week
+                  );
+                })
+                .map((block, i) => (
+                  <CalendarBookingsTableBlock
+                    booking={{
+                      ...block,
+                      start: new Date(block.startTime).getHours()
+                    }}
+                    container={containerRef}
+                    day={day}
+                    rink={rink}
+                    i={i}
+                  />
+                )),
+              allFreeTimes(rink.bookings, day, week, rink.startHour, rink.endHour).map(
+                (block, i) => (
+                  <CalendarBookingsTableBlock
+                    booking={{ ...block, start: block.start.getHours() }}
+                    container={containerRef}
+                    day={day}
+                    rink={rink}
+                    i={i}
+                    free
+                  />
+                )
+              )
             ]
           )}
         </div>

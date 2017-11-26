@@ -148,7 +148,7 @@ const enhance = compose(
 const sendRequest = (params, blocker, resulter) => {
   blocker(true);
 
-  createBooking(params.rink, new Date(2017, currentMonth - 1, params.day, params.start, 0, 0, 0), params.length)
+  createBooking(params.rink, new Date(2017, currentMonth - 1, params.day, params.start, 0, 0, 0), params.length, params.name)
     .then(({ res, json }) => {
       if (res.status === 200) {
         resulter(true, "Booking has been created")
@@ -274,7 +274,7 @@ export default enhance(
               <Button
                 onClick={() =>
                   sendRequest(
-                    { start: formStart, length: formLength, rink: rink.id, day },
+                    { start: formStart, length: formLength, rink: rink.id, day, name: formName },
                     setSending,
                     queryResult
                   )

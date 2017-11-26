@@ -38,6 +38,7 @@ export default compose(
     componentDidMount() {
       getRinkById(this.props.match.params.id).then(({ res, json }) => {
         this.setState({ rink: json });
+        console.log(json);
       });
     }
   }),
