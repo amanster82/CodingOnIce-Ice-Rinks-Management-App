@@ -60,3 +60,8 @@ export const daysForWeekDay = (month, weekDay) =>
   ].filter((_day, i) => i % 7 === weekDay);
 
 export const tagThemes = ["#27a9e8", "#63c799", "#f16737"];
+
+export const times = (day, startHour, endHour) =>
+[...Array.from(Array(endHour - startHour)).map((_v, i) => i + startHour)].map(hour => {
+  return new Date(2017, currentMonth, day, hour, 0, 0, 0);
+});

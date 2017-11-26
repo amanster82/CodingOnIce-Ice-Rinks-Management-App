@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "material-ui/styles";
 import CalendarBookingTag from "./CalendarBookingTag";
-import { tagThemes } from "lib/calendar";
+import { tagThemes, calendarWeekDays } from "lib/calendar";
 
 const styles = theme => ({
   container: {
@@ -48,8 +48,18 @@ const renderBookings = (bookings, max, c) => (
 );
 
 export default withStyles(styles)(
-  ({ classes: c, bookings, contract }) =>
+  ({ classes: c, contract, rink, day, week }) =>
     contract ? null : (
-      <div className={c.container}>{renderBookings(bookings, 3, c)}</div>
+      <div className={c.container}>
+        {renderBookings(
+          rink.bookings.filter(
+            el =>
+              new Date(el.startTime).getDate() === day &&
+              calendarWeekDays[new Date(el.startTime).getDay()] === week
+          ),
+          3,
+          c
+        )}
+      </div>
     )
 );

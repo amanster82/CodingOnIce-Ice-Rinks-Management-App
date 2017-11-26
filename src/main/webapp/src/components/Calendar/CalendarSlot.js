@@ -3,9 +3,6 @@ import { withStyles } from "material-ui/styles";
 import cx from "classnames";
 import CalendarBookingsContainer from "./CalendarBookingsContainer";
 import { withState, compose } from "recompose";
-import CalendarBookingCreation from "./CalendarBookingCreation";
-import Button from "material-ui/Button";
-import AddIcon from "material-ui-icons/Add";
 
 const styles = theme => ({
   container: {
@@ -109,7 +106,7 @@ export default enhance(
     setSelection,
     showDialog,
     setShowDialog,
-    bookings
+    rink
   }) => (
     <div
       className={cx(c.container, {
@@ -117,17 +114,6 @@ export default enhance(
         [c.borderRight]: week === "Sat"
       })}
     >
-      {selected && (
-        <Button
-          fab
-          color="primary"
-          aria-label="add"
-          className={c.createButton}
-          onClick={() => setShowDialog(true)}
-        >
-          <AddIcon />
-        </Button>
-      )}
       <div
         className={cx(c.date, {
           [c.contract]: selected !== null && !selected && selectedWeek,
@@ -139,18 +125,13 @@ export default enhance(
       </div>
       <div className={c.bookings}>
         <CalendarBookingsContainer
-          bookings={bookings || []}
+          rink={rink}
           timeTable={selected}
           contract={selected !== null && !selected && selectedWeek}
           day={day}
           week={week}
         />
       </div>
-      <CalendarBookingCreation
-        day={day}
-        showDialog={showDialog}
-        setShowDialog={setShowDialog}
-      />
     </div>
   )
 );
