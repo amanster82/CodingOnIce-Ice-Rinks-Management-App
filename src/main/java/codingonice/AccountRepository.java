@@ -12,5 +12,4 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
 
     //ArrayList<Bill> findBillsByAccount(Account account);
 
-//    Account save();
 }

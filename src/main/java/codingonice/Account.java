@@ -12,7 +12,8 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected int id;
 
-    protected String name;
+    protected String firstName;
+    protected String lastName;
 
     //PUBLIC - For authentication to compare with server
     public String password;
@@ -35,7 +36,7 @@ public class Account {
     }
 
     public String getName() {
-        return name;
+        return firstName+' '+lastName;
     }
 
     public String getEmail() {
