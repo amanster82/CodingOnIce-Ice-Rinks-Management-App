@@ -11,7 +11,6 @@ import Select from "material-ui/Select";
 import Button from "material-ui/Button";
 import TextField from "material-ui/TextField";
 import { createBooking } from "lib/api/bookings";
-import { Redirect } from "react-router-dom";
 import { currentMonth } from "lib/calendar";
 
 // start is the starting hour for an event in 24 hr time
@@ -297,7 +296,7 @@ export default enhance(
                 Cancel
               </Button>
               {alert !== "" && <div className={c.alert}>{alert}</div>}
-              {success && <Redirect to={"/calendar/"+rink.id} />}
+              {success && window.location.reload()}
             </div>
           </div>
         </Popover>
