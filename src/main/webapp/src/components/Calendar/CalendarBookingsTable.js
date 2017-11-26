@@ -86,6 +86,71 @@ const getOffset = (ref, day, times, start) => {
 
 const startTimes = [10, 13, 15];
 
+const freeTime = (day, startHour, length) => ({
+  start: new Date(2017, currentMonth, day, startHour, 0, 0, 0),
+  length,
+  name: "Free time"
+});
+
+const allFreeTimes = (bookings, day) => {
+  const free = freeTime(day, 9, 9);
+  const allFree = [free];
+
+  for (var i = 0; i < bookings.length; i++) {
+    const booking = bookings[i];
+    const idx = allFree.findIndex(el => {
+      return (
+        booking.start >= el.start &&
+        booking.start.getHours() < el.start.getHours() + el.length
+      );
+    });
+
+    if (idx === -1) {
+      continue;
+    }
+
+    const time = allFree.splice(idx, 1)[0];
+
+    const first = {
+      start: new Date(time.start),
+      length: booking.start.getHours() - time.start.getHours(),
+      name: "Free time"
+    };
+    const second = {
+      start: new Date(booking.start),
+      length: time.length - first.length - booking.length,
+      name: "Free time"
+    };
+    second.start.setHours(booking.start.getHours() + booking.length);
+
+    if (first.length > 0) {
+      allFree.push(first);
+    }
+
+    if (second.length > 0) {
+      allFree.push(second);
+    }
+  }
+
+  return allFree;
+};
+
+const renderTimeBlock = (block, ref, day, c, i) => (
+  <div
+    className={c.bubble}
+    style={{
+      top: getOffset(ref, day, times(day), startTimes[i % 3]).top + "px",
+      height: getOffset(ref, day, times(day), startTimes[i % 3]).height + "px",
+      backgroundColor: tagThemes[i % 3]
+    }}
+  >
+    <div className={c.name}>{block.name}</div>
+    <div className={c.eventTime}>
+      {startTimes[i % 3]}:00 - {startTimes[i % 3] + 1}:00
+    </div>
+  </div>
+);
+
 class CalendarBookingsTable extends React.PureComponent {
   containerRef = null;
 
@@ -139,26 +204,14 @@ class CalendarBookingsTable extends React.PureComponent {
               <CircularProgress />
             </div>
           ) : (
-            bookings.slice(0, 3).map(({ name }, i) => (
-              <div
-                key={i}
-                className={c.bubble}
-                style={{
-                  top:
-                    getOffset(containerRef, day, times(day), startTimes[i % 3])
-                      .top + "px",
-                  height:
-                    getOffset(containerRef, day, times(day), startTimes[i % 3])
-                      .height + "px",
-                  backgroundColor: tagThemes[i % 3]
-                }}
-              >
-                <div className={c.name}>{name}</div>
-                <div className={c.eventTime}>
-                  {startTimes[i % 3]}:00 - {startTimes[i % 3] + 1}:00
-                </div>
-              </div>
-            ))
+            [
+              bookings.map((block, i) =>
+                renderTimeBlock(block, containerRef, day, c, i)
+              ),
+              allFreeTimes(bookings, 1).map((block, i) =>
+                renderTimeBlock({...block, start: block.start.getHours()}, containerRef, day, c, i)
+              )
+            ]
           )}
         </div>
       </div>

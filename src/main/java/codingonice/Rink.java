@@ -23,6 +23,13 @@ public class Rink {
 
     private String name;
 
+    private String description;
+    private String address;
+    private String info;
+    private int capacity;
+    private int startHour;
+    private int endHour;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "rink_id")
     private List<Booking> bookings;
@@ -48,7 +55,27 @@ public class Rink {
         this.bookings = bookings;
     }
 
-    private Rink() {
+    public String getDescription() {
+        return description;
+    }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public int getStartHour() {
+        return startHour;
+    }
+
+    public int getEndHour() {
+        return endHour;
     }
 }

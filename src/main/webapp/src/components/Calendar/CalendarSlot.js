@@ -7,13 +7,6 @@ import CalendarBookingCreation from "./CalendarBookingCreation";
 import Button from "material-ui/Button";
 import AddIcon from "material-ui-icons/Add";
 
-const bookings = [
-  { start: new Date(), duration: 1, name: "Some event 1" },
-  { start: new Date(), duration: 1, name: "Some event 2" },
-  { start: new Date(), duration: 1, name: "Some event 3" },
-  { start: new Date(), duration: 1, name: "Some event 4" }
-];
-
 const styles = theme => ({
   container: {
     position: "relative",
@@ -115,7 +108,8 @@ export default enhance(
     selectedWeek,
     setSelection,
     showDialog,
-    setShowDialog
+    setShowDialog,
+    bookings
   }) => (
     <div
       className={cx(c.container, {
@@ -145,7 +139,7 @@ export default enhance(
       </div>
       <div className={c.bookings}>
         <CalendarBookingsContainer
-          bookings={bookings}
+          bookings={bookings || []}
           timeTable={selected}
           contract={selected !== null && !selected && selectedWeek}
           day={day}

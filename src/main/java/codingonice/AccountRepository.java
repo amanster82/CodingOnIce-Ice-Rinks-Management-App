@@ -1,23 +1,16 @@
 package codingonice;
 
+import org.springframework.data.repository.CrudRepository;
+
 import java.util.ArrayList;
 
-public class AccountRepository {
+public interface AccountRepository extends CrudRepository<Account, Long> {
 
-    public ArrayList<Account> findAll() {
-        return new ArrayList<Account>();
-    }
+    ArrayList<Account> findAll();
 
-    public Account findById(int id) {
+    Account findById(int id);
 
-        return null;
-    }
-        
-    public ArrayList<Bill> findBillsByAccount(Account account) {
-      return new ArrayList<Bill>();
-    }
+    //ArrayList<Bill> findBillsByAccount(Account account);
 
-    public void save(Account account) {
-        
-      }
+//    Account save();
 }
