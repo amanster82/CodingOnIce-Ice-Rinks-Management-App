@@ -25,7 +25,8 @@ public class Account {
 
     private boolean isAdmin;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id")
     private List<Bill> bills;
 
     protected Account() {
