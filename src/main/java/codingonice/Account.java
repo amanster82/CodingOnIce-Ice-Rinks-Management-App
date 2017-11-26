@@ -1,33 +1,65 @@
 package codingonice;
 
 import java.util.Date;
-import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "accounts")
 public class Account {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private int id;
-    private String email;
-    private String password;
-    private Date creationDate;
-    private boolean isApproved;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected int id;
+
+    protected String name;
+
+    //PUBLIC - For authentication to compare with server
+    public String password;
+
+    protected String email;
+    protected Date creationDate;
+    protected boolean isApproved;
+
     private boolean isAdmin;
-    private ArrayList<Bill> bills;
 
-    private Account() {
+    @OneToMany
+    private List<Bill> bills;
+
+    protected Account() {
 
     }
 
-    public AccountBuilder builder() {
-        //AccountBuilder?
-        return null;
+    public static AccountBuilder builder() {
+        return new AccountBuilder();
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public boolean isApproved() {
+        return isApproved;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public List<Bill> getBills() {
+        return bills;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
 }

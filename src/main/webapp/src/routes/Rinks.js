@@ -2,12 +2,6 @@ import React from "react";
 import RinkContainer from "components/Rinks/RinkContainer";
 import { withStyles } from "material-ui/styles";
 
-const styles = theme => ({
+const styles = theme => ({});
 
-});
-
-export default withStyles(styles)(() => (
-  <div>
-    <RinkContainer />
-  </div>
-));
+export default withStyles(styles)(() => <RinkContainer />);

@@ -4,6 +4,7 @@ import Landing from "routes/Landing";
 import Rinks from "routes/Rinks";
 import Profile from "routes/Profile";
 import CalendarContainer from "components/Calendar/CalendarContainer";
+import Login from "routes/Login";
 
 export default () => (
   <Switch>
