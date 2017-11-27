@@ -62,7 +62,7 @@ function RinkCard(props) {
           </Button>
         </CardActions>
       </Card>
-      {redirect && <Redirect to="/calendar" />}
+      {redirect && <Redirect to={"/calendar/" + rinkId} />}
     </div>
   );
 }
