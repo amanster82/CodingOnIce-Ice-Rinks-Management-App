@@ -11,6 +11,8 @@ import "./normalize.css";
 import "./global.css";
 import "./animate.css";
 import blue from "material-ui/colors/blue";
+import { Provider } from "react-redux";
+import store from "lib/store";
 
 const jss = create(preset());
 jss.options.createGenerateClassName = createGenerateClassName;
@@ -36,7 +38,9 @@ class AppContainer extends Component {
       <MuiThemeProvider theme={theme}>
         <JssProvider jss={jss}>
           <Router>
-            <App />
+            <Provider store={store}>
+              <App />
+            </Provider>
           </Router>
         </JssProvider>
       </MuiThemeProvider>

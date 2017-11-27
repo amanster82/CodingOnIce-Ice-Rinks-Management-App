@@ -1,5 +1,7 @@
 import { withStateHandlers, compose } from "recompose";
 import { withStyles } from "material-ui/styles";
+import store from "lib/store";
+import { fetchAccount } from "lib/accounts";
 
 const styles = theme => ({
   inline: {
@@ -49,6 +51,12 @@ export default compose(
       }),
       reset: () => message => ({ submit: false, alert: message }),
       redirect: () => () => ({ success: true }),
+      login: () => () => {
+
+        store.dispatch(fetchAccount());
+
+        return { success: true };
+      },
       requestCreation: ({ name, last, email, password }) => (
         functor,
         reset,
