@@ -30,8 +30,9 @@ export default withStyles(styles)(({ classes: c }) => [
   </div>,
 
   <div className={c.container}>
-    <ProfileBox title="Profile Info" />
-
+    <ProfileBox title="Profile Info">
+      <ProfileInfo />
+    </ProfileBox>
     <ProfileBox title="Current bills">
       <ProfileBills />
     </ProfileBox>

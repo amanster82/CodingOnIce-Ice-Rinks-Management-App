@@ -3,25 +3,34 @@ import PropTypes from "prop-types";
 import { withStyles } from "material-ui/styles";
 import Paper from "material-ui/Paper";
 import Typography from "material-ui/Typography";
-import rink1Image from "./images/map.png";
+import rinkBackground from "./images/background.jpg";
+import rinkMap from "./images/map.png";
+import MailOutline from "material-ui-icons/MailOutline";
+import Call from "material-ui-icons/Call";
+import Avatar from "material-ui/Avatar";
+import Today from "material-ui-icons/Today";
+import List, { ListItem, ListItemIcon} from 'material-ui/List';
+import Map from "material-ui-icons/Map";
 
 
 const styles = theme => ({
-  backgroundStyle: theme.mixins.gutters({
+  backgroundStyle: ({
     paddingTop: 1,
+    height: "100%",
   }),
   root: theme.mixins.gutters({
-    paddingTop: 16,
-    paddingBottom: 16,
-    maxWidth: 400,
-    marginLeft: 50,
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    maxWidth: '35%',
+    marginLeft: theme.spacing.unit * 3,   
     marginTop: theme.spacing.unit * 3,
   }),
   mapStyle: theme.mixins.gutters({
-    paddingTop: 16,
-    paddingBottom: 16,
-    maxWidth: 625,
-    marginLeft: 50,
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    minWidth: 630,
+    maxWidth: '40%',
+    marginLeft: theme.spacing.unit * 3,   
     marginTop: theme.spacing.unit * 3,
   }),
 });
@@ -29,14 +38,14 @@ const styles = theme => ({
 function InfoSheet(props) {
   const { classes } = props;
   return (
-    <div className={classes.backgroundStyle} style={{backgroundImage: 'url(http://www.trip-points.com/media/reviews/photos/original/4f/12/a8/32-minsk-arena-complex-29-1443951652.jpg)'}}>
+    <div className={classes.backgroundStyle} style={{backgroundImage: 'url(' + rinkBackground + ')'}}>
       <Paper className={classes.root}>
-        <Typography type="headline" color="secondary">
+        <Typography type="headline" color="primary">
           Commonwealth Arena Complex
         </Typography>
       </Paper>
       <Paper className={classes.root}>
-        <Typography type="headline" color="secondary">
+        <Typography type="headline" color="primary">
           Arena Information
         </Typography>
         <Typography type="body1">
@@ -44,24 +53,48 @@ function InfoSheet(props) {
         </Typography>
       </Paper>
       <Paper className={classes.root}>
-        <Typography type="headline" color="secondary">
+        <Typography type="headline" color="primary">
           Contact
         </Typography>
-        <Typography type="body1">
-          <b>Address:</b> 1925 Patricia Bay Hwy, Victoria, B.C.
-        </Typography>
-        <Typography type="body1">
-          <b>Phone Number:</b> (555) 555-8296
-        </Typography>
-        <Typography type="body1">
-          <b>Email:</b> commonwealtharenacomplex@shaw.ca
-        </Typography>
+        <List>
+          <ListItem>
+            <ListItemIcon>
+              <Avatar>
+                <Today/>
+              </Avatar>
+            </ListItemIcon>
+            <Typography type="body1">
+              1925 Patricia Bay Hwy, Victoria, B.C.
+            </Typography>
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <Avatar>
+                <Call/>
+              </Avatar>
+            </ListItemIcon>
+            <Typography type="body1">
+              (555) 555-8296
+            </Typography>
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <Avatar>
+                <MailOutline/>
+              </Avatar>
+            </ListItemIcon>
+            <Typography type="body1">
+              commonwealtharenacomplex@shaw.ca
+            </Typography>
+          </ListItem>
+        </List>
       </Paper>
       <Paper className={classes.mapStyle}>
-        <Typography type="headline"  color="secondary">
+        <Typography type="headline"  color="primary">
+        <Map/>
           Map
         </Typography>
-        <img src ="https://i.imgur.com/mw9OtWs.png" />
+        <img src = {rinkMap} alt=""/>
       </Paper>
     </div>
   );
