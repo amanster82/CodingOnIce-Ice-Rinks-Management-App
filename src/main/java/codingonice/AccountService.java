@@ -26,6 +26,7 @@ public class AccountService {
     public Account getAccountByEmail(String email) {
         return this.accountRepository.findByEmail(email);
     }
+
     public static AccountService getInstance() {
         return instance;
     }
@@ -37,17 +38,10 @@ public class AccountService {
 
     public boolean addAccount(String firstName, String lastName, String email, String password) {
 
-        Account newAccount = Account.builder()
-                .setName(firstName, lastName)
-                .setEmail(email)
-                .setPassword(passwordEncoders.encode(password))
-                .build();
-
-        System.out.println("saving");
+        Account newAccount = Account.builder().setName(firstName, lastName).setEmail(email)
+                .setPassword(passwordEncoders.encode(password)).build();
 
         Account savedAccount = this.accountRepository.save(newAccount);
-
-        System.out.println(savedAccount);
 
         return savedAccount != null;
 

@@ -21,21 +21,21 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 @Configuration
-@EnableRedisHttpSession 
+@EnableRedisHttpSession
 public class AppConfiguration extends WebMvcConfigurerAdapter {
 
     @Configuration
     private class SessionConfig extends AbstractHttpSessionApplicationInitializer {
         public SessionConfig() {
-            super(SessionConfig.class); 
+            super(SessionConfig.class);
         }
     }
-    
-	@Bean
-	public LettuceConnectionFactory connectionFactory() {
-		return new LettuceConnectionFactory();
+
+    @Bean
+    public LettuceConnectionFactory connectionFactory() {
+        return new LettuceConnectionFactory();
     }
-    
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
@@ -55,6 +55,5 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AccountSessionInterceptor());
     }
-
 
 }

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name = "bills")
 public class Bill {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private double balance;
     private Date issueDate;
@@ -22,6 +22,6 @@ public class Bill {
     private Account account;
 
     private Bill() {
-        
+
     }
 }

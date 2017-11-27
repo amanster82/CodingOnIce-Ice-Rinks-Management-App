@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @RestController
 @RequestMapping("/bookings")
@@ -38,7 +37,8 @@ public class BookingController {
     }
 
     @RequestMapping(value = "/account/{id}", method = RequestMethod.GET)
-    public ResponseEntity<List<Booking>> getBookingsByAccount(@SessionAttribute("account") Integer account, @PathVariable("id") int id) {
+    public ResponseEntity<List<Booking>> getBookingsByAccount(@SessionAttribute("account") Integer account,
+            @PathVariable("id") int id) {
 
         ArrayList<Booking> bookings = new ArrayList<Booking>();
 
@@ -73,10 +73,11 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
-        Date endTime = (Date)booking.startTime.clone();
+        Date endTime = (Date) booking.startTime.clone();
         endTime.setHours(booking.startTime.getHours() + booking.length);
 
-        List<Booking> conflictedBookings = RinkService.getInstance().getRepository().findBookingsByRinkAndDateInbetween(rink.getId(), booking.startTime, endTime);
+        List<Booking> conflictedBookings = RinkService.getInstance().getRepository()
+                .findBookingsByRinkAndDateInbetween(rink.getId(), booking.startTime, endTime);
 
         if (conflictedBookings.size() > 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -88,12 +89,8 @@ public class BookingController {
             bookings = rink.getBookings();
         }
 
-        Booking newBooking = Booking.builder()
-            .setLength(booking.length)
-            .setRink(rink)
-            .setStartTime(booking.startTime)
-            .setName(booking.name)
-            .build();
+        Booking newBooking = Booking.builder().setLength(booking.length).setRink(rink).setStartTime(booking.startTime)
+                .setName(booking.name).build();
 
         bookings.add(newBooking);
 

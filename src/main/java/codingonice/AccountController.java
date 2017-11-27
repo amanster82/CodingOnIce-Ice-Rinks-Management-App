@@ -67,15 +67,12 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<Boolean> login(@RequestBody AccountLoginEntity params, @SessionAttribute("account") Integer account,
-            HttpSession session) {
+    public ResponseEntity<Boolean> login(@RequestBody AccountLoginEntity params,
+            @SessionAttribute("account") Integer account, HttpSession session) {
 
         if (account != 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-
-        System.out.println(params.email);
-        System.out.println(params.password);
 
         Account verified = AuthenticationService.getInstance().login(params.email, params.password);
         if (verified == null) {

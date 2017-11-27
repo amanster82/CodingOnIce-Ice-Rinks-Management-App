@@ -6,11 +6,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class ForwardingController {
 
-    @RequestMapping({
-      "/login",
-      "/register",
-      "/rinks"
-    })
+    @RequestMapping({ "/login", "/register", "/rinks", "/calendar", "/info", "/profile" })
     public String forward() {
         return "forward:/";
     }

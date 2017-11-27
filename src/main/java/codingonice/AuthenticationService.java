@@ -15,7 +15,7 @@ public class AuthenticationService {
     private static AuthenticationService instance;
 
     @Autowired
-    private static PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     public static void createInstance(PasswordEncoder encoder) {
         getInstance().passwordEncoder = encoder;
@@ -35,8 +35,6 @@ public class AuthenticationService {
             return null;
         }
 
-        System.out.println(this.passwordEncoder);
-
         Boolean verify = this.passwordEncoder.matches(password, check.password);
         return verify == false ? null : check;
     }
@@ -47,7 +45,6 @@ public class AuthenticationService {
         }
         // Check if email already exists
         if (AccountService.getInstance().getAccountRepository().findByEmail(email) != null) {
-            System.out.println("exists");
             return false;
         }
 
