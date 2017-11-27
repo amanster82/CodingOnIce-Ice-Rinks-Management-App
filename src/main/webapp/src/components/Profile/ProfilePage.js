@@ -3,6 +3,7 @@ import { withStyles } from "material-ui/styles";
 import ProfileBox from "./ProfileBox";
 import ProfileUpcomingEvents from "./ProfileUpcomingEvents";
 import ProfileBills from "./ProfileBills";
+import ProfileInfo from "./ProfileInfo";
 
 const styles = theme => ({
   container: {
@@ -22,7 +23,8 @@ export default withStyles(styles)(({ classes: c }) => (
     <ProfileBox title="Current bills">
       <ProfileBills />
     </ProfileBox>
-    <ProfileBox title="Profile Info" />
-    <ProfileBox title="Profile Info" />
+    <ProfileBox title="Profile Info">
+    <ProfileInfo />
+  </ProfileBox>
   </div>
 ));
