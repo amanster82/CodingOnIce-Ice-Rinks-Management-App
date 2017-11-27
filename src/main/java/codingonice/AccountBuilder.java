@@ -1,7 +1,5 @@
 package codingonice;
 
-import java.util.Date;
-
 public class AccountBuilder {
     private Account account = new Account();
 
