@@ -16,9 +16,12 @@ export function post(endpoint, body = {}, options = {}) {
   }).then(
     res =>
       new Promise((resolve, reject) => {
-        res.json().then(json => {
-          resolve({ res, json });
-        });
+        res
+          .json()
+          .then(json => {
+            resolve({ res, json });
+          })
+          .catch(reject);
       })
   );
 }
@@ -34,9 +37,12 @@ export function get(endpoint, options = {}) {
   }).then(
     res =>
       new Promise((resolve, reject) => {
-        res.json().then(json => {
-          resolve({ res, json });
-        });
+        res
+          .json()
+          .then(json => {
+            resolve({ res, json });
+          })
+          .catch(reject);
       })
   );
 }
