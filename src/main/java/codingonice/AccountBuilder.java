@@ -24,7 +24,7 @@ public class AccountBuilder {
 
     public AccountBuilder setPassword(String password) {
         //authentication
-        account.password = password;
+        account.setPassword(password);
         return this;
     }
 

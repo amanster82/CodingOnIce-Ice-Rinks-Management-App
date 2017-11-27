@@ -16,7 +16,7 @@ public class Account {
     protected String lastName;
 
     //PUBLIC - For authentication to compare with server
-    public String password;
+    private String password;
 
     @Column(name = "email", unique = true)
     protected String email;
@@ -69,6 +69,15 @@ public class Account {
         return id;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public String setPassword(String password) {
+        //should this be done in the builder or no
+        this.password = password;
+        return password;
+    }
     public boolean setApproved(boolean value) {
         this.isApproved = value;
         return this.isApproved;

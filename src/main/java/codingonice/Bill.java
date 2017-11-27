@@ -24,4 +24,16 @@ public class Bill {
     private Bill() {
 
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public Date getIssueDate() {
+        return issueDate;
+    }
 }

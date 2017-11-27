@@ -1,6 +1,7 @@
 package codingonice;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -95,8 +96,30 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
-    public void getBills(int id) {
+    @RequestMapping(value = "/{id}/billing", method = RequestMethod.GET)
+    public ResponseEntity<List<Bill>> getBillsByAccount(@SessionAttribute("account") Integer account,
+                                                          @PathVariable("id") int id) {
 
+        List<Bill> bills = new ArrayList<Bill>();
+
+        if ((account == 0 || account != id) && !AuthenticationService.getInstance().isAdmin(account)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        Account acc = AccountService.getInstance().getAccountById(id);
+        bills = BillingService.getInstance().getBillsByAccount(id);
+        return ResponseEntity.ok(bills);
+    }
+
+    @RequestMapping(value = "/{id}/bill/{billId}/pay", method = RequestMethod.POST)
+    public ResponseEntity<List<Bill>> payBillsById(@SessionAttribute("account") Integer account,
+                                                      @PathVariable("id") int id,
+                                                      @PathVariable("billId") int billId) {
+
+        List<Bill> bills = new ArrayList<Bill>();
+        Account acc = AccountService.getInstance().getAccountById(id);
+        bills = BillingService.getInstance().getBillsByAccount(id);
+        return ResponseEntity.ok(bills);
     }
 
     @RequestMapping(value = "/{id}/actions/approve", method = RequestMethod.POST)
@@ -111,5 +134,11 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         return ResponseEntity.ok(true);
+    }
+
+    @RequestMapping(value = "/actions/unapproved", method = RequestMethod.GET)
+    public ResponseEntity<ArrayList<Account>> getUnapprovedAccounts() {
+        ArrayList<Account> acc = AccountService.getInstance().getRepository().findByIsApproved(false);
+        return ResponseEntity.ok(acc);
     }
 }
