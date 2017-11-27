@@ -30,8 +30,4 @@ public class AccountBuilder {
         return this;
     }
 
-    public AccountBuilder setApproved(boolean approved) {
-        account.isApproved = approved;
-        return this;
-    }
 }

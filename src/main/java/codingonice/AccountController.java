@@ -22,6 +22,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import codingonice.AuthenticationService;
 
+import javax.xml.ws.Response;
+
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
@@ -98,7 +100,12 @@ public class AccountController {
 
     }
 
-    public void approve(int id) {
-
+    @RequestMapping(value = "/{id}/actions/approve", method = RequestMethod.POST)
+    public ResponseEntity<Boolean> approve(@PathVariable("id") Integer id) {
+        boolean successful = AccountService.getInstance().approveAccount(id);
+        if (!successful) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        return ResponseEntity.ok(true);
     }
 }

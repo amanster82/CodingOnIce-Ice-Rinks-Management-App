@@ -3,12 +3,7 @@ package codingonice;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public class AuthenticationService {
 
@@ -62,12 +57,20 @@ public class AuthenticationService {
     }
 
     public boolean isApproved(int id) {
+        Account acc = AccountService.getInstance().getAccountRepository().findById(id);
+        if (acc == null) {
+            return false;
+        }
 
-        return false;
+        return acc.getApproved();
     }
 
-    public boolean isPrivileged(int id) {
+    public boolean isAdmin(int id) {
+        Account acc = AccountService.getInstance().getAccountRepository().findById(id);
+        if (acc == null) {
+            return false;
+        }
 
-        return false;
+        return acc.isAdmin();
     }
 }
