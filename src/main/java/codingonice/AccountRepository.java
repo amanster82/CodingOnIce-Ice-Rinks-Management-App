@@ -12,6 +12,7 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
     Account findById(int id);
 
     Account findByEmail(String email);
+
     //ArrayList<Bill> findBillsByAccount(Account account);
 
 }

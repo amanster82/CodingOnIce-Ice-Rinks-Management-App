@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+import codingonice.AuthenticationService;
 
 @RestController
 @RequestMapping("/accounts")
@@ -24,9 +25,8 @@ public class AccountController {
 
     @Autowired
     private final AccountRepository accountRepository;
-
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private static PasswordEncoder passwordEncoder;
 
     private static class AccountCreateEntity {
 
@@ -42,11 +42,11 @@ public class AccountController {
     }
 
     @Autowired
-    AccountController(AccountRepository repository) {
+    AccountController(AccountRepository repository, PasswordEncoder passwordEncoder) {
 
         this.accountRepository = repository;
-
-        AccountService.createInstance(this.accountRepository);
+        this.passwordEncoder = passwordEncoder;
+        AccountService.createInstance(this.accountRepository, this.passwordEncoder);
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -63,52 +63,22 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<Account> login(@RequestBody AccountLoginEntity account) {
-
-        Account check = AccountService.getInstance().getAccountRepository().findByEmail(account.email);
-
-        if (check instanceof Account) {
-            Boolean verify = passwordEncoder.matches(account.password, check.password);
-            if (verify == false) {
+    public ResponseEntity<Boolean> login(@RequestBody AccountLoginEntity account) {
+        Boolean verified = AuthenticationService.login(account.email,account.password);
+        if (!verified) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
             }
-        }
 
-        return ResponseEntity.ok(check);
+        return ResponseEntity.ok(true);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Account> register(@RequestBody AccountCreateEntity account) {
-
-        if (account.firstName == null || account.lastName == null || account.email == null || account.password == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        } else {
-            // Check if email exists
-            if (AccountService.getInstance().getAccountRepository().findByEmail(account.email) instanceof Account)  {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-            }
-            // Sanitize
-            account.firstName = Jsoup.clean(account.firstName, Whitelist.simpleText());
-            account.lastName = Jsoup.clean(account.lastName, Whitelist.simpleText());
-            account.email = Jsoup.clean(account.email, Whitelist.simpleText());
+        boolean successful = AuthenticationService.getInstance().register(account.firstName,account.lastName,account.email,account.password);
+        if (successful) {
+            return ResponseEntity.ok(AccountService.getInstance().getAccountByEmail(account.email));
         }
-
-        List<Account> accounts = new LinkedList<Account>();
-
-        if (accountRepository.findAll() != null) {
-            accounts = accountRepository.findAll();
-        }
-
-        Account newAccount = Account.builder()
-            .setName(account.firstName, account.lastName)
-            .setEmail(account.email)
-            .setPassword(passwordEncoder.encode(account.password))
-            .build();
-
-        accounts.add(newAccount);
-
-        AccountService.getInstance().getAccountRepository().save(accounts);
-        return ResponseEntity.ok(newAccount);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     public void getBills(int id) {
