@@ -136,13 +136,18 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/{id}/bills/{billId}/pay", method = RequestMethod.POST)
-    public ResponseEntity<List<Bill>> payBillsById(@SessionAttribute("account") Integer account,
-            @PathVariable("id") int id, @PathVariable("billId") int billId) {
+    public ResponseEntity<Boolean> payBillsById(@SessionAttribute("account") Integer account,
+                                                      @PathVariable("id") int id,
+                                                      @PathVariable("billId") int billId) {
 
-        // = new ArrayList<Bill>();
+        //TODO: AUTHENTICATION HERE
+
         Account acc = AccountService.getInstance().getAccountById(id);
-        List<Bill> bills = BillingService.getInstance().getBillsByAccount(id);
-        return ResponseEntity.ok(bills);
+        if (acc == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        boolean successful = BillingService.getInstance().setPaidStatus(acc, billId);
+        return ResponseEntity.ok(successful);
     }
 
     @RequestMapping(value = "/{id}/actions/approve", method = RequestMethod.POST)

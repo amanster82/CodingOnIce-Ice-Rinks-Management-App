@@ -70,7 +70,6 @@ public class AccountService {
         bills = acc.getBills();
         bills = acc.setBill(bill);
         return this.accountRepository.save(acc) != null;
-
     }
 
 }

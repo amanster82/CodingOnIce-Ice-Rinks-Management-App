@@ -17,7 +17,7 @@ public class Bill {
     private int id;
     private double balance;
     private Date issueDate;
-
+    private boolean paid;
     @ManyToOne
     private Account account;
 
@@ -45,6 +45,15 @@ public class Bill {
     public double setBalance(double balance) {
         this.balance = balance;
         return this.balance;
+    }
+
+    public boolean getPaid() {
+        return paid;
+    }
+
+    public boolean setPaid(boolean value) {
+        this.paid = value;
+        return this.paid;
     }
 
 }

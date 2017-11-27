@@ -15,4 +15,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     ArrayList<Bill> findBillsById(int id);
 
     ArrayList<Account> findByIsApproved(boolean bit);
+
 }

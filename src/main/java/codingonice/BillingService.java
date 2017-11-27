@@ -42,4 +42,16 @@ public class BillingService {
         return successful;
     }
 
+    public boolean setPaidStatus(Account acc, int billId) {
+
+        Bill bill = acc.getBills().stream().filter(b -> b.getId() == billId).findFirst().get();
+
+        if (bill == null) {
+            return false;
+        }
+        bill.setPaid(true);
+        return AccountService.getInstance().getRepository().save(acc) != null;
+
+    }
+
 }
