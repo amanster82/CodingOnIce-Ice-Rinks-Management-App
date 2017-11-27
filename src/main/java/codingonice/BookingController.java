@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -37,7 +38,7 @@ public class BookingController {
     }
 
     @RequestMapping(value = "/account/{id}", method = RequestMethod.GET)
-    public List<Booking> getBookingsByAccount(@PathVariable("id") int id) {
+    public List<Booking> getBookingsByAccount(@SessionAttribute("account") Integer account, @PathVariable("id") int id) {
 
         return new ArrayList<Booking>();
     }

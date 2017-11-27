@@ -1,15 +1,46 @@
 package codingonice;
 
+import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
+import org.springframework.session.web.context.AbstractHttpSessionApplicationInitializer;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
-public class AppConfiguration {
+@EnableWebMvc
+@EnableJdbcHttpSession
+public class AppConfiguration extends WebMvcConfigurerAdapter {
+
+    @Configuration
+    private class SessionConfig extends AbstractHttpSessionApplicationInitializer {
+        public SessionConfig() {
+            super(SessionConfig.class); 
+        }
+    }
+
+	@Bean
+	public EmbeddedDatabase dataSource() {
+		return new EmbeddedDatabaseBuilder() 
+				.setType(EmbeddedDatabaseType.H2)
+				.addScript("org/springframework/session/jdbc/schema-h2.sql").build();
+	}
+
+	@Bean
+	public PlatformTransactionManager transactionManager(DataSource dataSource) {
+		return new DataSourceTransactionManager(dataSource); 
+	}
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
@@ -25,4 +56,11 @@ public class AppConfiguration {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new AccountSessionInterceptor());
+    }
+
+
 }
