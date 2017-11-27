@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "accounts", uniqueConstraints = {@UniqueConstraint(columnNames="email")})
+@Table(name = "accounts", uniqueConstraints = { @UniqueConstraint(columnNames = "email") })
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,7 +38,7 @@ public class Account {
     }
 
     public String getName() {
-        return firstName+' '+lastName;
+        return firstName + ' ' + lastName;
     }
 
     public String getEmail() {

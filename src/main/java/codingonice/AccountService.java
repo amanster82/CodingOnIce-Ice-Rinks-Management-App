@@ -34,11 +34,8 @@ public class AccountService {
 
     public boolean addAccount(String firstName, String lastName, String email, String password) {
 
-        Account newAccount = Account.builder()
-                .setName(firstName, lastName)
-                .setEmail(email)
-                .setPassword(passwordEncoders.encode(password))
-                .build();
+        Account newAccount = Account.builder().setName(firstName, lastName).setEmail(email)
+                .setPassword(passwordEncoders.encode(password)).build();
 
         return this.accountRepository.save(newAccount) != null;
     }

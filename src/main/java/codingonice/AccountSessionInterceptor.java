@@ -15,7 +15,7 @@ public class AccountSessionInterceptor extends HandlerInterceptorAdapter {
     if (session.getAttribute("account") == null) {
       session.setAttribute("account", 0);
     }
-    
+
     return true;
   }
 }
