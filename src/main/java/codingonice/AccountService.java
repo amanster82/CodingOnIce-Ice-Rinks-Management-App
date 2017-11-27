@@ -43,8 +43,13 @@ public class AccountService {
                 .setPassword(passwordEncoders.encode(password))
                 .build();
 
+        System.out.println("saving");
 
-        return this.accountRepository.save(newAccount) != null;
+        Account savedAccount = this.accountRepository.save(newAccount);
+
+        System.out.println(savedAccount);
+
+        return savedAccount != null;
 
     }
 }

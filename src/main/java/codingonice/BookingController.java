@@ -38,9 +38,15 @@ public class BookingController {
     }
 
     @RequestMapping(value = "/account/{id}", method = RequestMethod.GET)
-    public List<Booking> getBookingsByAccount(@SessionAttribute("account") Integer account, @PathVariable("id") int id) {
+    public ResponseEntity<List<Booking>> getBookingsByAccount(@SessionAttribute("account") Integer account, @PathVariable("id") int id) {
 
-        return new ArrayList<Booking>();
+        ArrayList<Booking> bookings = new ArrayList<Booking>();
+
+        if (account == 0 || account != id) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(bookings);
     }
 
     /**
