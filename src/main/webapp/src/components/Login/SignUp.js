@@ -18,7 +18,7 @@ export default enhance(
     password,
     submit,
     handleChange,
-    request,
+    requestCreation,
     reset,
     first,
     alert,
@@ -74,7 +74,7 @@ export default enhance(
         raised
         color="primary"
         disabled={validate(name, last, email, password) || submit}
-        onClick={() => request(createAccount, reset, redirect)}
+        onClick={() => requestCreation(createAccount, reset, redirect)}
       >
         Get Started
       </Button>
