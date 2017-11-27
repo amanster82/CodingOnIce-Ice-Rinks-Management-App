@@ -58,7 +58,6 @@ public class BookingController {
     private static class BookingCreateEntity {
 
         public int rinkId;
-        public int accountId;
         public int length;
         public String name;
 

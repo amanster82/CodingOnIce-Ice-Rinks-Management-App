@@ -109,10 +109,15 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/{id}/actions/approve", method = RequestMethod.POST)
-    public ResponseEntity<Boolean> approve(@PathVariable("id") Integer id) {
+    public ResponseEntity<Boolean> approve(@PathVariable("id") Integer id, @SessionAttribute("account") Integer account) {
+
+        if (!AuthenticationService.getInstance().isAdmin(account)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
         boolean successful = AccountService.getInstance().approveAccount(id);
         if (!successful) {
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         return ResponseEntity.ok(true);
     }
