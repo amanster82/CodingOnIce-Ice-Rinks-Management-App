@@ -1,5 +1,7 @@
 package codingonice;
 
+import javax.servlet.http.HttpSession;
+
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +25,31 @@ public class AuthenticationService {
         return instance;
     }
 
-    public Account login(String email, String password) {
+    public boolean login(String email, String password, HttpSession session) {
         Account check = AccountService.getInstance().getAccountRepository().findByEmail(email);
 
         if (check == null) {
-            return null;
+            return false;
         }
 
         Boolean verify = this.passwordEncoder.matches(password, check.password);
-        return verify == false ? null : check;
+
+        if (verify) {
+            session.setAttribute("account", check.id);
+        }
+
+        return verify;
+    }
+
+    public boolean logout(Integer accountId, HttpSession session) {
+
+        if (accountId == 0) {
+            return false;
+        }
+
+        session.setAttribute("account", 0);
+
+        return true;
     }
 
     public boolean register(String firstName, String lastName, String email, String password) {
@@ -52,8 +70,9 @@ public class AuthenticationService {
 
     }
 
-    public boolean isAuthenticated() {
-        return false;
+    public boolean isAuthenticated(Integer accountId) {
+
+        return accountId != 0;
     }
 
     public boolean isApproved(int id) {

@@ -31,7 +31,7 @@ public class AccountController {
     @Autowired
     private final AccountRepository accountRepository;
     @Autowired
-    private static PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     private static class AccountCreateEntity {
 
@@ -57,7 +57,6 @@ public class AccountController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ArrayList<Account> getAccounts() {
-        System.out.print(AccountService.getInstance());
 
         return AccountService.getInstance().getAccountRepository().findAll();
     }
@@ -76,14 +75,23 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
-        Account verified = AuthenticationService.getInstance().login(params.email, params.password);
-        if (verified == null) {
+        boolean verified = AuthenticationService.getInstance().login(params.email, params.password, session);
+        if (verified == false) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
-        session.setAttribute("account", verified.id);
-
         return ResponseEntity.ok(true);
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public ResponseEntity<Boolean> logout(@SessionAttribute("account") Integer account, HttpSession session) {
+        
+        boolean success = AuthenticationService.getInstance().logout(account, session);
+
+        if (success) {
+            return ResponseEntity.ok(null);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @RequestMapping(method = RequestMethod.POST)

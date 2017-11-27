@@ -8,6 +8,8 @@ import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +44,7 @@ public class BookingController {
 
         ArrayList<Booking> bookings = new ArrayList<Booking>();
 
-        if (account == 0 || account != id) {
+        if ((account == 0 || account != id) && !AuthenticationService.getInstance().isAdmin(account)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
@@ -65,7 +67,25 @@ public class BookingController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Booking> createBooking(@RequestBody BookingCreateEntity booking) {
+    public ResponseEntity<Booking> createBooking(@RequestBody BookingCreateEntity booking,
+            @SessionAttribute("account") Integer accountId) {
+
+        if (!AuthenticationService.getInstance().isAuthenticated(accountId)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        String name = Jsoup.clean(booking.name, Whitelist.simpleText());
+        //lastName = Jsoup.clean(lastName, Whitelist.simpleText());
+
+        if (name == "" || name.length() > 64 || booking.length < 1 || booking.length > 3) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+        Account account = AccountService.getInstance().getAccountById(accountId);
+
+        if (account == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
 
         Rink rink = RinkService.getInstance().getRepository().findById(booking.rinkId);
 
@@ -90,7 +110,7 @@ public class BookingController {
         }
 
         Booking newBooking = Booking.builder().setLength(booking.length).setRink(rink).setStartTime(booking.startTime)
-                .setName(booking.name).build();
+                .setName(name).setAccount(account).build();
 
         bookings.add(newBooking);
 

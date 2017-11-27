@@ -23,6 +23,10 @@ public class AccountService {
         return this.accountRepository.findByEmail(email);
     }
 
+    public Account getAccountById(Integer id) {
+        return this.accountRepository.findById(id);
+    }
+
     public static AccountService getInstance() {
         return instance;
     }
