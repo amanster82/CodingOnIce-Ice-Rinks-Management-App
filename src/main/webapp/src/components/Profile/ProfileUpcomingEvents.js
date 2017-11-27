@@ -23,7 +23,8 @@ const styles = theme => ({
     background: theme.palette.background.paper,
     overflowY: "auto",
     flex: 1,
-    width: "100%"
+    width: "100%",
+    height: "100%"
   },
 
 
@@ -39,6 +40,7 @@ const styles = theme => ({
     width: 0,
     overflow: 'hidden',
     transition: theme.transitions.create(["width"]),
+    transitionDuration: '0.5s',
     transitionTimingFunction: 'ease-in',
     whiteSpace: 'nowrap'
   },
@@ -46,6 +48,18 @@ const styles = theme => ({
     width: '35%',
     overflow: 'inherit'
   },
+
+  closeSlide: {
+    height: '0 !important',
+    width: '0 !important'
+  },
+
+  close:{
+    transition: 'width, height',
+    transitionDelay: '3s'
+  }
+
+
 });
 var time = new Date(2017, 11, 2, 23, 15, 2, 0);
 export function prettyDate(time) {
@@ -77,20 +91,20 @@ export function prettyDate(time) {
         (diff >= -60 && diff < 0 && "in a moment") ||
         (diff < 60 && "just now") ||
         (diff < 120 && "a minute ago") ||
-        (diff < 3600 && Math.floor(diff / 60) + " minutes ago") ||
-        (diff < 7200 && "about an hour ago") ||
-        (diff < 86400 && `about ${Math.floor(diff / 3600)} hours ago`))) ||
+        (diff < 3600 && Math.floor(diff / 60) + " minutes") ||
+        (diff < 7200 && "about an hour") ||
+        (diff < 86400 && `about ${Math.floor(diff / 3600)} hours`))) ||
     (day_diff < -7 && `in ${Math.abs(diff)} days`) ||
     (day_diff == -1 && "in a day") ||
-    (day_diff == 1 && "a day ago") ||
-    (day_diff < 7 && day_diff + " days ago") ||
+    (day_diff == 1 && "a day") ||
+    (day_diff < 7 && day_diff + " days") ||
     (day_diff < 31 &&
       `${week_diff === 1 ? "a" : week_diff} week${
         week_diff === 1 ? "" : "s"
-      } ago`) ||
+      }`) ||
     `${month_diff === 1 ? "a" : month_diff} month${
       month_diff === 1 ? "" : "s"
-    } ago`
+    }`
   );
 }
 
@@ -107,14 +121,13 @@ export default enhance(({ classes: c, slide, setSlide, cancel, setCancel }) => (
         <Avatar>
           <EventIcon />
         </Avatar>
-        <ListItemText primary="Skating Party" secondary="Jan 28, 2014" />
+        <ListItemText primary="Skating Party" secondary="Dec 02, 2017" />
         <ListItemText primary={`Starts in: ${prettyDate(time)}`} />
         
-     {!slide && (
-        <IconButton onClick={() => setSlide(true) }>
-          <Close/>
+        <IconButton className={cx(c.close, {[c.closeSlide]: slide})} onClick={() => setSlide(true) }>
+          <Close className={cx(c.close, {[c.closeSlide]: slide})}/>
         </IconButton>
-      )}
+  
       </div>
 
 
