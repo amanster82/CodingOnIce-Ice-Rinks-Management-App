@@ -1,7 +1,7 @@
 import React from "react";
 import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
-import {} from "lib/api/accounts";
+import { login } from "lib/api/accounts";
 import { Redirect } from "react-router-dom";
 import enhance from "./Helper";
 
@@ -50,7 +50,7 @@ export default enhance(
         raised
         color="primary"
         disabled={validate(email, password) || submit}
-        onClick={() => requestCreation(() => {}, reset, redirect)}
+        onClick={() => requestCreation(login, reset, redirect)}
       >
         Login
       </Button>
