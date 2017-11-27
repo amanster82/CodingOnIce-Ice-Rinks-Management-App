@@ -11,8 +11,4 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     Account findById(int id);
 
     Account findByEmail(String email);
-
-    ArrayList<Bill> findBillsByAccount(Account account);
-
-    ArrayList<Account> findAllBy
 }

@@ -48,9 +48,23 @@ public class AccountController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ArrayList<Account> getAccounts() {
+    public ResponseEntity<List<Account>> getAccounts(@SessionAttribute("account") Integer account) {
 
-        return AccountService.getInstance().getRepository().findAll();
+        if (account == 0) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        if (AuthenticationService.getInstance().isAdmin(account)) {
+            return ResponseEntity.status(HttpStatus.OK).body(AccountService.getInstance().getRepository().findAll());
+        }
+
+        ArrayList<Account> list = new ArrayList<Account>();
+        Account entity = AccountService.getInstance().getRepository().findById(account);
+
+        entity.setPassword("");
+        list.add(entity);
+
+        return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -100,14 +114,14 @@ public class AccountController {
     public ResponseEntity<List<Bill>> getBillsByAccount(@SessionAttribute("account") Integer account,
                                                           @PathVariable("id") int id) {
 
-        List<Bill> bills = new ArrayList<Bill>();
+        //List<Bill> bills = new ArrayList<Bill>();
 
         if ((account == 0 || account != id) && !AuthenticationService.getInstance().isAdmin(account)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
         Account acc = AccountService.getInstance().getAccountById(id);
-        bills = BillingService.getInstance().getBillsByAccount(id);
+        List<Bill> bills = BillingService.getInstance().getBillsByAccount(id);
         return ResponseEntity.ok(bills);
     }
 
@@ -116,9 +130,9 @@ public class AccountController {
                                                       @PathVariable("id") int id,
                                                       @PathVariable("billId") int billId) {
 
-        List<Bill> bills = new ArrayList<Bill>();
+        // = new ArrayList<Bill>();
         Account acc = AccountService.getInstance().getAccountById(id);
-        bills = BillingService.getInstance().getBillsByAccount(id);
+        List<Bill> bills = BillingService.getInstance().getBillsByAccount(id);
         return ResponseEntity.ok(bills);
     }
 

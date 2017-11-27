@@ -5,12 +5,9 @@ import java.util.List;
 
 public class BillingService {
 
-    private BillingService instance;
+    private static BillingService instance;
 
-    private BillingService() {
-    }
-
-    public BillingService getInstance() {
+    public static BillingService getInstance() {
         if (instance == null) {
             instance = new BillingService();
         }
@@ -19,13 +16,7 @@ public class BillingService {
 
 
     public List<Bill> getBillsByAccount(int id) {
-        Account acc = AccountService.getInstance().getAccountRepository().findById(id);
-        ArrayList<Bill> bills = AccountService.getInstance().getAccountRepository().findBillsByAccount(acc);
-
-        if (bills != null) {
-
-        }
-
+        return null;
     }
     
 }
