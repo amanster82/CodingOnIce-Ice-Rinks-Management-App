@@ -30,11 +30,10 @@ public class Rink {
     private int startHour;
     private int endHour;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval=true)
     @JoinColumn(name = "rink_id")
     private List<Booking> bookings;
 
-    @OneToMany
     public List<Booking> getBookings() {
         return bookings;
     }

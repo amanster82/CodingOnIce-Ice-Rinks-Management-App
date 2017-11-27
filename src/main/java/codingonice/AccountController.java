@@ -58,13 +58,13 @@ public class AccountController {
     @RequestMapping(method = RequestMethod.GET)
     public ArrayList<Account> getAccounts() {
 
-        return AccountService.getInstance().getAccountRepository().findAll();
+        return AccountService.getInstance().getRepository().findAll();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Account getAccount(@PathVariable("id") Integer id) {
         //do authentication here
-        return AccountService.getInstance().getAccountRepository().findById(id);
+        return AccountService.getInstance().getRepository().findById(id);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)

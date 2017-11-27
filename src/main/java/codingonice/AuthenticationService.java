@@ -26,7 +26,7 @@ public class AuthenticationService {
     }
 
     public boolean login(String email, String password, HttpSession session) {
-        Account check = AccountService.getInstance().getAccountRepository().findByEmail(email);
+        Account check = AccountService.getInstance().getRepository().findByEmail(email);
 
         if (check == null) {
             return false;
@@ -57,7 +57,7 @@ public class AuthenticationService {
             return false;
         }
         // Check if email already exists
-        if (AccountService.getInstance().getAccountRepository().findByEmail(email) != null) {
+        if (AccountService.getInstance().getRepository().findByEmail(email) != null) {
             return false;
         }
 
@@ -76,7 +76,7 @@ public class AuthenticationService {
     }
 
     public boolean isApproved(int id) {
-        Account acc = AccountService.getInstance().getAccountRepository().findById(id);
+        Account acc = AccountService.getInstance().getRepository().findById(id);
         if (acc == null) {
             return false;
         }
@@ -85,7 +85,7 @@ public class AuthenticationService {
     }
 
     public boolean isAdmin(int id) {
-        Account acc = AccountService.getInstance().getAccountRepository().findById(id);
+        Account acc = AccountService.getInstance().getRepository().findById(id);
         if (acc == null) {
             return false;
         }

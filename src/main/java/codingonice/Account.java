@@ -25,9 +25,13 @@ public class Account {
 
     private boolean isAdmin;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "account_id")
     private List<Bill> bills;
+
+    @OneToMany(orphanRemoval = true)
+    @JoinColumn(name = "account_id")
+    private List<Booking> bookings;
 
     protected Account() {
 
@@ -68,6 +72,10 @@ public class Account {
     public boolean setApproved(boolean value) {
         this.isApproved = value;
         return this.isApproved;
+    }
+
+    public List<Booking> getBookings() {
+        return this.bookings;
     }
 
 }

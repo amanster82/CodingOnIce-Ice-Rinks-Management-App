@@ -31,7 +31,7 @@ public class AccountService {
         return instance;
     }
 
-    public AccountRepository getAccountRepository() {
+    public AccountRepository getRepository() {
         System.out.print("account repository");
         return accountRepository;
     }
@@ -45,7 +45,7 @@ public class AccountService {
     }
 
     public boolean approveAccount(int id) {
-        Account acc = AccountService.getInstance().getAccountRepository().findById(id);
+        Account acc = AccountService.getInstance().getRepository().findById(id);
         if (acc == null) {
             return false;
         }

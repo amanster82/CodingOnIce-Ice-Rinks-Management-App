@@ -120,8 +120,32 @@ public class BookingController {
         return ResponseEntity.ok(newBooking);
     }
 
-    public void cancelBooking(int id) {
+    @RequestMapping(value = "/{id}/cancel", method = RequestMethod.POST)
+    public ResponseEntity<Boolean> cancelBookingg(@PathVariable("id") Integer id,
+            @SessionAttribute("account") Integer accountId) {
 
+        if (!AuthenticationService.getInstance().isAuthenticated(accountId)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+        }
+
+        Booking booking = RinkService.getInstance().getRepository().findBookingById(id);
+
+        if (booking == null || booking.rink == null || booking.account == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+        }
+
+        booking.account.getBookings().removeIf(b -> {
+            return b.getId() == id;
+        });
+
+        AccountService.getInstance().getRepository().save(booking.account);
+
+        booking.rink.getBookings().removeIf(b -> {
+            return b.getId() == id;
+        });
+
+        RinkService.getInstance().getRepository().save(booking.rink);
+
+        return ResponseEntity.ok(true);
     }
-
 }
