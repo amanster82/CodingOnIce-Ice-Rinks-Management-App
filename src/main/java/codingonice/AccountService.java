@@ -50,9 +50,14 @@ public class AccountService {
             return false;
         }
 
+        // Account is already approved!
+        if (acc.getApproved() == true) {
+            return false;
+        }
+
         acc.setApproved(true);
         this.accountRepository.save(acc);
-        return acc.getApproved();
+        return true;
     }
 
 }
