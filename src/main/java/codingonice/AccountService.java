@@ -1,9 +1,5 @@
 package codingonice;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class AccountService {
@@ -26,6 +22,7 @@ public class AccountService {
     public Account getAccountByEmail(String email) {
         return this.accountRepository.findByEmail(email);
     }
+
     public static AccountService getInstance() {
         return instance;
     }
@@ -43,8 +40,18 @@ public class AccountService {
                 .setPassword(passwordEncoders.encode(password))
                 .build();
 
-
         return this.accountRepository.save(newAccount) != null;
-
     }
+
+    public boolean approveAccount(int id) {
+        Account acc = AccountService.getInstance().getAccountRepository().findById(id);
+        if (acc == null) {
+            return false;
+        }
+
+        acc.setApproved(true);
+        this.accountRepository.save(acc);
+        return acc.getApproved();
+    }
+
 }

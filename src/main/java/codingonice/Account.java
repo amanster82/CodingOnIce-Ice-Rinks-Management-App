@@ -49,7 +49,7 @@ public class Account {
         return creationDate;
     }
 
-    public boolean isApproved() {
+    public boolean getApproved() {
         return isApproved;
     }
 
@@ -63,6 +63,11 @@ public class Account {
 
     public Integer getId() {
         return id;
+    }
+
+    public boolean setApproved(boolean value) {
+        this.isApproved = value;
+        return this.isApproved;
     }
 
 }
