@@ -87,4 +87,9 @@ public class Account {
         return this.bookings;
     }
 
+    public List<Bill> setBill(Bill bill) {
+        this.bills.add(bill);
+        return this.bills;
+    }
+
 }

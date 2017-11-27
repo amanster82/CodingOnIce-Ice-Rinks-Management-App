@@ -123,22 +123,19 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
-    @RequestMapping(value = "/{id}/billing", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/bills", method = RequestMethod.GET)
     public ResponseEntity<List<Bill>> getBillsByAccount(@SessionAttribute("account") Integer account,
             @PathVariable("id") int id) {
 
-        //List<Bill> bills = new ArrayList<Bill>();
-
-        if ((account == 0 || account != id) && !AuthenticationService.getInstance().isAdmin(account)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
+//        if ((account == 0 || account != id) && !AuthenticationService.getInstance().isAdmin(account)) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+//        }
 
         Account acc = AccountService.getInstance().getAccountById(id);
-        List<Bill> bills = BillingService.getInstance().getBillsByAccount(id);
-        return ResponseEntity.ok(bills);
+        return ResponseEntity.ok(acc.getBills());
     }
 
-    @RequestMapping(value = "/{id}/bill/{billId}/pay", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/bills/{billId}/pay", method = RequestMethod.POST)
     public ResponseEntity<List<Bill>> payBillsById(@SessionAttribute("account") Integer account,
             @PathVariable("id") int id, @PathVariable("billId") int billId) {
 

@@ -21,7 +21,7 @@ public class Bill {
     @ManyToOne
     private Account account;
 
-    private Bill() {
+    public Bill() {
 
     }
 
@@ -36,4 +36,15 @@ public class Bill {
     public Date getIssueDate() {
         return issueDate;
     }
+
+    public Date setIssueDate(Date date) {
+        this.issueDate = date;
+        return this.issueDate;
+    }
+
+    public double setBalance(double balance) {
+        this.balance = balance;
+        return this.balance;
+    }
+
 }

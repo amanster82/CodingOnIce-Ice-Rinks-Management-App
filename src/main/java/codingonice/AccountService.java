@@ -1,6 +1,10 @@
 package codingonice;
 
+import org.springframework.security.access.method.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class AccountService {
     private AccountRepository accountRepository;
@@ -58,6 +62,15 @@ public class AccountService {
         acc.setApproved(true);
         this.accountRepository.save(acc);
         return true;
+    }
+
+    public boolean setBills(Account acc, Bill bill) {
+        List<Bill> bills = new LinkedList<Bill>();
+
+        bills = acc.getBills();
+        bills = acc.setBill(bill);
+        return this.accountRepository.save(acc) != null;
+
     }
 
 }

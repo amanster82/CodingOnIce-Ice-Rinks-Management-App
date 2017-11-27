@@ -148,4 +148,5 @@ public class BookingController {
 
         return ResponseEntity.ok(true);
     }
+
 }
