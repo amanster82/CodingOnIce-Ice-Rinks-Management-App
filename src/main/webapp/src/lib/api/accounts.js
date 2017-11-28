@@ -11,3 +11,7 @@ export function login(params) {
 export function getCurrentAccount() {
   return get("/accounts/current");
 }
+
+export function logout() {
+  return post("/accounts/logout");
+}

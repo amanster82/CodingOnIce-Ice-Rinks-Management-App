@@ -20,6 +20,10 @@ const styles = theme => ({
     ...theme.typography.headline,
     marginTop: "1rem",
     color: theme.palette.error[700]
+  },
+  success: {
+    ...theme.typography.headline,
+    marginTop: "1rem"
   }
 });
 
@@ -50,9 +54,10 @@ export default compose(
         [key]: value
       }),
       reset: () => message => ({ submit: false, alert: message }),
-      redirect: () => () => ({ success: true }),
-      login: () => () => {
-
+      registerDone: () => () => {
+        return { success: true };
+      },
+      loginDone: () => () => {
         store.dispatch(fetchAccount());
 
         return { success: true };
@@ -60,11 +65,12 @@ export default compose(
       requestCreation: ({ name, last, email, password }) => (
         functor,
         reset,
-        redirect
+        successAction,
+        failMessage
       ) => {
         functor({ firstName: name, lastName: last, email, password })
-          .then(({ res, obj }) => redirect())
-          .catch(exc => reset("Server is unavailable"));
+          .then(({ res, obj }) => successAction())
+          .catch(exc => reset(failMessage));
 
         return { submit: true, first: false, alert: "" };
       }

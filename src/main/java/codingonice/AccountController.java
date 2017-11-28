@@ -108,9 +108,9 @@ public class AccountController {
         boolean success = AuthenticationService.getInstance().logout(account, session);
 
         if (success) {
-            return ResponseEntity.ok(null);
+            return ResponseEntity.ok(true);
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
     }
 
     @RequestMapping(method = RequestMethod.POST)

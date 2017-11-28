@@ -2,6 +2,7 @@ import React from "react";
 import { withStyles } from "material-ui/styles";
 import Tabs, { Tab } from "material-ui/Tabs";
 import { withState, compose } from "recompose";
+import { Redirect } from "react-router-dom";
 
 import Login from "./Login";
 import SignUp from "./SignUp";

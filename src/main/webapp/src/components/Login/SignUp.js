@@ -23,7 +23,7 @@ export default enhance(
     first,
     alert,
     success,
-    redirect
+    registerDone
   }) => (
     <div>
       <div className={c.inline}>
@@ -74,12 +74,14 @@ export default enhance(
         raised
         color="primary"
         disabled={validate(name, last, email, password) || submit}
-        onClick={() => requestCreation(createAccount, reset, redirect)}
+        onClick={() => requestCreation(createAccount, reset, registerDone, "Email is already taken")}
       >
         Get Started
       </Button>
       {alert !== "" && <div className={c.alert}>{alert}</div>}
-      {success && <Redirect to="/profile" />}
+      {success && (
+        <div className={c.success}>Account was created! You can now log in</div>
+      )}
     </div>
   )
 );
