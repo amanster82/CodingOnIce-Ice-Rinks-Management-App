@@ -141,7 +141,7 @@ const enhance = compose(
         return {
           alert: message,
           sending: false,
-          selected: message !== ""
+          selected: res !== true
         };
       }
     }

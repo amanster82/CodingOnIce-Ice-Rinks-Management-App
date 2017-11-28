@@ -32,7 +32,6 @@ export function fetchBookings(rink) {
     return getBookingsByRink(rink).then(
       ({ res, json }) => {
         dispatch(setBookingsForRink(rink, json));
-        console.log(json);
       },
       reject => dispatch(setBookingsForRink(rink, []))
     );
