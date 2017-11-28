@@ -5,3 +5,7 @@ bin
 .project
 .settings
 .vscode
+web/node_modules
+src/main/webapp
+web/coverage
+web/build
