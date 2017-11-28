@@ -23,24 +23,33 @@ const styles = theme => ({
     ...theme.mixins.gutters({
       paddingTop: 1,
     }),
-    backgroundColor: 'rgba(0,0,0,0.3)',
-    height: '100%'
+    backgroundColor: "rgba(0,0,0,0.3)",
+    height: "100%",
+    overflowY: "auto",
+    display: 'flex'
   },
   root: theme.mixins.gutters({
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
-    maxWidth: '35%',
-    marginLeft: theme.spacing.unit * 3,   
-    marginTop: theme.spacing.unit * 3,
+    maxWidth: "75%",
+    marginLeft: theme.spacing.unit * 3,
+    marginTop: theme.spacing.unit * 3
   }),
-  mapStyle: theme.mixins.gutters({
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
-    minWidth: 630,
-    maxWidth: '40%',
-    marginLeft: theme.spacing.unit * 3,   
-    marginTop: theme.spacing.unit * 3,
-  }),
+  mapStyle: {
+    ...theme.mixins.gutters({
+      paddingTop: theme.spacing.unit * 2,
+      paddingBottom: theme.spacing.unit * 2,
+      minWidth: 630,
+      maxWidth: "40%",
+      marginLeft: theme.spacing.unit * 3,
+      marginTop: theme.spacing.unit * 3
+    }),
+    marginBottom: "2rem"
+  },
+  column: {
+    flex: 1
+    //display: "inline-block"
+  }
 });
 
 function InfoSheet(props) {
@@ -48,39 +57,66 @@ function InfoSheet(props) {
   return (
     <div className={classes.backgroundStyle} style={{backgroundImage: 'url(http://www.trip-points.com/media/reviews/photos/original/4f/12/a8/32-minsk-arena-complex-29-1443951652.jpg)'}}>
       <div className={classes.overlay}>
-        <Paper className={classes.root}>
-          <Typography type="headline" color="secondary">
-            Commonwealth Arena Complex
-          </Typography>
-        </Paper>
-        <Paper className={classes.root}>
-          <Typography type="headline" color="secondary">
-            Arena Information
-          </Typography>
-          <Typography type="body1">
-          Commonwealth has 9 indoor ice arenas that can be used by groups for a variety of activites.
-          </Typography>
-        </Paper>
-        <Paper className={classes.root}>
-          <Typography type="headline" color="secondary">
-            Contact
-          </Typography>
-          <Typography type="body1">
-            <b>Address:</b> 1925 Patricia Bay Hwy, Victoria, B.C.
-          </Typography>
-          <Typography type="body1">
-            <b>Phone Number:</b> (555) 555-8296
-          </Typography>
-          <Typography type="body1">
-            <b>Email:</b> commonwealtharenacomplex@shaw.ca
-          </Typography>
-        </Paper>
-        <Paper className={classes.mapStyle}>
-          <Typography type="headline"  color="secondary">
-            Map
-          </Typography>
-          <img src ="https://i.imgur.com/mw9OtWs.png" />
-        </Paper>
+        <div className={classes.column}>
+          <Paper className={classes.root}>
+            <Typography type="headline" color="primary">
+              Commonwealth Arena Complex
+            </Typography>
+          </Paper>
+          <Paper className={classes.root}>
+            <Typography type="headline" color="primary">
+              Arena Information
+            </Typography>
+            <Typography type="body1">
+              Commonwealth has 9 indoor ice arenas that can be used by groups
+              for a variety of activites.
+            </Typography>
+          </Paper>
+          <Paper className={classes.root}>
+            <Typography type="headline" color="primary">
+              Contact
+            </Typography>
+            <List>
+              <ListItem>
+                <ListItemIcon>
+                  <Avatar>
+                    <Today />
+                  </Avatar>
+                </ListItemIcon>
+                <Typography type="body1">
+                  1925 Patricia Bay Hwy, Victoria, B.C.
+                </Typography>
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <Avatar>
+                    <Call />
+                  </Avatar>
+                </ListItemIcon>
+                <Typography type="body1">(555) 555-8296</Typography>
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <Avatar>
+                    <MailOutline />
+                  </Avatar>
+                </ListItemIcon>
+                <Typography type="body1">
+                  commonwealtharenacomplex@shaw.ca
+                </Typography>
+              </ListItem>
+            </List>
+          </Paper>
+        </div>
+        <div className={classes.column}>
+          <Paper className={classes.mapStyle}>
+            <Typography type="headline" color="primary">
+              <Map />
+              Map
+            </Typography>
+            <img src={rinkMap} alt="" />
+          </Paper>
+        </div>
       </div>
     </div>
   );
