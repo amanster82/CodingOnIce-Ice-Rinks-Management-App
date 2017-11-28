@@ -3,11 +3,13 @@ import { withStyles } from "material-ui/styles";
 import { connect } from "react-redux";
 import { compose } from "recompose";
 import Menu, { MenuItem } from 'material-ui/Menu';
-//import Avatar from 'material-ui/Avatar';
-import Button from 'material-ui/Button';
+import Avatar from 'material-ui/Avatar';
 
 const styles = theme => ({
-
+  avatar: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
 });
 
 const mapStateToProps = store => ({
@@ -40,23 +42,26 @@ class UserMenu extends React.Component {
     const {classes: c, name} = this.props;
 
     return (
-      <div>
-        <Button
-          color = "secondary"
+      <div className={c.avatar}>
+        <Avatar
           aria-owns={this.state.open ? 'user-menu' : null}
           aria-haspopup="true"
           onClick={this.handleClick}
         >
           {name.split(" ").map(el => el[0]).join("")}
-          </Button>
+          </Avatar>
         <Menu
           id="user-menu"
           anchorEl={this.state.anchorEl}
           open={this.state.open}
           onRequestClose={this.handleRequestClose}
         >
-          <MenuItem onClick={this.handleRequestClose}>Profile</MenuItem>
-          <MenuItem onClick={this.handleRequestClose}>Logout</MenuItem>
+          <MenuItem onClick={this.handleRequestClose}>
+            Profile
+          </MenuItem>
+          <MenuItem onClick={this.handleRequestClose}>
+            Logout
+          </MenuItem>
         </Menu>
       </div>
     );
