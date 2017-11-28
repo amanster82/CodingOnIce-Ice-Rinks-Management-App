@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { compose } from "recompose";
 import { connect } from "react-redux";
 import UserIcon from "./UserIcon";
+import List, { ListItem } from 'material-ui/List';
+
 
 const styles = theme => ({
   nav: {
@@ -21,7 +23,10 @@ const styles = theme => ({
     '&:hover': {
       color: 'orange'
     }
-  }
+  },
+  menu: {
+    justifyContent: 'flex-end',  
+  }  
 })
 
 const mapStateToProps = store => ({
@@ -35,10 +40,14 @@ const enhance = compose(
 
 export default enhance(({classes: c, account}) => (
   <div className={c.nav}>
-    <Link to="/" className={c.link}>Home</Link>
-    <Link to="/rinks" className={c.link}>Rinks</Link>
-    <Link to="/info" className={c.link}>Info</Link>
-    {account.loggedIn === false && <Link to="/login" className={c.link}>Login</Link>}
-    {account.loggedIn && <UserIcon />}
+    <List>
+      <ListItem className={c.menu}>
+        <Link to="/" className={c.link}>Home</Link>
+        <Link to="/rinks" className={c.link}>Rinks</Link>
+        <Link to="/info" className={c.link}>Info</Link>
+        {account.loggedIn === false && <Link to="/login" className={c.link}>Login</Link>}
+        {account.loggedIn && <UserIcon />}
+      </ListItem>
+    </List>
   </div>
 ));
