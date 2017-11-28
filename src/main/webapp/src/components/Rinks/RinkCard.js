@@ -5,16 +5,58 @@ import Button from "material-ui/Button";
 import Typography from "material-ui/Typography";
 import { withState, compose } from "recompose";
 import { Redirect } from "react-router-dom";
+import IconButton from "material-ui/IconButton";
 
-const styles = {
+const styles = theme => ({
   card: {
-    margin: "1rem",
-    height: "auto"
+    margin: "2rem",
+    height: "auto",
+    "&:hover": {
+      transition: "all 0.5s ease",
+      cursor: "pointer",
+      boxShadow: theme.shadows[10]
+    },
+    "&:hover $view": {
+      transition: "all 0.5s ease",
+      visibility: "visible",
+      color: "white",
+      textAlign: "center"
+    },
+    
+    "&:hover $media":{
+      filter: 'brightness(50%)',
+      transition: "all 0.5s ease",
+    }
+
   },
+
+  view: {
+    visibility: "hidden",
+    position: "absolute",
+    zIndex: "1000",
+    top: '50%',
+    left: '50%',
+    textAlign: 'center',
+    transform: 'translate(-50%, -50%)',
+    width: '100%',
+    fontSize: '1.25rem'
+    
+  },
+
   media: {
-    height: 300
+    height: 200,
+  },
+
+  container: {
+    position: 'absolute',
+    width: '150px', 
+    height: '150px', 
+   /* backgroundColor: '#808', */
+    marginLeft: '30%',
+    marginTop: '6%'
+    
   }
-};
+});
 
 function RinkCard(props) {
   const {
@@ -34,7 +76,8 @@ function RinkCard(props) {
 
   return (
     <div>
-      <Card className={classes.card}>
+      <Card className={classes.card} onClick={() => setRedirect(true)}>
+        <div style={{position: 'relative'}}> <div className={classes.container}><div className={classes.view}>View Schedule</div></div></div>
         <CardMedia className={classes.media} image={rinkImage} />
         <CardContent>
           <Typography type="headline" component="h2" color="primary">
@@ -56,12 +99,8 @@ function RinkCard(props) {
             <b>Hours:</b> 0{rinkStartHour}:00 - {rinkEndHour}:00
           </Typography>
         </CardContent>
-        <CardActions>
-          <Button dense color="primary" onClick={() => setRedirect(true)}>
-            Calendar
-          </Button>
-        </CardActions>
       </Card>
+
       {redirect && <Redirect to={"/calendar/" + rinkId} />}
     </div>
   );
@@ -69,7 +108,7 @@ function RinkCard(props) {
 
 const enhance = compose(
   withStyles(styles),
-  withState('redirect', 'setRedirect', false)
+  withState("redirect", "setRedirect", false)
 );
 
 export default enhance(RinkCard);
