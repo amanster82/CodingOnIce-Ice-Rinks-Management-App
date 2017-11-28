@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import { withStyles } from "material-ui/styles";
 import Paper from "material-ui/Paper";
 import Typography from "material-ui/Typography";
-import rink1Image from "./images/map.png";
+import rinkMap from "./images/map.png";
+import rinkBackground from "./images/background.jpg"; 
+
 
 const styles = theme => ({
   backgroundStyle: theme.mixins.gutters({
@@ -31,8 +33,7 @@ function InfoSheet(props) {
     <div
       className={classes.backgroundStyle}
       style={{
-        backgroundImage:
-          "url(http://www.trip-points.com/media/reviews/photos/original/4f/12/a8/32-minsk-arena-complex-29-1443951652.jpg)",
+          backgroundImage: 'url(' + rinkBackground + ')',
           display: 'flex',
           backgroundSize: 'cover',
           height: '100%',
@@ -41,12 +42,12 @@ function InfoSheet(props) {
       {" "}
       <div style={{float: 'left'}}>
         <Paper className={classes.root}>
-          <Typography type="headline" color="secondary">
+          <Typography type="headline" color="primary">
             Commonwealth Arena Complex
           </Typography>
         </Paper>
         <Paper className={classes.root}>
-          <Typography type="headline" color="secondary">
+          <Typography type="headline" color="primary">
             Arena Information
           </Typography>
           <Typography type="body1">
@@ -55,7 +56,7 @@ function InfoSheet(props) {
           </Typography>
         </Paper>
         <Paper className={classes.root}>
-          <Typography type="headline" color="secondary">
+          <Typography type="headline" color="primary">
             Contact
           </Typography>
           <Typography type="body1">
@@ -71,10 +72,10 @@ function InfoSheet(props) {
       </div>
       <div>
         <Paper className={classes.mapStyle} style={{float: 'left'}}>
-          <Typography type="headline" color="secondary">
+          <Typography type="headline" color="primary">
             Map
           </Typography>
-          <img src="https://i.imgur.com/mw9OtWs.png" />
+          <img src = {rinkMap} alt=""/> 
         </Paper>
       </div>
     </div>
