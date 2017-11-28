@@ -1,7 +1,7 @@
 package codingonice;
 
 import java.util.List;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "rinks")
@@ -30,7 +31,7 @@ public class Rink {
     private int startHour;
     private int endHour;
 
-    @OneToMany(fetch = FetchType.EAGER, orphanRemoval=true)
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "rink_id")
     private List<Booking> bookings;
 

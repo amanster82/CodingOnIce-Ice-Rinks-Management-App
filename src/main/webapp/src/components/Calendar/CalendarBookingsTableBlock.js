@@ -12,6 +12,8 @@ import Button from "material-ui/Button";
 import TextField from "material-ui/TextField";
 import { createBooking } from "lib/api/bookings";
 import { currentMonth } from "lib/calendar";
+import store from "lib/store";
+import { fetchBookings } from "lib/rinks";
 
 // start is the starting hour for an event in 24 hr time
 const getOffset = (ref, day, times, start, length, rink) => {
@@ -97,7 +99,6 @@ const enhance = compose(
       formName: "New event",
       booking,
       rink,
-      success: false,
       alert: "",
       sending: false
     }),
@@ -133,11 +134,14 @@ const enhance = compose(
       }),
       setName: () => name => ({ formName: name }),
       setSending: () => sending => ({ sending }),
-      queryResult: () => (res, message) => {
+      queryResult: ({rink: {id}}) => (res, message) => {
+
+        store.dispatch(fetchBookings(id));
+
         return {
-          success: res,
           alert: message,
-          sending: false
+          sending: false,
+          selected: message !== ""
         };
       }
     }
@@ -178,7 +182,6 @@ export default enhance(
     setLength,
     setName,
     alert,
-    success,
     queryResult,
     sending,
     setSending
@@ -296,7 +299,6 @@ export default enhance(
                 Cancel
               </Button>
               {alert !== "" && <div className={c.alert}>{alert}</div>}
-              {success && window.location.reload()}
             </div>
           </div>
         </Popover>

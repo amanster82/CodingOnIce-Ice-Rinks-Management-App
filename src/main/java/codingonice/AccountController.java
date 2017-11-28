@@ -48,9 +48,35 @@ public class AccountController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ArrayList<Account> getAccounts() {
+    public ResponseEntity<List<Account>> getAccounts(@SessionAttribute("account") Integer account) {
 
-        return AccountService.getInstance().getRepository().findAll();
+        if (account == 0) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        if (AuthenticationService.getInstance().isAdmin(account) == false) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(AccountService.getInstance().getRepository().findAll().stream().map(acc -> {
+                acc.setPassword("");
+                return acc;
+            }));
+    }
+
+    @RequestMapping(value = "/current", method = RequestMethod.GET)
+    public ResponseEntity<Account> getCurrentAccount(@SessionAttribute("account") Integer account) {
+
+        if (account == 0) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        Account entity = AccountService.getInstance().getRepository().findById(account);
+
+        entity.setPassword("");
+
+        return ResponseEntity.status(HttpStatus.OK).body(entity);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -77,7 +103,7 @@ public class AccountController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public ResponseEntity<Boolean> logout(@SessionAttribute("account") Integer account, HttpSession session) {
-        
+
         boolean success = AuthenticationService.getInstance().logout(account, session);
 
         if (success) {
@@ -98,32 +124,32 @@ public class AccountController {
 
     @RequestMapping(value = "/{id}/billing", method = RequestMethod.GET)
     public ResponseEntity<List<Bill>> getBillsByAccount(@SessionAttribute("account") Integer account,
-                                                          @PathVariable("id") int id) {
+            @PathVariable("id") int id) {
 
-        List<Bill> bills = new ArrayList<Bill>();
+        //List<Bill> bills = new ArrayList<Bill>();
 
         if ((account == 0 || account != id) && !AuthenticationService.getInstance().isAdmin(account)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
         Account acc = AccountService.getInstance().getAccountById(id);
-        bills = BillingService.getInstance().getBillsByAccount(id);
+        List<Bill> bills = BillingService.getInstance().getBillsByAccount(id);
         return ResponseEntity.ok(bills);
     }
 
     @RequestMapping(value = "/{id}/bill/{billId}/pay", method = RequestMethod.POST)
     public ResponseEntity<List<Bill>> payBillsById(@SessionAttribute("account") Integer account,
-                                                      @PathVariable("id") int id,
-                                                      @PathVariable("billId") int billId) {
+            @PathVariable("id") int id, @PathVariable("billId") int billId) {
 
-        List<Bill> bills = new ArrayList<Bill>();
+        // = new ArrayList<Bill>();
         Account acc = AccountService.getInstance().getAccountById(id);
-        bills = BillingService.getInstance().getBillsByAccount(id);
+        List<Bill> bills = BillingService.getInstance().getBillsByAccount(id);
         return ResponseEntity.ok(bills);
     }
 
     @RequestMapping(value = "/{id}/actions/approve", method = RequestMethod.POST)
-    public ResponseEntity<Boolean> approve(@PathVariable("id") Integer id, @SessionAttribute("account") Integer account) {
+    public ResponseEntity<Boolean> approve(@PathVariable("id") Integer id,
+            @SessionAttribute("account") Integer account) {
 
         if (!AuthenticationService.getInstance().isAdmin(account)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);

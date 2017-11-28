@@ -33,7 +33,12 @@ public class AuthenticationService {
         }
 
         Boolean verify = this.passwordEncoder.matches(password, check.getPassword());
-        return verify == false ? null : check;
+
+        if (verify) {
+            session.setAttribute("account", check.id);
+        }
+
+        return verify;
     }
 
     public boolean logout(Integer accountId, HttpSession session) {

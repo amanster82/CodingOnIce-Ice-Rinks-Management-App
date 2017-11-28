@@ -4,6 +4,7 @@ import { CircularProgress } from "material-ui/Progress";
 import throttle from "lodash/throttle";
 import { currentMonth, tagThemes, times, calendarWeekDays } from "lib/calendar";
 import CalendarBookingsTableBlock from "./CalendarBookingsTableBlock";
+import { connect } from "react-redux";
 
 const formatTime = date =>
   `${date.getHours() > 12 ? date.getHours() - 12 : date.getHours()}${
@@ -64,8 +65,7 @@ const allFreeTimes = (allBookings, day, week, startHour, endHour) => {
     const booking = bookings[i];
     const bookingDate = new Date(booking.startTime);
     const bookingTime = bookingDate.getHours();
-    const idx = allFree.findIndex(el => {
-      console.log(bookingDate, el.start, bookingTime, el.length);
+    const idx = allFree.findIndex(el => {;
       return (
         bookingDate >= el.start && bookingTime < el.start.getHours() + el.length
       );
@@ -74,8 +74,6 @@ const allFreeTimes = (allBookings, day, week, startHour, endHour) => {
     if (idx === -1) {
       continue;
     }
-
-    console.log("passed");
 
     const time = allFree.splice(idx, 1)[0];
 
@@ -102,6 +100,10 @@ const allFreeTimes = (allBookings, day, week, startHour, endHour) => {
 
   return allFree;
 };
+
+const mapStateToProps = store => ({
+  allBookings: store.rinks.bookings
+});
 
 class CalendarBookingsTable extends React.PureComponent {
   containerRef = null;
@@ -139,9 +141,15 @@ class CalendarBookingsTable extends React.PureComponent {
 
   render() {
     const containerRef = this.containerRef;
-    const { classes: c, rink, day, week } = this.props;
+    const { classes: c, rink, day, week, allBookings } = this.props;
 
-    console.log(rink);
+    const bookings = !allBookings[rink.id] ? rink.bookings : allBookings[rink.id];
+    const freeTimes = allFreeTimes(bookings, day, week, rink.startHour, rink.endHour);
+
+    console.log(freeTimes);
+
+    console.log(bookings);
+
 
     return (
       <div className={c.container} ref={ref => this.updateRef(ref)}>
@@ -159,10 +167,11 @@ class CalendarBookingsTable extends React.PureComponent {
             </div>
           ) : (
             [
-              rink.bookings
+                bookings
                 .filter(b => {
                   const t = new Date(b.startTime);
                   const h = t.getHours();
+                  console.log("filtering");
                   return (
                     h >= rink.startHour &&
                     h + b.length <= rink.endHour &&
@@ -180,9 +189,10 @@ class CalendarBookingsTable extends React.PureComponent {
                     day={day}
                     rink={rink}
                     i={i}
+                    key={block.id}
                   />
                 )),
-              allFreeTimes(rink.bookings, day, week, rink.startHour, rink.endHour).map(
+              freeTimes.map(
                 (block, i) => (
                   <CalendarBookingsTableBlock
                     booking={{ ...block, start: block.start.getHours() }}
@@ -191,6 +201,7 @@ class CalendarBookingsTable extends React.PureComponent {
                     rink={rink}
                     i={i}
                     free
+                    key={block.start.toISOString() + i}
                   />
                 )
               )
@@ -202,4 +213,4 @@ class CalendarBookingsTable extends React.PureComponent {
   }
 }
 
-export default withStyles(styles)(CalendarBookingsTable);
+export default connect(mapStateToProps)(withStyles(styles)(CalendarBookingsTable));
