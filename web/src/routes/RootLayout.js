@@ -6,6 +6,7 @@ import Profile from "routes/Profile";
 import CalendarContainer from "components/Calendar/CalendarContainer";
 import Info from "routes/Info";
 import Login from "routes/Login";
+import Test from "routes/Test";
 
 export default () => (
   <Switch>
@@ -15,5 +16,6 @@ export default () => (
     <Route path="/calendar/:id" component={CalendarContainer} />
     <Route exact path="/info" component={Info} />
     <Route exact path="/login" component={Login} />
+    <Route exact path="/test" component={Test} />
   </Switch>
 );
