@@ -4,7 +4,6 @@ import { withStyles } from "material-ui/styles";
 import cx from "classnames";
 import { withState, compose } from "recompose";
 import Login from "components/Login/LoginContainer";
-import videoClip from "static/splash.mp4";
 
 const styles = theme => ({
   container: {
@@ -53,7 +52,7 @@ const enhance = compose(
 export default enhance(({ classes: c, toggle, setToggle }) => (
   <div className={c.container}>
     <div>
-      <video autoplay="" src={videoClip} type="video/mp4" className={c.bgvid} />
+      <video autoplay="" src="" type="video/mp4" className={c.bgvid} />
     </div>
     <div className={cx(c.buttons, "animated", { fadeOut: toggle === true })}>
       <Button color="primary" raised onClick={() => setToggle(true)}>
