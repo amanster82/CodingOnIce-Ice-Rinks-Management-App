@@ -2,6 +2,8 @@ import React from "react";
 import { withStyles } from "material-ui/styles";
 import CalendarBookingTag from "./CalendarBookingTag";
 import { tagThemes, calendarWeekDays } from "lib/calendar";
+import { connect } from "react-redux";
+import store from "lib/store";
 
 const styles = theme => ({
   container: {
@@ -28,6 +30,10 @@ const styles = theme => ({
   }
 });
 
+const mapStateToProps = store => ({
+  bookings: store.rinks.bookings
+})
+
 const renderBookings = (bookings, max, c) => (
   <div className={c.group}>
     <div className={c.bookings}>
@@ -47,12 +53,12 @@ const renderBookings = (bookings, max, c) => (
   </div>
 );
 
-export default withStyles(styles)(
-  ({ classes: c, contract, rink, day, week }) =>
+export default connect(mapStateToProps)(withStyles(styles)(
+  ({ classes: c, contract, rink, day, week, bookings }) =>
     contract ? null : (
       <div className={c.container}>
         {renderBookings(
-          rink.bookings.filter(
+          (bookings[rink.id] ? bookings[rink.id] : rink.bookings).filter(
             el =>
               new Date(el.startTime).getDate() === day &&
               calendarWeekDays[new Date(el.startTime).getDay()] === week
@@ -62,4 +68,4 @@ export default withStyles(styles)(
         )}
       </div>
     )
-);
+));

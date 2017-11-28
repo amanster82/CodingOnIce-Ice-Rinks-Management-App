@@ -146,11 +146,6 @@ class CalendarBookingsTable extends React.PureComponent {
     const bookings = !allBookings[rink.id] ? rink.bookings : allBookings[rink.id];
     const freeTimes = allFreeTimes(bookings, day, week, rink.startHour, rink.endHour);
 
-    console.log(freeTimes);
-
-    console.log(bookings);
-
-
     return (
       <div className={c.container} ref={ref => this.updateRef(ref)}>
         <div className={c.times}>
@@ -171,7 +166,6 @@ class CalendarBookingsTable extends React.PureComponent {
                 .filter(b => {
                   const t = new Date(b.startTime);
                   const h = t.getHours();
-                  console.log("filtering");
                   return (
                     h >= rink.startHour &&
                     h + b.length <= rink.endHour &&
