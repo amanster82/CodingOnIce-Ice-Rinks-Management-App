@@ -1,4 +1,4 @@
-import { getCurrentAccount } from "lib/api/accounts";
+import { getCurrentAccount, logout } from "lib/api/accounts";
 
 const initialState = {
   current: {
@@ -21,6 +21,9 @@ export default function accounts(state = initialState, action) {
         }
       };
 
+    case "SET_LOGOUT":
+      return initialState;
+
     default:
       return state;
   }
@@ -30,10 +33,28 @@ export function setAccount(account) {
   return { type: "SET_CURRENT_ACCOUNT", account };
 }
 
+export function setLogout() {
+  return { type: "SET_LOGOUT"};
+}
+
 export function fetchAccount() {
   return function(dispatch) {
-    return getCurrentAccount().then(({ res, json }) => {
-      dispatch(setAccount(json));
-    }, reject => {});
+    return getCurrentAccount().then(
+      ({ res, json }) => {
+        dispatch(setAccount(json));
+      },
+      reject => {}
+    );
+  };
+}
+
+export function doLogout() {
+  return function(dispatch) {
+    return logout().then(
+      ({ res, json }) => {
+        dispatch(setLogout());
+      },
+      reject => dispatch(setLogout())
+    );
   };
 }

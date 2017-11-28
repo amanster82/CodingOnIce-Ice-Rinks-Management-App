@@ -21,7 +21,8 @@ export default enhance(
     first,
     alert,
     success,
-    redirect
+    redirect,
+    loginDone
   }) => (
     <div>
       <TextField
@@ -50,7 +51,7 @@ export default enhance(
         raised
         color="primary"
         disabled={validate(email, password) || submit}
-        onClick={() => requestCreation(login, reset, redirect)}
+        onClick={() => requestCreation(login, reset, loginDone, "Invalid email or password")}
       >
         Login
       </Button>
