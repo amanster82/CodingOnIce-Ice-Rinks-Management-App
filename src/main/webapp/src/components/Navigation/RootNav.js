@@ -38,7 +38,7 @@ export default enhance(({classes: c, account}) => (
     <Link to="/" className={c.link}>Home</Link>
     <Link to="/rinks" className={c.link}>Rinks</Link>
     <Link to="/info" className={c.link}>Info</Link>
-    {!account.loggedIn && <Link to="/login" className={c.link}>Login</Link>}
+    {account.loggedIn === false && <Link to="/login" className={c.link}>Login</Link>}
     {account.loggedIn && <UserIcon />}
   </div>
 ));
