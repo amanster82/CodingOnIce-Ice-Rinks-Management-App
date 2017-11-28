@@ -2,7 +2,7 @@ package codingonice;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,11 +58,12 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
-        return ResponseEntity.status(HttpStatus.OK)
-            .body(AccountService.getInstance().getRepository().findAll().stream().map(acc -> {
-                acc.setPassword("");
-                return acc;
-            }));
+        List<Account> accounts = AccountService.getInstance().getRepository().findAll().stream().map(acc -> {
+            acc.setPassword("");
+            return acc;
+        }).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(accounts);
     }
 
     @RequestMapping(value = "/current", method = RequestMethod.GET)
