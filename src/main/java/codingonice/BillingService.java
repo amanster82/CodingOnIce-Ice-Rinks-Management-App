@@ -3,6 +3,7 @@ package codingonice;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 public class BillingService {
 
@@ -27,18 +28,26 @@ public class BillingService {
         return acc.getBills();
     }
 
-    public boolean setBillByAccount(int id, double balance, Date issueDate) {
+    public boolean setBillByAccount(Account acc, Date issueDate) {
 
-        Account acc = AccountService.getInstance().getAccountById(id);
         if (acc == null) {
             return false;
         }
 
         Bill bill = new Bill();
         bill.setIssueDate(issueDate);
-        bill.setBalance(balance);
+
+        //Generate a random price for bill
+        Random r = new Random();
+        double rangeMin = 30.0;
+        double rangeMax = 100.0;
+        double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+        bill.setBalance(randomValue);
 
         boolean successful = AccountService.getInstance().setBills(acc, bill);
+        if (successful) {
+            AccountService.getInstance().getRepository().save(acc);
+        }
         return successful;
     }
 

@@ -1,6 +1,8 @@
 package codingonice;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -117,11 +119,14 @@ public class BookingController {
 
         RinkService.getInstance().getRepository().save(rink);
 
+        //Create billing
+        Date now = new Date();
+        BillingService.getInstance().setBillByAccount(account, now);
         return ResponseEntity.ok(newBooking);
     }
 
     @RequestMapping(value = "/{id}/cancel", method = RequestMethod.POST)
-    public ResponseEntity<Boolean> cancelBookingg(@PathVariable("id") Integer id,
+    public ResponseEntity<Boolean> cancelBooking(@PathVariable("id") Integer id,
             @SessionAttribute("account") Integer accountId) {
 
         if (!AuthenticationService.getInstance().isAuthenticated(accountId)) {

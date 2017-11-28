@@ -65,10 +65,8 @@ public class AccountService {
     }
 
     public boolean setBills(Account acc, Bill bill) {
-        List<Bill> bills = new LinkedList<Bill>();
 
-        bills = acc.getBills();
-        bills = acc.setBill(bill);
+        acc.setBill(bill);
         return this.accountRepository.save(acc) != null;
     }
 
