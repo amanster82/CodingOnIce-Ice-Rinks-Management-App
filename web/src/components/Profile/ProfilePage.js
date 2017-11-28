@@ -4,37 +4,41 @@ import ProfileBox from "./ProfileBox";
 import ProfileUpcomingEvents from "./ProfileUpcomingEvents";
 import ProfileBills from "./ProfileBills";
 import ProfileInfo from "./ProfileInfo";
+import AdminApproval from "./AdminApproval";
+import { connect } from "react-redux";
+import { compose } from "recompose";
 
 const styles = theme => ({
   container: {
     display: "grid",
     gridTemplateRows: "50% 50%",
-    width: "100%",
-    height: "100%"
-  },
-
-  container2: {
-    display: "grid",
-    gridTemplateColumns: "100%",
-    gridTemplateRows: "100%!important",
+    gridTemplateColumns: "50%  50%",
     width: "100%",
     height: "100%"
   }
 });
 
-export default withStyles(styles)(({ classes: c }) => [
-  <div className={c.container2}>
-    <ProfileBox title="Upcoming events">
+const mapStateToProps = store => ({
+  account: store.accounts.current
+});
+
+const enhance = compose(withStyles(styles), connect(mapStateToProps));
+
+export default enhance(({ classes: c, account }) => (
+  <div className={c.container}>
+    <ProfileBox title="My upcoming events" large={!account.admin}>
       <ProfileUpcomingEvents />
     </ProfileBox>
-  </div>,
-
-  <div className={c.container}>
     <ProfileBox title="Profile Info">
       <ProfileInfo />
     </ProfileBox>
     <ProfileBox title="Current bills">
       <ProfileBills />
     </ProfileBox>
+    {account.admin && (
+      <ProfileBox title="Approve accounts">
+        <AdminApproval />
+      </ProfileBox>
+    )}
   </div>
-]);
+));
