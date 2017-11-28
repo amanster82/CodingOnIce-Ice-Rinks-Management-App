@@ -127,9 +127,9 @@ public class AccountController {
     public ResponseEntity<List<Bill>> getBillsByAccount(@SessionAttribute("account") Integer account,
             @PathVariable("id") int id) {
 
-//        if ((account == 0 || account != id) && !AuthenticationService.getInstance().isAdmin(account)) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-//        }
+        if ((account == 0 || account != id) && !AuthenticationService.getInstance().isAdmin(account)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
 
         Account acc = AccountService.getInstance().getAccountById(id);
         return ResponseEntity.ok(acc.getBills());

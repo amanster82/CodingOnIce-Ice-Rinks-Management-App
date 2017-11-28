@@ -88,6 +88,11 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
+        //Check if account is approved - only approved accounts can book
+        if (!account.getApproved()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
         Rink rink = RinkService.getInstance().getRepository().findById(booking.rinkId);
 
         if (rink == null) {
@@ -111,7 +116,7 @@ public class BookingController {
         }
 
         Booking newBooking = Booking.builder().setLength(booking.length).setRink(rink).setStartTime(booking.startTime)
-                .setName(name).build();
+                .setName(name).setAccount(account).build();
 
         bookings.add(newBooking);
 
