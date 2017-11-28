@@ -51,6 +51,10 @@ public class Rink {
         return underMaintenance;
     }
 
+    public void setMaintenance(boolean value) {
+        this.underMaintenance = value;
+    }
+
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
     }

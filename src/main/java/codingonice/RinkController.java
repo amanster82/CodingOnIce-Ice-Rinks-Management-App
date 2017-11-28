@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import codingonice.RinkService;
 
+import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,17 +40,22 @@ public class RinkController {
         return RinkService.getInstance().getRepository().findById(id);
     }
 
-    public boolean isUnderMaintenance(int id) {
-
-        return false;
+    @RequestMapping(value = "/{id}/maintenance", method = RequestMethod.GET)
+    public boolean isUnderMaintenance(@PathVariable("id") Integer id) {
+        Rink rink = RinkService.getInstance().getRepository().findById(id);
+        if (rink == null) {
+            return false;
+        }
+        return rink.getUnderMaintenance();
     }
 
-    public void startMaintenance(int id) {
-
+    @RequestMapping(value = "/{id}/actions/maintenance/start")
+    public boolean startMaintenance(@PathVariable("id") Integer id) {
+        return RinkService.getInstance().setMaintenance(id, true);
     }
 
-    public void stopMaintenance(int id) {
-
+    @RequestMapping(value = "/{id}/actions/maintenance/stop")
+    public boolean stopMaintenance(@PathVariable("id") Integer id) {
+        return RinkService.getInstance().setMaintenance(id, false);
     }
-
 }
