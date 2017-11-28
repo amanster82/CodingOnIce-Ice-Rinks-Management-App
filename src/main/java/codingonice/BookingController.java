@@ -109,7 +109,7 @@ public class BookingController {
         }
 
         Booking newBooking = Booking.builder().setLength(booking.length).setRink(rink).setStartTime(booking.startTime)
-                .setName(name).setAccount(account).build();
+                .setName(name).build();
 
         bookings.add(newBooking);
 
