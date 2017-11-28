@@ -69,7 +69,7 @@ export default enhance(({ classes: c, toggle, setToggle }) => (
     )}
 
     <video
-      autoplay=""
+      autoPlay=""
       src="https://clips.vorwaerts-gmbh.de/VfE_html5.mp4"
       type="video/mp4"
       className={c.bgvid}

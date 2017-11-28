@@ -1,4 +1,4 @@
-import "whatwg-fetch";
+import 'isomorphic-fetch';
 
 const APIUrl = process.env.API_URL || "http://localhost:8080";
 
