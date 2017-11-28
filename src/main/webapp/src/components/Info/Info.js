@@ -8,7 +8,7 @@ import rinkMap from "./images/map.png";
 import MailOutline from "material-ui-icons/MailOutline";
 import Call from "material-ui-icons/Call";
 import Avatar from "material-ui/Avatar";
-import Today from "material-ui-icons/Today";
+import AddLocation from "material-ui-icons/AddLocation";
 import List, { ListItem, ListItemIcon} from 'material-ui/List';
 import Map from "material-ui-icons/Map";
 
@@ -55,7 +55,7 @@ const styles = theme => ({
 function InfoSheet(props) {
   const { classes } = props;
   return (
-    <div className={classes.backgroundStyle} style={{backgroundImage: 'url(http://www.trip-points.com/media/reviews/photos/original/4f/12/a8/32-minsk-arena-complex-29-1443951652.jpg)'}}>
+    <div className={classes.backgroundStyle} style={{backgroundImage: 'url(' + rinkBackground + ')'}}>
       <div className={classes.overlay}>
         <div className={classes.column}>
           <Paper className={classes.root}>
@@ -80,7 +80,7 @@ function InfoSheet(props) {
               <ListItem>
                 <ListItemIcon>
                   <Avatar>
-                    <Today />
+                    <AddLocation/>
                   </Avatar>
                 </ListItemIcon>
                 <Typography type="body1">
