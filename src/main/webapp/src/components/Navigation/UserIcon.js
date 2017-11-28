@@ -9,6 +9,9 @@ const styles = theme => ({
   avatar: {
     display: 'flex',
     justifyContent: 'flex-end',
+    '&:hover': {
+      cursor: 'pointer'
+    }
   },
 });
 
