@@ -17,7 +17,8 @@ const styles = theme => ({
   backgroundStyle: {
     backgroundSize: 'cover',
     height: '100%',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    position: 'relative'
   },
   overlay: {
     ...theme.mixins.gutters({

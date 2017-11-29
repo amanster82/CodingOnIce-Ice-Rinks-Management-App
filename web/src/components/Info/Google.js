@@ -9,8 +9,8 @@ render() {
       <div>
       <Map google={this.props.google} 
       
-      style={{width: '50%', height: '50%', position: 'relative'}}
       className={'map'}
+      style={{width: '50%', height: '50%', position: 'relative'}}
       zoom={14}
       initialCenter={{
         lat: 48.432373,
