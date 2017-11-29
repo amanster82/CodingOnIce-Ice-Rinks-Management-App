@@ -37,7 +37,7 @@ export default enhance(({ classes: c, account }) => (
     <ProfileBox title="Profile Info">
       <ProfileInfo />
     </ProfileBox>
-    <ProfileBox title="Current bills">
+    <ProfileBox title="Current bills" padded>
       <ProfileBills />
     </ProfileBox>
     {account.admin && (

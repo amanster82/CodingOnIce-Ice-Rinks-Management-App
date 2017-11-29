@@ -3,8 +3,6 @@ import red from "material-ui/colors/red";
 
 export default theme => ({
   container: {
-    padding: "1rem",
-    overflowY: 'auto',
     height: '100%'
   },
   row: {

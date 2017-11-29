@@ -15,7 +15,6 @@ import { compose } from "recompose";
 
 const styles = theme => ({
   container: {
-    overflowY: 'scroll',
     height: '100%'
   },
   row: {

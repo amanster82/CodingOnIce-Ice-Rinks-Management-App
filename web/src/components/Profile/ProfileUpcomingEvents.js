@@ -25,7 +25,6 @@ import UpcomingEvent from "./UpcomingEvent";
 const styles = theme => ({
   root: {
     background: theme.palette.background.paper,
-    overflowY: "auto",
     flex: 1,
     width: "100%",
     height: "100%"
