@@ -1,5 +1,5 @@
 import { getBookingsByRink } from "lib/api/bookings";
-import { getAllRinks } from "lib/api/rinks";
+import { getAllRinks, startMaintenance, endMaintenance } from "lib/api/rinks";
 
 const initialState = {
   bookings: {},
@@ -61,6 +61,20 @@ export function fetchAllRinks() {
         dispatch(setAllRinks(json));
       },
       reject => dispatch(setAllRinks([]))
+    );
+  };
+}
+
+export function setMaintenance(rinkId, maintenance) {
+  return function(dispatch) {
+    return (maintenance
+      ? startMaintenance(rinkId)
+      : endMaintenance(rinkId)
+    ).then(
+      ({ res, json }) => {
+        dispatch(fetchAllRinks());
+      },
+      reject => {}
     );
   };
 }

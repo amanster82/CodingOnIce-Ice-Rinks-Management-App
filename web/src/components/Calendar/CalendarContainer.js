@@ -13,7 +13,8 @@ import { getRinkById } from "lib/api/rinks";
 import { CircularProgress } from "material-ui/Progress";
 import { connect } from "react-redux";
 import store from "lib/store";
-import { fetchBookings } from "lib/rinks";
+import { fetchBookings, setMaintenance, fetchAllRinks } from "lib/rinks";
+import Button from "material-ui/Button";
 
 const styles = theme => ({
   container: {
@@ -38,17 +39,30 @@ const styles = theme => ({
     alignItems: "center",
     justifyContent: "center",
     height: "100%"
+  },
+  maintenance: {
+    display: "inline-block",
+    marginLeft: "1rem",
+    fontSize: "0.9rem",
+    fontWeight: 600,
+    textTransform: "uppercase"
+  },
+  maintenanceButton: {
+    float: "right"
   }
 });
 
 const mapStateToProps = store => ({
-  bookings: store.rinks.bookings
+  bookings: store.rinks.bookings,
+  account: store.accounts.current,
+  all: store.rinks.all
 });
 
 export default compose(
   withStyles(styles),
   lifecycle({
     componentDidMount() {
+      store.dispatch(fetchAllRinks());
       getRinkById(this.props.match.params.id).then(({ res, json }) => {
         this.setState({ rink: json });
         store.dispatch(fetchBookings(json.id));
@@ -57,17 +71,40 @@ export default compose(
   }),
   connect(mapStateToProps),
   branch(
-    ({ rink, bookings }) => !rink || !bookings[rink.id],
+    ({ rink, bookings, all }) => !rink || !bookings[rink.id] || !all,
     renderComponent(({ classes: c }) => (
       <div className={c.loading}>
         <CircularProgress />
       </div>
     )),
-    renderComponent(({ classes: c, rink }) => (
+    renderComponent(({ classes: c, rink, account, all }) => (
       <div className={c.container}>
         <div className={c.month}>
           {rink.name} - {calendarMonths[currentMonth]}{" "}
           {currentDate.getFullYear()}
+          {all.find(el => el.id === rink.id).underMaintenance && (
+            <div className={c.maintenance}>Under Maintenance</div>
+          )}
+          {account.admin && (
+            <div className={c.maintenanceButton}>
+              <Button
+                raised
+                color="primary"
+                onClick={() =>
+                  store.dispatch(
+                    setMaintenance(
+                      rink.id,
+                      !all.find(el => el.id === rink.id).underMaintenance
+                    )
+                  )
+                }
+              >
+                {all.find(el => el.id === rink.id).underMaintenance
+                  ? "End Maintenance"
+                  : "Start Maintenance"}
+              </Button>
+            </div>
+          )}
         </div>
         <div className={c.calendar}>
           <Calendar rink={rink} />
