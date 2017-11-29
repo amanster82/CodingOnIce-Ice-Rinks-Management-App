@@ -1,13 +1,11 @@
 import React from "react";
-import LoginContainer from "components/Login/LoginContainer";
+import LoginPage from "components/Login/LoginPage";
 import { withStyles } from "material-ui/styles";
 
-const styles = theme => ({
-
-});
+const styles = theme => ({});
 
 export default withStyles(styles)(() => (
-  <div>
-    <LoginContainer />
+  <div style={{ height: "100%" }}>
+    <LoginPage />
   </div>
 ));

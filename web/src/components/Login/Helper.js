@@ -14,7 +14,8 @@ const styles = theme => ({
     }
   },
   button: {
-    marginTop: "1rem"
+    marginTop: "1rem",
+    margin: "auto"
   },
   alert: {
     ...theme.typography.headline,

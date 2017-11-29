@@ -69,15 +69,24 @@ export default enhance(
         error={!first && password === ""}
         helperText={!first && password === "" ? "Password must be set" : ""}
       />
-      <Button
-        className={c.button}
-        raised
-        color="primary"
-        disabled={validate(name, last, email, password) || submit}
-        onClick={() => requestCreation(createAccount, reset, registerDone, "Email is already taken")}
-      >
-        Get Started
-      </Button>
+      <div style={{textAlign: 'center'}}>
+        <Button
+          className={c.button}
+          raised
+          color="primary"
+          disabled={validate(name, last, email, password) || submit}
+          onClick={() =>
+            requestCreation(
+              createAccount,
+              reset,
+              registerDone,
+              "Email is already taken"
+            )
+          }
+        >
+          Get Started
+        </Button>
+      </div>
       {alert !== "" && <div className={c.alert}>{alert}</div>}
       {success && (
         <div className={c.success}>Account was created! You can now log in</div>

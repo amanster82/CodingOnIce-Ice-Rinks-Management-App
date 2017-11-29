@@ -4,6 +4,7 @@ import Button from "material-ui/Button";
 import { login } from "lib/api/accounts";
 import { Redirect } from "react-router-dom";
 import enhance from "./Helper";
+import LoginContainer from "./LoginContainer";
 
 function validate(email, password) {
   return email === "" || password === "";
@@ -46,15 +47,24 @@ export default enhance(
         error={!first && password === ""}
         helperText={!first && password === "" ? "Password must be set" : ""}
       />
-      <Button
-        className={c.button}
-        raised
-        color="primary"
-        disabled={validate(email, password) || submit}
-        onClick={() => requestCreation(login, reset, loginDone, "Invalid email or password")}
-      >
-        Login
-      </Button>
+      <div style={{textAlign: 'center'}}>
+        <Button
+          className={c.button}
+          raised
+          color="primary"
+          disabled={validate(email, password) || submit}
+          onClick={() =>
+            requestCreation(
+              login,
+              reset,
+              loginDone,
+              "Invalid email or password"
+            )
+          }
+        >
+          Login
+        </Button>
+      </div>
       {alert !== "" && <div className={c.alert}>{alert}</div>}
       {success && <Redirect to="/profile" />}
     </div>

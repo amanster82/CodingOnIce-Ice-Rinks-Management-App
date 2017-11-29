@@ -14,7 +14,7 @@ const styles = theme => ({
     maxWidth: "447px",
     margin: "40px auto",
     borderRadius: "4px",
-    boxShadow: "0 4px 10px 4px rgba(19, 35, 47, 0.3)"
+    boxShadow: "0 4px 10px 4px rgba(19, 35, 47, 0.3)",
   },
   tabGroup: {
     listStyle: "none",
