@@ -6,7 +6,6 @@ import { withState, compose } from "recompose";
 import { Redirect } from "react-router-dom";
 //import rinkBackground from "./images/solid.jpg";
 
-
 const styles = theme => ({
   card: {
     margin: "2rem",
@@ -23,39 +22,36 @@ const styles = theme => ({
       color: "white",
       textAlign: "center"
     },
-    
-    "&:hover $media":{
-      filter: 'brightness(50%)',
-      transition: "all 0.5s ease",
-    }
 
+    "&:hover $media": {
+      filter: "brightness(50%)",
+      transition: "all 0.5s ease"
+    }
   },
 
   view: {
     visibility: "hidden",
     position: "absolute",
     zIndex: "1000",
-    top: '50%',
-    left: '50%',
-    textAlign: 'center',
-    transform: 'translate(-50%, -50%)',
-    width: '100%',
-    fontSize: '1.25rem'
-    
+    top: "50%",
+    left: "50%",
+    textAlign: "center",
+    transform: "translate(-50%, -50%)",
+    width: "100%",
+    fontSize: "1.25rem"
   },
 
   media: {
-    height: 200,
+    height: 200
   },
 
   container: {
-    position: 'absolute',
-    width: '150px', 
-    height: '150px', 
-   /* backgroundColor: '#808', */
-    marginLeft: '30%',
-    marginTop: '6%'
-    
+    position: "absolute",
+    width: "150px",
+    height: "150px",
+    /* backgroundColor: '#808', */
+    marginLeft: "30%",
+    marginTop: "6%"
   }
 });
 
@@ -78,7 +74,12 @@ function RinkCard(props) {
   return (
     <div>
       <Card className={classes.card} onClick={() => setRedirect(true)}>
-        <div style={{position: 'relative'}}> <div className={classes.container}><div className={classes.view}>View Schedule</div></div></div>
+        <div style={{ position: "relative" }}>
+          {" "}
+          <div className={classes.container}>
+            <div className={classes.view}>View Schedule</div>
+          </div>
+        </div>
         <CardMedia className={classes.media} image={rinkImage} />
         <CardContent>
           <Typography type="headline" component="h2" color="primary">
@@ -97,7 +98,8 @@ function RinkCard(props) {
             <b>Capacity:</b> {rinkCapacity}
           </Typography>
           <Typography component="p">
-            <b>Hours:</b> 0{rinkStartHour}:00 - {rinkEndHour}:00
+            <b>Hours:</b> {rinkStartHour < 10 ? "0" : ""}
+            {rinkStartHour}:00 - {rinkEndHour}:00
           </Typography>
         </CardContent>
       </Card>
