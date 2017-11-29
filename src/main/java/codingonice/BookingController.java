@@ -135,7 +135,7 @@ public class BookingController {
         return ResponseEntity.ok(newBooking);
     }
 
-    @RequestMapping(value = "/{id}/cancel", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/actions/cancel", method = RequestMethod.POST)
     public ResponseEntity<Boolean> cancelBooking(@PathVariable("id") Integer id,
             @SessionAttribute("account") Integer accountId) {
 

@@ -22,6 +22,8 @@ import List, {
   ListItemText,
   ListItemSecondaryAction
 } from "material-ui/List";
+import store from "lib/store";
+import { doCancelBooking } from "lib/rinks";
 
 const styles = theme => ({
   left: {
@@ -79,7 +81,6 @@ export default enhance(
         <ListItemText
           primary={`Starts in: ${prettyDateInterval(booking.startTime)}`}
         />
-
         <IconButton
           className={cx(c.close, { [c.closeSlide]: expand })}
           onClick={() => setExpand(true)}
@@ -87,9 +88,8 @@ export default enhance(
           <Close className={cx(c.close, { [c.closeSlide]: expand })} />
         </IconButton>
       </div>
-
       <div className={cx(c.right, { [c.slide]: expand })}>
-        <Button raised color="accent" className={c.button}>
+        <Button raised color="accent" className={c.button} onClick={() => store.dispatch(doCancelBooking(booking.id))}>
           Confirm
         </Button>
         <Button

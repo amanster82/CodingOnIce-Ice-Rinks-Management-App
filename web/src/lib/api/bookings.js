@@ -13,3 +13,7 @@ export function createBooking(rinkId, startTime, length, name) {
     startTime: typeof startTime === "object" ? startTime.toISOString() : startTime
   });
 }
+
+export function cancelBooking(bookingId) {
+  return post(`/bookings/${bookingId}/actions/cancel`);
+}
