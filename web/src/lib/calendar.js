@@ -53,7 +53,8 @@ const prevMonth = month =>
     : Array.from(Array(daysInPrevMonth(month)))
         .map((_val, day) => day + 1)
         .slice(daysInPrevMonth(month) - offset(month), daysInPrevMonth(month));
-const nextMonth = month => 35 - prevMonth(month).length - daysInCurMonth(month);
+const nextMonth = month =>
+  month >= 12 ? 0 : 35 - prevMonth(month).length - daysInCurMonth(month);
 
 export const daysForWeekDay = (month, weekDay) =>
   [
