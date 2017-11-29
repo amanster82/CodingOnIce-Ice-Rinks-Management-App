@@ -52,7 +52,14 @@ const freeTime = (currentMonth, day, startHour, length) => ({
   name: "Free time"
 });
 
-const allFreeTimes = (allBookings, day, week, currentMonth, startHour, endHour) => {
+const allFreeTimes = (
+  allBookings,
+  day,
+  week,
+  currentMonth,
+  startHour,
+  endHour
+) => {
   const free = freeTime(currentMonth, day, startHour, endHour - startHour);
   const allFree = [free];
 
@@ -104,7 +111,8 @@ const allFreeTimes = (allBookings, day, week, currentMonth, startHour, endHour) 
 const mapStateToProps = store => ({
   allBookings: store.rinks.bookings,
   currentMonth: store.rinks.currentMonth,
-  account: store.accounts.current
+  account: store.accounts.current,
+  currentDate: store.rinks.currentDate
 });
 
 class CalendarBookingsTable extends React.PureComponent {
@@ -143,7 +151,16 @@ class CalendarBookingsTable extends React.PureComponent {
 
   render() {
     const containerRef = this.containerRef;
-    const { classes: c, rink, day, week, allBookings, currentMonth, account } = this.props;
+    const {
+      classes: c,
+      rink,
+      day,
+      week,
+      allBookings,
+      currentMonth,
+      account,
+      currentDate
+    } = this.props;
 
     const bookings = !allBookings[rink.id]
       ? rink.bookings
@@ -155,7 +172,13 @@ class CalendarBookingsTable extends React.PureComponent {
       currentMonth,
       rink.startHour,
       rink.endHour
-    );
+    ).filter(el => {
+      const end = new Date(el.start);
+
+      end.setHours(el.start.getHours() + el.length);
+
+      return currentDate < end;
+    });
 
     return (
       <div className={c.container} ref={ref => this.updateRef(ref)}>
