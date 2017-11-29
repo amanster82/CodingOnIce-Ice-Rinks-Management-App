@@ -1,5 +1,7 @@
 package codingonice;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpSession;
 
 import org.jsoup.Jsoup;
@@ -91,5 +93,13 @@ public class AuthenticationService {
         }
 
         return acc.isAdmin();
+    }
+
+    public static List<Account> filterAccounts(List<Account> accounts) {
+
+        return accounts.stream().map(acc -> {
+            acc.setPassword("");
+            return acc;
+        }).collect(Collectors.toList());
     }
 }

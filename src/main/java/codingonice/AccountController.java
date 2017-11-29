@@ -58,10 +58,7 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
-        List<Account> accounts = AccountService.getInstance().getRepository().findAll().stream().map(acc -> {
-            acc.setPassword("");
-            return acc;
-        }).collect(Collectors.toList());
+        List<Account> accounts = AuthenticationService.filterAccounts(AccountService.getInstance().getRepository().findAll());
 
         return ResponseEntity.status(HttpStatus.OK).body(accounts);
     }
@@ -166,8 +163,8 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/actions/unapproved", method = RequestMethod.GET)
-    public ResponseEntity<ArrayList<Account>> getUnapprovedAccounts() {
-        ArrayList<Account> acc = AccountService.getInstance().getRepository().findByIsApproved(false);
-        return ResponseEntity.ok(acc);
+    public ResponseEntity<List<Account>> getUnapprovedAccounts() {
+        List<Account> accounts = AuthenticationService.filterAccounts(AccountService.getInstance().getRepository().findByIsApproved(false));
+        return ResponseEntity.ok(accounts);
     }
 }
