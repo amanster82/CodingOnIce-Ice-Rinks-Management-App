@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "material-ui/styles";
 import Calendar from "./Calendar";
-import { currentMonth, currentDate, calendarMonths } from "lib/calendar";
+import { calendarMonths } from "lib/calendar";
 import {
   compose,
   lifecycle,
@@ -13,8 +13,16 @@ import { getRinkById } from "lib/api/rinks";
 import { CircularProgress } from "material-ui/Progress";
 import { connect } from "react-redux";
 import store from "lib/store";
-import { fetchBookings, setMaintenance, fetchAllRinks } from "lib/rinks";
+import {
+  fetchBookings,
+  setMaintenance,
+  fetchAllRinks,
+  setCurrentMonth
+} from "lib/rinks";
 import Button from "material-ui/Button";
+import IconButton from "material-ui/IconButton";
+import ArrowRight from "material-ui-icons/ArrowForward";
+import ArrowLeft from "material-ui-icons/ArrowBack";
 
 const styles = theme => ({
   container: {
@@ -27,7 +35,9 @@ const styles = theme => ({
     ...theme.typography.headline,
     padding: "0.75rem",
     color: theme.palette.primary[700],
-    marginLeft: "2rem"
+    marginLeft: "2rem",
+    display: "flex",
+    alignItems: "center"
   },
   calendar: {
     padding: "0 1rem 1rem 1rem",
@@ -49,13 +59,16 @@ const styles = theme => ({
   },
   maintenanceButton: {
     float: "right"
-  }
+  },
+  arrow: {}
 });
 
 const mapStateToProps = store => ({
   bookings: store.rinks.bookings,
   account: store.accounts.current,
-  all: store.rinks.all
+  all: store.rinks.all,
+  currentMonth: store.rinks.currentMonth,
+  currentDate: store.rinks.currentDate
 });
 
 export default compose(
@@ -77,39 +90,47 @@ export default compose(
         <CircularProgress />
       </div>
     )),
-    renderComponent(({ classes: c, rink, account, all }) => (
-      <div className={c.container}>
-        <div className={c.month}>
-          {rink.name} - {calendarMonths[currentMonth]}{" "}
-          {currentDate.getFullYear()}
-          {all.find(el => el.id === rink.id).underMaintenance && (
-            <div className={c.maintenance}>Under Maintenance</div>
-          )}
-          {account.admin && (
-            <div className={c.maintenanceButton}>
-              <Button
-                raised
-                color="primary"
-                onClick={() =>
-                  store.dispatch(
-                    setMaintenance(
-                      rink.id,
-                      !all.find(el => el.id === rink.id).underMaintenance
+    renderComponent(
+      ({ classes: c, rink, account, all, currentMonth, currentDate }) => (
+        <div className={c.container}>
+          <div className={c.month}>
+            <IconButton onClick={() => store.dispatch(setCurrentMonth(currentMonth - 1))}>
+              <ArrowLeft />
+            </IconButton>
+            {rink.name} - {calendarMonths[currentMonth]}{" "}
+            {currentDate.getFullYear()}
+            {all.find(el => el.id === rink.id).underMaintenance && (
+              <div className={c.maintenance}>Under Maintenance</div>
+            )}
+            {account.admin && (
+              <div className={c.maintenanceButton}>
+                <Button
+                  raised
+                  color="primary"
+                  onClick={() =>
+                    store.dispatch(
+                      setMaintenance(
+                        rink.id,
+                        !all.find(el => el.id === rink.id).underMaintenance
+                      )
                     )
-                  )
-                }
-              >
-                {all.find(el => el.id === rink.id).underMaintenance
-                  ? "End Maintenance"
-                  : "Start Maintenance"}
-              </Button>
-            </div>
-          )}
+                  }
+                >
+                  {all.find(el => el.id === rink.id).underMaintenance
+                    ? "End Maintenance"
+                    : "Start Maintenance"}
+                </Button>
+              </div>
+            )}
+            <IconButton onClick={() => store.dispatch(setCurrentMonth(currentMonth + 1))}>
+              <ArrowRight />
+            </IconButton>
+          </div>
+          <div className={c.calendar}>
+            <Calendar rink={rink} />
+          </div>
         </div>
-        <div className={c.calendar}>
-          <Calendar rink={rink} />
-        </div>
-      </div>
-    ))
+      )
+    )
   )
 )();

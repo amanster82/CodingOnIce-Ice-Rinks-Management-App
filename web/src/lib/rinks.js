@@ -3,7 +3,9 @@ import { getAllRinks, startMaintenance, endMaintenance } from "lib/api/rinks";
 
 const initialState = {
   bookings: {},
-  all: null
+  all: null,
+  currentDate: new Date(),
+  currentMonth: new Date().getMonth() + 1
 };
 
 export default function rinks(state = initialState, action) {
@@ -29,6 +31,16 @@ export default function rinks(state = initialState, action) {
         ...state,
         all: action.allRinks
       };
+    
+      case "SET_CURRENT_MONTH":
+        if (!action.month) {
+          return state;
+        }
+
+        return {
+          ...state,
+          currentMonth: Math.max(Math.min(12, action.month), 1)
+        };
 
     default:
       return state;
@@ -41,6 +53,10 @@ export function setBookingsForRink(rink, bookings) {
 
 export function setAllRinks(allRinks) {
   return { type: "SET_RINKS", allRinks };
+}
+
+export function setCurrentMonth(month) {
+  return { type: "SET_CURRENT_MONTH", month };
 }
 
 export function fetchBookings(rink) {

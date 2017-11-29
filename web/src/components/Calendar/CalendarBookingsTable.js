@@ -2,7 +2,7 @@ import React from "react";
 import { withStyles } from "material-ui/styles";
 import { CircularProgress } from "material-ui/Progress";
 import throttle from "lodash/throttle";
-import { currentMonth, tagThemes, times, calendarWeekDays } from "lib/calendar";
+import { tagThemes, times, calendarWeekDays } from "lib/calendar";
 import CalendarBookingsTableBlock from "./CalendarBookingsTableBlock";
 import { connect } from "react-redux";
 
@@ -46,14 +46,14 @@ const styles = theme => ({
   }
 });
 
-const freeTime = (day, startHour, length) => ({
+const freeTime = (currentMonth, day, startHour, length) => ({
   start: new Date(2017, currentMonth - 1, day, startHour, 0, 0, 0),
   length,
   name: "Free time"
 });
 
-const allFreeTimes = (allBookings, day, week, startHour, endHour) => {
-  const free = freeTime(day, startHour, endHour - startHour);
+const allFreeTimes = (allBookings, day, week, currentMonth, startHour, endHour) => {
+  const free = freeTime(currentMonth, day, startHour, endHour - startHour);
   const allFree = [free];
 
   const bookings = allBookings.filter(el => {
@@ -102,7 +102,8 @@ const allFreeTimes = (allBookings, day, week, startHour, endHour) => {
 };
 
 const mapStateToProps = store => ({
-  allBookings: store.rinks.bookings
+  allBookings: store.rinks.bookings,
+  currentMonth: store.rinks.currentMonth
 });
 
 class CalendarBookingsTable extends React.PureComponent {
@@ -141,7 +142,7 @@ class CalendarBookingsTable extends React.PureComponent {
 
   render() {
     const containerRef = this.containerRef;
-    const { classes: c, rink, day, week, allBookings } = this.props;
+    const { classes: c, rink, day, week, allBookings, currentMonth } = this.props;
 
     const bookings = !allBookings[rink.id]
       ? rink.bookings
@@ -150,6 +151,7 @@ class CalendarBookingsTable extends React.PureComponent {
       bookings,
       day,
       week,
+      currentMonth,
       rink.startHour,
       rink.endHour
     );

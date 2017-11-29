@@ -11,9 +11,9 @@ import Select from "material-ui/Select";
 import Button from "material-ui/Button";
 import TextField from "material-ui/TextField";
 import { createBooking } from "lib/api/bookings";
-import { currentMonth } from "lib/calendar";
 import store from "lib/store";
 import { fetchBookings } from "lib/rinks";
+import { connect } from "react-redux";
 
 // start is the starting hour for an event in 24 hr time
 const getOffset = (ref, day, times, start, length, rink) => {
@@ -89,8 +89,13 @@ const styles = theme => ({
   }
 });
 
+const mapStateToProps = store => ({
+  currentMonth: store.rinks.currentMonth
+})
+
 const enhance = compose(
   withStyles(styles),
+  connect(mapStateToProps),
   withStateHandlers(
     ({ booking, rink }) => ({
       selected: false,
@@ -151,7 +156,7 @@ const enhance = compose(
 const sendRequest = (params, blocker, resulter) => {
   blocker(true);
 
-  createBooking(params.rink, new Date(2017, currentMonth - 1, params.day, params.start, 0, 0, 0), params.length, params.name)
+  createBooking(params.rink, new Date(2017, params.currentMonth - 1, params.day, params.start, 0, 0, 0), params.length, params.name)
     .then(({ res, json }) => {
       if (res.status === 200) {
         resulter(true, "Booking has been created")
@@ -184,7 +189,8 @@ export default enhance(
     alert,
     queryResult,
     sending,
-    setSending
+    setSending,
+    currentMonth
   }) => (
     <div
       className={cx(c.bubble, { [c.free]: free, [c.selected]: selected })}
@@ -277,7 +283,7 @@ export default enhance(
               <Button
                 onClick={() =>
                   sendRequest(
-                    { start: formStart, length: formLength, rink: rink.id, day, name: formName },
+                    { start: formStart, length: formLength, rink: rink.id, day, name: formName, currentMonth },
                     setSending,
                     queryResult
                   )

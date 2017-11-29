@@ -2,7 +2,8 @@ import React from "react";
 import { withStyles } from "material-ui/styles";
 import CalendarColumn from "./CalendarColumn";
 import { compose, withStateHandlers } from "recompose";
-import { calendarWeekDays, daysForWeekDay, currentMonth } from "lib/calendar";
+import { calendarWeekDays, daysForWeekDay } from "lib/calendar";
+import { connect } from "react-redux";
 
 const styles = theme => ({
   container: {
@@ -15,6 +16,10 @@ const styles = theme => ({
   }
 });
 
+const mapStateToProps = store => ({
+  currentMonth: store.rinks.currentMonth
+});
+
 const enhanced = compose(
   withStyles(styles),
   withStateHandlers(() => ({ selectedWeek: null, selectedSlot: null }), {
@@ -23,11 +28,12 @@ const enhanced = compose(
         selectedWeek === week && selectedSlot === slot ? null : week,
       selectedSlot: selectedWeek === week && selectedSlot === slot ? null : slot
     })
-  })
+  }),
+  connect(mapStateToProps)
 );
 
 export default enhanced(
-  ({ classes: c, selectedWeek, selectedSlot, selectSlot, rink }) => (
+  ({ classes: c, selectedWeek, selectedSlot, selectSlot, rink, currentMonth }) => (
     <div className={c.container}>
       {calendarWeekDays.map((weekDay, i) => (
         <CalendarColumn
