@@ -10,6 +10,8 @@ import ModeEdit from "material-ui-icons/ModeEdit";
 import Face from "material-ui-icons/Face";
 import MailOutline from "material-ui-icons/MailOutline";
 import Today from "material-ui-icons/Today";
+import { connect } from "react-redux";
+import { compose } from "recompose";
 
 const styles = theme => ({
       row: {
@@ -18,32 +20,22 @@ const styles = theme => ({
       },
 });
 
-export default withStyles(styles)(({ classes: c }) => (
+const mapStateToProps = store => ({
+  account: store.accounts.current
+});
+
+const enhance = compose(withStyles(styles), connect(mapStateToProps));
+
+export default enhance(({ classes: c, account }) => (
   <div className={c.container}>
     <List>
-      <ListItem>
-        <ListItemIcon>
-          <Avatar>
-            <PermIdentity/>
-          </Avatar>
-        </ListItemIcon>
-        <ListItemText primary="id"/>
-      </ListItem>
       <ListItem>
         <ListItemIcon>
           <Avatar>
             <Face/>
           </Avatar>
         </ListItemIcon>
-        <ListItemText primary="name"/>
-      </ListItem>
-      <ListItem>
-        <ListItemIcon>
-          <Avatar>
-            <Today/>
-          </Avatar>
-        </ListItemIcon>
-        <ListItemText primary="creationDate"/>
+        <ListItemText primary={"Name: " + account.name}/>
       </ListItem>
       <ListItem>
         <ListItemIcon>
@@ -51,38 +43,15 @@ export default withStyles(styles)(({ classes: c }) => (
             <MailOutline/>
           </Avatar>
         </ListItemIcon>
-        <ListItemText primary="email"/>
+        <ListItemText primary={"Email: " + account.email}/>
       </ListItem>
       <ListItem>
         <ListItemIcon>
           <Avatar>
-            <CreditCard/>
+            <MailOutline/>
           </Avatar>
         </ListItemIcon>
-        <ListItemText primary="Billing Information"/>
-        <Button>
-          <ModeEdit/>
-        </Button>
-      </ListItem>
-      <ListItem>
-        <Button dense color="primary">
-          View My Bills
-        </Button>
-      </ListItem>
-      <ListItem>
-        <Button dense color="primary">
-          View Bookings
-        </Button>
-      </ListItem>
-      <ListItem>
-        <Button dense color="primary">
-          Edit My Password
-        </Button>
-      </ListItem>
-    <ListItem>
-        <Button dense color="primary">
-          Log Out
-        </Button>
+        <ListItemText primary={"Approved: " + (account.approved ? "Yes" : "No")}/>
       </ListItem>
     </List>
   </div>

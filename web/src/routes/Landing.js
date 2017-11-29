@@ -4,6 +4,7 @@ import { withStyles } from "material-ui/styles";
 import cx from "classnames";
 import { withState, compose } from "recompose";
 import Login from "components/Login/LoginContainer";
+import videoClip from "static/splash.mp4";
 
 const styles = theme => ({
   container: {
@@ -67,12 +68,11 @@ export default enhance(({ classes: c, toggle, setToggle }) => (
         </div>
       </div>
     )}
-
-    <video
-      autoPlay=""
-      src="https://clips.vorwaerts-gmbh.de/VfE_html5.mp4"
-      type="video/mp4"
-      className={c.bgvid}
-    />
+      <video 
+        autoplay="" 
+        src={videoClip} 
+        type="video/mp4" 
+        className={c.bgvid} 
+        /> 
   </div>
 ));

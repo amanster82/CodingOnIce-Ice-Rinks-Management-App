@@ -1,6 +1,8 @@
 import React from "react";
 import { withStyles } from "material-ui/styles";
 import ProfilePage from "components/Profile/ProfilePage";
+import { connect } from "react-redux";
+import { compose } from "recompose";
 
 const styles = theme => ({
   container: {
@@ -22,10 +24,16 @@ const styles = theme => ({
   }
 });
 
-export default withStyles(styles)(({classes: c}) => (
+const mapStateToProps = store => ({
+  account: store.accounts.current
+});
+
+const enhance = compose(withStyles(styles), connect(mapStateToProps));
+
+export default enhance(({classes: c, account}) => (
   <div className={c.container}>
     <div className={c.name}>
-    Welcome, Group Name
+    Welcome, {account.name}
     </div>
     <div className={c.dashboard}>
         <ProfilePage />
