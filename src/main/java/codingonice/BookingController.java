@@ -140,12 +140,22 @@ public class BookingController {
             @SessionAttribute("account") Integer accountId) {
 
         if (!AuthenticationService.getInstance().isAuthenticated(accountId)) {
+            System.out.println("auth");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
         }
 
         Booking booking = RinkService.getInstance().getRepository().findBookingById(id);
 
         if (booking == null || booking.rink == null || booking.account == null) {
+            if (booking == null) {
+                System.out.println("exists");
+            }
+            if (booking.rink == null) {
+                System.out.println("rink");
+            }
+            if (booking.account == null) {
+                System.out.println("acc");
+            }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
         }
 

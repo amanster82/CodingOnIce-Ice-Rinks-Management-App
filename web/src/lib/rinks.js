@@ -95,11 +95,11 @@ export function setMaintenance(rinkId, maintenance) {
   };
 }
 
-export function doCancelBooking(id) {
+export function doCancelBooking(rink, id) {
   return function(dispatch) {
     return cancelBooking(id).then(
       ({ res, json }) => {
-        dispatch(fetchBookings(id));
+        dispatch(fetchAllRinks());
       },
       reject => {}
     );

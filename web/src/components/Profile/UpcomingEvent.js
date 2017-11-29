@@ -89,7 +89,7 @@ export default enhance(
         </IconButton>
       </div>
       <div className={cx(c.right, { [c.slide]: expand })}>
-        <Button raised color="accent" className={c.button} onClick={() => store.dispatch(doCancelBooking(booking.id))}>
+        <Button raised color="accent" className={c.button} onClick={() => store.dispatch(doCancelBooking(rink.id, booking.id))}>
           Confirm
         </Button>
         <Button

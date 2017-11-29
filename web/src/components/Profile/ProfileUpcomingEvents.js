@@ -30,7 +30,6 @@ const styles = theme => ({
     height: "100%"
   }
 });
-var time = new Date(2017, 11, 2, 23, 15, 2, 0);
 
 const mapStateToProps = store => ({
   all: store.rinks.all,
