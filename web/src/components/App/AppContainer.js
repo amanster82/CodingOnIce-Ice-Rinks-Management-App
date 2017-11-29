@@ -27,7 +27,8 @@ const theme = createMuiTheme({
     },
     secondary: {
       ...blue,
-      A200: "#f0f8ff"
+      A200: "#f0f8ff",
+      A400: "#bdc5cc"      
     }
   }
 });
