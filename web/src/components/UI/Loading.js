@@ -13,6 +13,6 @@ const styles = theme => ({
 
 export default withStyles(styles)(({classes: c}) => (
   <div className={c.loading}>
-
+    <CircularProgress />
   </div>
 ));
