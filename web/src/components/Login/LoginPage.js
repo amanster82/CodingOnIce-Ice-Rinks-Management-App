@@ -1,11 +1,12 @@
 import React from "react";
 import { withStyles } from "material-ui/styles";
 import Tabs, { Tab } from "material-ui/Tabs";
-import { withState, compose } from "recompose";
-import { Redirect } from "react-router-dom";
+import { withState, compose, branch, renderComponent } from "recompose";
 import LoginContainer from "./LoginContainer";
 import Backdrop from "./backdrop.jpg";
 import cx from "classnames";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 const styles = theme => ({
   overlay: {
@@ -28,9 +29,15 @@ const styles = theme => ({
   }
 });
 
+const mapStateToProps = store => ({
+  account: store.accounts.current
+});
+
 const enhance = compose(
   withStyles(styles),
-  withState("toggle", "setToggle", 0)
+  withState("toggle", "setToggle", 0),
+  connect(mapStateToProps),
+  branch(({account}) => account.loggedIn, renderComponent(() => <Redirect to="/profile" />))
 );
 
 export default enhance(({ classes: c, toggle, setToggle }) => (

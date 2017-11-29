@@ -58,7 +58,6 @@ export function fetchAllRinks() {
   return function(dispatch) {
     return getAllRinks().then(
       ({ res, json }) => {
-        console.log(json);
         dispatch(setAllRinks(json));
       },
       reject => dispatch(setAllRinks([]))

@@ -87,6 +87,11 @@ public class AuthenticationService {
     }
 
     public boolean isAdmin(int id) {
+
+        if (!isAuthenticated(id)) {
+            return false;
+        }
+
         Account acc = AccountService.getInstance().getRepository().findById(id);
         if (acc == null) {
             return false;

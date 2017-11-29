@@ -1,16 +1,17 @@
 import React from "react";
 import { withStyles } from "material-ui/styles";
-import { compose, lifecycle } from "recompose";
+import { compose, lifecycle, renderComponent, branch } from "recompose";
 import store from "lib/store";
 import { fetchUnapprovedAccounts } from "lib/accounts";
 import { connect } from "react-redux";
+import Loading from "components/UI/Loading";
 
 const styles = theme => ({
 
 });
 
 const mapStateToProps = store => ({
-  all: store.accounts.all
+  unapproved: store.accounts.unapproved
 })
 
 const enhance = compose(
@@ -20,9 +21,12 @@ const enhance = compose(
       store.dispatch(fetchUnapprovedAccounts())
     }
   }),
-  connect(mapStateToProps)
+  connect(mapStateToProps),
+  branch(({unapproved}) => !unapproved,
+    renderComponent(Loading)
+  )
 )
 
-export default () => (
+export default enhance(() => (
   <div>admin interface</div>
-);
+));

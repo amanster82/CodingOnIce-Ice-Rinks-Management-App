@@ -3,8 +3,8 @@ import { withStyles } from "material-ui/styles";
 import ProfilePage from "components/Profile/ProfilePage";
 import { connect } from "react-redux";
 import { compose, branch, renderComponent } from "recompose";
-import { CircularProgress } from "material-ui/Progress";
 import { Redirect } from "react-router-dom";
+import Loading from "components/UI/Loading";
 
 const styles = theme => ({
   container: {
@@ -23,12 +23,6 @@ const styles = theme => ({
     padding: "0 1rem 1rem 1rem",
     flex: 1,
     display: "flex"
-  },
-  loading: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100%"
   }
 });
 
@@ -41,10 +35,8 @@ const enhance = compose(
   connect(mapStateToProps),
   branch(
     ({ account }) => !account.loaded,
-    renderComponent(({ classes: c }) => (
-      <div className={c.loading}>
-        <CircularProgress />
-      </div>
+    renderComponent(() => (
+      <Loading />
     ))
   )
 );

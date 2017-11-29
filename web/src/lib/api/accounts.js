@@ -17,5 +17,9 @@ export function logout() {
 }
 
 export function getUnapprovedAccounts() {
-  return get("/accounts/actions/unapproved")
+  return get("/accounts/unapproved");
+}
+
+export function approveAccount(id) {
+  return post(`/accounts/${id}/actions/approve`);
 }

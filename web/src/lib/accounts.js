@@ -8,7 +8,8 @@ const initialState = {
   current: {
     loggedIn: false,
     loaded: false
-  }
+  },
+  unapproved: null
 };
 
 export default function accounts(state = initialState, action) {
@@ -33,6 +34,13 @@ export default function accounts(state = initialState, action) {
     case "SET_LOADED":
       return { ...state, current: { ...state.current, loaded: true } };
 
+    case "SET_UNAPPROVED_ACCOUNTS":
+      if (!action.accounts) {
+        return state;
+      }
+
+      return { ...state, unapproved: action.accounts };
+
     default:
       return state;
   }
@@ -48,6 +56,10 @@ export function setLogout() {
 
 export function setLoaded() {
   return { type: "SET_LOADED" };
+}
+
+export function setUnapprovedAccounts(accounts) {
+  return { type: "SET_UNAPPROVED_ACCOUNTS", accounts };
 }
 
 export function fetchAccount() {
@@ -74,11 +86,24 @@ export function doLogout() {
 
 export function fetchUnapprovedAccounts() {
   return function(dispatch) {
-    return logout().then(
+    return getUnapprovedAccounts().then(
       ({ res, json }) => {
-        dispatch(getUnapprovedAccounts());
+        console.log("unapproved", json);
+        dispatch(setUnapprovedAccounts(json));
       },
-      reject => dispatch(getUnapprovedAccounts())
+      reject => dispatch(setUnapprovedAccounts([]))
     );
   };
+}
+
+export function approveAccount(id) {
+  return function(dispatch) {
+    return getUnapprovedAccounts().then(
+      ({ res, json }) => {
+        console.log("unapproved", json);
+        dispatch(setUnapprovedAccounts(json));
+      },
+      reject => dispatch(setUnapprovedAccounts([]))
+    );
+  }; 
 }

@@ -58,7 +58,8 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
-        List<Account> accounts = AuthenticationService.filterAccounts(AccountService.getInstance().getRepository().findAll());
+        List<Account> accounts = AuthenticationService
+                .filterAccounts(AccountService.getInstance().getRepository().findAll());
 
         return ResponseEntity.status(HttpStatus.OK).body(accounts);
     }
@@ -134,8 +135,7 @@ public class AccountController {
 
     @RequestMapping(value = "/{id}/bills/{billId}/pay", method = RequestMethod.POST)
     public ResponseEntity<Boolean> payBillsById(@SessionAttribute("account") Integer account,
-                                                      @PathVariable("id") int id,
-                                                      @PathVariable("billId") int billId) {
+            @PathVariable("id") int id, @PathVariable("billId") int billId) {
 
         //TODO: AUTHENTICATION HERE
 
@@ -162,9 +162,15 @@ public class AccountController {
         return ResponseEntity.ok(true);
     }
 
-    @RequestMapping(value = "/actions/unapproved", method = RequestMethod.GET)
-    public ResponseEntity<List<Account>> getUnapprovedAccounts() {
-        List<Account> accounts = AuthenticationService.filterAccounts(AccountService.getInstance().getRepository().findByIsApproved(false));
+    @RequestMapping(value = "/unapproved", method = RequestMethod.GET)
+    public ResponseEntity<List<Account>> getUnapprovedAccounts(@SessionAttribute("account") Integer account) {
+
+        if (!AuthenticationService.getInstance().isAdmin(account)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        List<Account> accounts = AuthenticationService
+                .filterAccounts(AccountService.getInstance().getRepository().findByIsApproved(false));
         return ResponseEntity.ok(accounts);
     }
 }
