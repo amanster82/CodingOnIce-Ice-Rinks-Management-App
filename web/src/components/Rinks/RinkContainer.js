@@ -120,7 +120,7 @@ const styles = theme => ({
   container: {
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr",
-    //backgroundColor: theme.palette.grey[300]
+    backgroundColor: theme.palette.grey[300]
   },
   loading: {
     display: "flex",

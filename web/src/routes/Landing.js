@@ -21,7 +21,7 @@ const styles = theme => ({
     position: "fixed",
     top: 0,
     overflow: "hidden !important",
-    zIndex: -100
+    zIndex: -100,
   },
 
   buttons: {
