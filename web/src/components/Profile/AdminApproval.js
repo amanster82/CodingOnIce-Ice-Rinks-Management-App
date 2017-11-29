@@ -30,7 +30,7 @@ const styles = theme => ({
     marginLeft: "1rem"
   },
   none: {
-    ...theme.typography.headline,
+    ...theme.typography.title,
     padding: '1.5rem'
   }
 });
