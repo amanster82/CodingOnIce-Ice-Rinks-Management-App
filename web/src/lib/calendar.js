@@ -73,7 +73,7 @@ export function prettyDateInterval(time, intervalPrefix = "in", intervalPostfix 
     date = new Date(date);
   }
 
-  let diff = (diff = (new Date().getTime() - date.getTime()) / 1000);
+  let diff = Math.abs((new Date().getTime() - date.getTime()) / 1000);
 
   var day_diff = Math.floor(Math.abs(diff) / 86400);
 
@@ -106,5 +106,5 @@ export function prettyDateAbsolute(start) {
 
   const date = typeof start === "string" ? new Date(start) : start;
 
-  return `${calendarMonths[date.getMonth()+1].slice(0, 3)} ${date.getDate()}, ${date.getFullYear()}`;
+  return `${calendarMonths[date.getMonth()+1].slice(0, 3)} ${date.getDate()}, ${date.getFullYear()} ${date.getHours()<10?'0':''}${date.getHours()}:${date.getMinutes()}${date.getMinutes()<10?'0':''}`;
 };
