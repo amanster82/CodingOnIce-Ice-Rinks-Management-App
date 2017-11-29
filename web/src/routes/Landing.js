@@ -17,7 +17,7 @@ const styles = theme => ({
     height: "auto",
     width: "100%",
     display: "inline-block !important",
-    position: "absolute",
+    position: "fixed",
     top: 0,
     overflow: "hidden !important",
     zIndex: -100
@@ -52,6 +52,9 @@ const enhance = compose(
 
 export default enhance(({ classes: c, toggle, setToggle }) => (
   <div className={c.container}>
+    <div>
+      <video autoplay="" loop src={videoClip} type="video/mp4" className={c.bgvid} />
+    </div>
     <div className={cx(c.buttons, "animated", { fadeOut: toggle === true })}>
       <Button color="primary" raised onClick={() => setToggle(true)}>
         Reserve a Rink
@@ -68,11 +71,5 @@ export default enhance(({ classes: c, toggle, setToggle }) => (
         </div>
       </div>
     )}
-      <video 
-        autoplay="" 
-        src={videoClip} 
-        type="video/mp4" 
-        className={c.bgvid} 
-        /> 
   </div>
 ));
