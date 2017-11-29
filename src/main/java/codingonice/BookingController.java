@@ -76,7 +76,6 @@ public class BookingController {
         }
 
         String name = Jsoup.clean(booking.name, Whitelist.simpleText());
-        //lastName = Jsoup.clean(lastName, Whitelist.simpleText());
 
         if (name == "" || name.length() > 64 || booking.length < 1 || booking.length > 3) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -88,9 +87,9 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
-        //Check if account is approved - only approved accounts can book
-        if (!account.getApproved()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        //Check if account is approved - only approved accounts can book (or admin)
+        if (!account.getApproved() && !AuthenticationService.getInstance().isAdmin(accountId)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
         Rink rink = RinkService.getInstance().getRepository().findById(booking.rinkId);

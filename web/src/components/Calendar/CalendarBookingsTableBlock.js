@@ -110,7 +110,7 @@ const enhance = compose(
         }
 
         let val = Math.min(
-          Math.max(rink.startHour, parseInt(start.split(":")[0])),
+          Math.max(rink.startHour, parseInt(start.split(":")[0], 10)),
           rink.endHour
         );
 
