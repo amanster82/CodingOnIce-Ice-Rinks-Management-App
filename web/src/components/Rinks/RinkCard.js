@@ -1,16 +1,17 @@
 import React from "react";
 import { withStyles } from "material-ui/styles";
-import Card, { CardActions, CardContent, CardMedia } from "material-ui/Card";
-import Button from "material-ui/Button";
+import Card, { CardContent, CardMedia } from "material-ui/Card";
 import Typography from "material-ui/Typography";
 import { withState, compose } from "recompose";
 import { Redirect } from "react-router-dom";
-import IconButton from "material-ui/IconButton";
+//import rinkBackground from "./images/solid.jpg";
+
 
 const styles = theme => ({
   card: {
     margin: "2rem",
     height: "auto",
+    opacity: 0.75,
     "&:hover": {
       transition: "all 0.5s ease",
       cursor: "pointer",

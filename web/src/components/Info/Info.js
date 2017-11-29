@@ -33,7 +33,8 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit * 2,
     maxWidth: "75%",
     marginLeft: theme.spacing.unit * 3,
-    marginTop: theme.spacing.unit * 3
+    marginTop: theme.spacing.unit * 3,
+    opacity: 0.88  
   }),
   mapStyle: {
     ...theme.mixins.gutters({
@@ -42,7 +43,8 @@ const styles = theme => ({
       minWidth: 630,
       maxWidth: "40%",
       marginLeft: theme.spacing.unit * 3,
-      marginTop: theme.spacing.unit * 3
+      marginTop: theme.spacing.unit * 3,
+      opacity: 0.88
     }),
     marginBottom: "2rem"
   },
