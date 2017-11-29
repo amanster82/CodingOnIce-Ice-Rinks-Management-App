@@ -25,7 +25,7 @@ export default withStyles(styles)(({ classes: c }) => (
     <AppBar position="static">
       <Toolbar>
         <Typography type="title" color="inherit" className={c.title}>
-          <img src={Logo} style={{filter:'brightness(10)', width:'15%'}}></img> 
+          <img src={Logo} style={{filter:'brightness(10)', width:'150px'}}></img> 
         </Typography>
         <RootNav />
       </Toolbar>
