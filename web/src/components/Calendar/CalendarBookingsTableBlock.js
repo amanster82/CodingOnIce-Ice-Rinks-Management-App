@@ -234,6 +234,7 @@ export default enhance(
                 value={formName}
                 label="Event name"
                 onChange={ev => setName(ev.target.value)}
+                onClick={() => formName === "New event" ? setName("") : {}}
               />
             </div>
             <div className={c.field}>
