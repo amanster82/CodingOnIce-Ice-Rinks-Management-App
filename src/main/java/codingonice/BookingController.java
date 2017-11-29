@@ -102,10 +102,12 @@ public class BookingController {
         endTime.setHours(booking.startTime.getHours() + booking.length);
 
         List<Booking> conflictedBookings = RinkService.getInstance().getRepository()
-                .findBookingsByRinkAndDateInbetween(rink.getId(), booking.startTime, endTime);
+                .findBookingsByRinkAndDateInbetween(booking.rinkId, booking.startTime, endTime);
 
-        if (conflictedBookings.size() > 0) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        for (Booking var : conflictedBookings) {
+            if (var.getId() == booking.rinkId) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            }
         }
 
         List<Booking> bookings = new LinkedList<Booking>();
