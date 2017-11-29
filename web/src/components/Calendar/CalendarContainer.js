@@ -58,7 +58,8 @@ const styles = theme => ({
     textTransform: "uppercase"
   },
   maintenanceButton: {
-    float: "right"
+    position: 'absolute',
+    right: '1rem'
   },
   arrow: {}
 });
@@ -94,7 +95,9 @@ export default compose(
       ({ classes: c, rink, account, all, currentMonth, currentDate }) => (
         <div className={c.container}>
           <div className={c.month}>
-            <IconButton onClick={() => store.dispatch(setCurrentMonth(currentMonth - 1))}>
+            <IconButton
+              onClick={() => store.dispatch(setCurrentMonth(currentMonth - 1))}
+            >
               <ArrowLeft />
             </IconButton>
             {rink.name} - {calendarMonths[currentMonth]}{" "}
@@ -102,6 +105,11 @@ export default compose(
             {all.find(el => el.id === rink.id).underMaintenance && (
               <div className={c.maintenance}>Under Maintenance</div>
             )}
+            <IconButton
+              onClick={() => store.dispatch(setCurrentMonth(currentMonth + 1))}
+            >
+              <ArrowRight />
+            </IconButton>
             {account.admin && (
               <div className={c.maintenanceButton}>
                 <Button
@@ -122,9 +130,6 @@ export default compose(
                 </Button>
               </div>
             )}
-            <IconButton onClick={() => store.dispatch(setCurrentMonth(currentMonth + 1))}>
-              <ArrowRight />
-            </IconButton>
           </div>
           <div className={c.calendar}>
             <Calendar rink={rink} />
