@@ -65,7 +65,7 @@ const allFreeTimes = (allBookings, day, week, startHour, endHour) => {
     const booking = bookings[i];
     const bookingDate = new Date(booking.startTime);
     const bookingTime = bookingDate.getHours();
-    const idx = allFree.findIndex(el => {;
+    const idx = allFree.findIndex(el => {
       return (
         bookingDate >= el.start && bookingTime < el.start.getHours() + el.length
       );
@@ -143,8 +143,16 @@ class CalendarBookingsTable extends React.PureComponent {
     const containerRef = this.containerRef;
     const { classes: c, rink, day, week, allBookings } = this.props;
 
-    const bookings = !allBookings[rink.id] ? rink.bookings : allBookings[rink.id];
-    const freeTimes = allFreeTimes(bookings, day, week, rink.startHour, rink.endHour);
+    const bookings = !allBookings[rink.id]
+      ? rink.bookings
+      : allBookings[rink.id];
+    const freeTimes = allFreeTimes(
+      bookings,
+      day,
+      week,
+      rink.startHour,
+      rink.endHour
+    );
 
     return (
       <div className={c.container} ref={ref => this.updateRef(ref)}>
@@ -156,55 +164,54 @@ class CalendarBookingsTable extends React.PureComponent {
           ))}
         </div>
         <div className={c.bubbles}>
-          {!containerRef ? (
+          {!containerRef && (
             <div className={c.progress}>
               <CircularProgress />
             </div>
-          ) : (
-            [
-                bookings
-                .filter(b => {
-                  const t = new Date(b.startTime);
-                  const h = t.getHours();
-                  return (
-                    h >= rink.startHour &&
-                    h + b.length <= rink.endHour &&
-                    t.getDate() === day &&
-                    calendarWeekDays[t.getDay()] === week
-                  );
-                })
-                .map((block, i) => (
-                  <CalendarBookingsTableBlock
-                    booking={{
-                      ...block,
-                      start: new Date(block.startTime).getHours()
-                    }}
-                    container={containerRef}
-                    day={day}
-                    rink={rink}
-                    i={i}
-                    key={block.id}
-                  />
-                )),
-              freeTimes.map(
-                (block, i) => (
-                  <CalendarBookingsTableBlock
-                    booking={{ ...block, start: block.start.getHours() }}
-                    container={containerRef}
-                    day={day}
-                    rink={rink}
-                    i={i}
-                    free
-                    key={block.start.toISOString() + i}
-                  />
-                )
-              )
-            ]
           )}
+          {containerRef &&
+            bookings
+              .filter(b => {
+                const t = new Date(b.startTime);
+                const h = t.getHours();
+                return (
+                  h >= rink.startHour &&
+                  h + b.length <= rink.endHour &&
+                  t.getDate() === day &&
+                  calendarWeekDays[t.getDay()] === week
+                );
+              })
+              .map((block, i) => (
+                <CalendarBookingsTableBlock
+                  booking={{
+                    ...block,
+                    start: new Date(block.startTime).getHours()
+                  }}
+                  container={containerRef}
+                  day={day}
+                  rink={rink}
+                  i={i}
+                  key={rink.id + "-" + block.id}
+                />
+              ))}
+          {containerRef &&
+            freeTimes.map((block, i) => (
+              <CalendarBookingsTableBlock
+                booking={{ ...block, start: block.start.getHours() }}
+                container={containerRef}
+                day={day}
+                rink={rink}
+                i={i}
+                free
+                key={block.start.toISOString() + block.length}
+              />
+            ))}
         </div>
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(CalendarBookingsTable));
+export default connect(mapStateToProps)(
+  withStyles(styles)(CalendarBookingsTable)
+);
