@@ -1,7 +1,9 @@
 import { getBookingsByRink } from "lib/api/bookings";
+import { getAllRinks } from "lib/api/rinks";
 
 const initialState = {
-  bookings: {}
+  bookings: {},
+  all: null
 };
 
 export default function rinks(state = initialState, action) {
@@ -18,6 +20,16 @@ export default function rinks(state = initialState, action) {
         }
       };
 
+    case "SET_RINKS":
+      if (!action.allRinks) {
+        return state;
+      }
+
+      return {
+        ...state,
+        all: action.allRinks
+      };
+
     default:
       return state;
   }
@@ -27,6 +39,10 @@ export function setBookingsForRink(rink, bookings) {
   return { type: "SET_BOOKINGS_FOR_RINK", rink, bookings };
 }
 
+export function setAllRinks(allRinks) {
+  return { type: "SET_RINKS", allRinks };
+}
+
 export function fetchBookings(rink) {
   return function(dispatch) {
     return getBookingsByRink(rink).then(
@@ -34,6 +50,18 @@ export function fetchBookings(rink) {
         dispatch(setBookingsForRink(rink, json));
       },
       reject => dispatch(setBookingsForRink(rink, []))
+    );
+  };
+}
+
+export function fetchAllRinks() {
+  return function(dispatch) {
+    return getAllRinks().then(
+      ({ res, json }) => {
+        console.log(json);
+        dispatch(setAllRinks(json));
+      },
+      reject => dispatch(setAllRinks([]))
     );
   };
 }

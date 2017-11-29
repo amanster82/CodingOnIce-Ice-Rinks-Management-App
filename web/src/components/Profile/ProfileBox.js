@@ -30,7 +30,7 @@ const styles = theme => ({
     left: 0,
     height: "100%",
     width: "100%",
-    overflowY: "auto"
+    overflowY: "hidden"
   },
   large: {
     gridRow: '1 / span 2'
