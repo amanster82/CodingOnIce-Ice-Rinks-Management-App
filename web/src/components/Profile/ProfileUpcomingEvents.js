@@ -24,7 +24,6 @@ import UpcomingEvent from "./UpcomingEvent";
 
 const styles = theme => ({
   root: {
-    width: "100%",
     background: theme.palette.background.paper,
     overflowY: "auto",
     flex: 1,
@@ -55,12 +54,22 @@ const currentDate = new Date();
 
 export default enhance(
   ({ classes: c, slide, setSlide, cancel, setCancel, all, account }) => (
-    <List className={c.root}>
-      {all && all.length && all
-        .map(el => el.bookings.map(b => ({ rink: el, booking: b })))
-        .reduce((left, right) => left.concat(right))
-        .filter(el => new Date(el.booking.startTime) > currentDate)
-        .map(el => <UpcomingEvent rink={el.rink} booking={el.booking} key={el.rink.id + "-" + el.booking.id}/>)}
-    </List>
+    <div className={c.root}>
+      <List>
+        {all &&
+          all.length &&
+          all
+            .map(el => el.bookings.map(b => ({ rink: el, booking: b })))
+            .reduce((left, right) => left.concat(right))
+            .filter(el => new Date(el.booking.startTime) > currentDate)
+            .map(el => (
+              <UpcomingEvent
+                rink={el.rink}
+                booking={el.booking}
+                key={el.rink.id + "-" + el.booking.id}
+              />
+            ))}
+      </List>
+    </div>
   )
 );
