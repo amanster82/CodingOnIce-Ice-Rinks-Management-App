@@ -47,6 +47,13 @@ class UserMenu extends React.Component {
     return this.setState({ open: false, clicked: id });
   };
 
+  componentDidUpdate(prevProps, prevState) {
+
+    if (this.state.clicked === 1) {
+      this.setState({clicked: 0}) 
+    }
+  }
+
   render() {
     const { classes: c, name } = this.props;
     const { clicked } = this.state;
