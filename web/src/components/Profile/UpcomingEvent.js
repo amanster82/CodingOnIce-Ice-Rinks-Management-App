@@ -81,15 +81,22 @@ export default enhance(
         <ListItemText
           primary={`Starts in: ${prettyDateInterval(booking.startTime)}`}
         />
-        <IconButton
-          className={cx(c.close, { [c.closeSlide]: expand })}
-          onClick={() => setExpand(true)}
-        >
-          <Close className={cx(c.close, { [c.closeSlide]: expand })} />
-        </IconButton>
+        {!expand && (
+          <IconButton
+            className={cx(c.close, { [c.closeSlide]: expand })}
+            onClick={() => setExpand(true)}
+          >
+            <Close className={cx(c.close, { [c.closeSlide]: expand })} />
+          </IconButton>
+        )}
       </div>
       <div className={cx(c.right, { [c.slide]: expand })}>
-        <Button raised color="accent" className={c.button} onClick={() => store.dispatch(doCancelBooking(rink.id, booking.id))}>
+        <Button
+          raised
+          color="primary"
+          className={c.button}
+          onClick={() => store.dispatch(doCancelBooking(rink.id, booking.id))}
+        >
           Confirm
         </Button>
         <Button
