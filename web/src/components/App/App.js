@@ -5,6 +5,7 @@ import AppBar from "material-ui/AppBar";
 import Toolbar from "material-ui/Toolbar";
 import Typography from "material-ui/Typography";
 import RootNav from "components/Navigation/RootNav";
+import Logo from "static/logo.png"
 
 const styles = theme => ({
   container: {
@@ -24,7 +25,7 @@ export default withStyles(styles)(({ classes: c }) => (
     <AppBar position="static">
       <Toolbar>
         <Typography type="title" color="inherit" className={c.title}>
-          Title
+          <img src={Logo} style={{filter:'brightness(10)', width:'15%'}}></img> 
         </Typography>
         <RootNav />
       </Toolbar>
