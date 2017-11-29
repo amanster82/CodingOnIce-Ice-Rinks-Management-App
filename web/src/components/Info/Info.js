@@ -11,6 +11,7 @@ import Avatar from "material-ui/Avatar";
 import AddLocation from "material-ui-icons/AddLocation";
 import List, { ListItem, ListItemIcon} from 'material-ui/List';
 import Map from "material-ui-icons/Map";
+import cx from "classnames";
 import GoogleMaps from "./GoogleMaps";
 
 const styles = theme => ({
@@ -61,12 +62,12 @@ function InfoSheet(props) {
     <div className={classes.backgroundStyle} style={{backgroundImage: 'url(' + rinkBackground + ')'}}>
       <div className={classes.overlay}>
         <div className={classes.column}>
-          <Paper className={classes.root}>
+          <Paper className={cx(classes.root, "animated fadeInUp")}>
             <Typography type="headline" color="primary">
               Commonwealth Arena Complex
             </Typography>
           </Paper>
-          <Paper className={classes.root}>
+          <Paper className={cx(classes.root, "animated fadeInUp")}>
             <Typography type="headline" color="primary">
               Arena Information
             </Typography>
@@ -75,7 +76,7 @@ function InfoSheet(props) {
               for a variety of activites.
             </Typography>
           </Paper>
-          <Paper className={classes.root}>
+          <Paper className={cx(classes.root, "animated fadeInUp")}>
             <Typography type="headline" color="primary">
               Contact
             </Typography>
@@ -111,7 +112,7 @@ function InfoSheet(props) {
             </List>
           </Paper>
         </div>
-        <div className={classes.column}>
+        <div className={cx(classes.column, "animated fadeInUp")}>
           <Paper className={classes.mapStyle} style={{height:"65%"}}>
             <Typography type="headline" color="primary">
               <Map />

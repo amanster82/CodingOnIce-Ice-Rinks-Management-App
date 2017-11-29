@@ -5,6 +5,7 @@ import cx from "classnames";
 import { withState, compose } from "recompose";
 import Login from "components/Login/LoginContainer";
 import videoClip from "static/splash.mp4";
+import { Redirect } from "react-router-dom";
 
 const styles = theme => ({
   container: {
@@ -47,10 +48,14 @@ const styles = theme => ({
 
 const enhance = compose(
   withStyles(styles),
-  withState("toggle", "setToggle", false)
+  withState("toggle", "setToggle", false),
+  withState("redirect", "setRedirect", false)
 );
 
-export default enhance(({ classes: c, toggle, setToggle }) => (
+
+
+
+export default enhance(({ classes: c, toggle, setToggle, redirect, setRedirect }) => (
   <div className={c.container}>
     <div>
       <video autoplay="" loop src={videoClip} type="video/mp4" className={c.bgvid} />
@@ -59,7 +64,7 @@ export default enhance(({ classes: c, toggle, setToggle }) => (
       <Button color="primary" raised onClick={() => setToggle(true)}>
         Reserve a Rink
       </Button>
-      <Button color="primary" raised style={{ left: 10 }}>
+      <Button color="primary" raised style={{ left: 10 }} onClick={() => setRedirect(true)}>
         View Rinks
       </Button>
     </div>
@@ -71,5 +76,8 @@ export default enhance(({ classes: c, toggle, setToggle }) => (
         </div>
       </div>
     )}
+ 
+ {redirect && <Redirect to={"/rinks/"}/>}
+   
   </div>
 ));

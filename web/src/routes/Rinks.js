@@ -4,4 +4,8 @@ import { withStyles } from "material-ui/styles";
 
 const styles = theme => ({});
 
-export default withStyles(styles)(() => <RinkContainer />);
+export default withStyles(styles)(({ classes: c }) => (
+  <div>
+    <RinkContainer />
+  </div>
+));

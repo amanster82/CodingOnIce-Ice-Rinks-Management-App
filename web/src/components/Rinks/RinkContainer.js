@@ -120,7 +120,7 @@ const styles = theme => ({
   container: {
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr",
-    backgroundColor: theme.palette.grey[300]
+    //backgroundColor: theme.palette.grey[300]
   },
   loading: {
     display: "flex",
@@ -134,7 +134,7 @@ export default compose(
   withStyles(styles),
   lifecycle({
     componentDidMount() {
-      getAllRinks().then(({res, json}) => {
+      getAllRinks().then(({ res, json }) => {
         this.setState({ rinks: json });
       });
     }
