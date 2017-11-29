@@ -55,7 +55,7 @@ const renderBookings = (bookings, max, c) => (
 
 export default connect(mapStateToProps)(withStyles(styles)(
   ({ classes: c, contract, rink, day, week, bookings }) =>
-    contract ? null : (
+    contract || rink.underMaintenance ? null : (
       <div className={c.container}>
         {renderBookings(
           (bookings[rink.id] ? bookings[rink.id] : rink.bookings).filter(

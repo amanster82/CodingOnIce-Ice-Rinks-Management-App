@@ -98,6 +98,10 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
+        if (rink.getUnderMaintenance() == true) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
         Date endTime = (Date) booking.startTime.clone();
         endTime.setHours(booking.startTime.getHours() + booking.length);
 

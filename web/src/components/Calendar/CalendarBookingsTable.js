@@ -170,6 +170,7 @@ class CalendarBookingsTable extends React.PureComponent {
             </div>
           )}
           {containerRef &&
+            !rink.underMaintenance &&
             bookings
               .filter(b => {
                 const t = new Date(b.startTime);
@@ -195,6 +196,7 @@ class CalendarBookingsTable extends React.PureComponent {
                 />
               ))}
           {containerRef &&
+            !rink.underMaintenance &&
             freeTimes.map((block, i) => (
               <CalendarBookingsTableBlock
                 booking={{ ...block, start: block.start.getHours() }}
@@ -206,6 +208,20 @@ class CalendarBookingsTable extends React.PureComponent {
                 key={block.start.toISOString() + block.length}
               />
             ))}
+          {containerRef &&
+            rink.underMaintenance && (
+              <CalendarBookingsTableBlock
+                booking={{
+                  start: rink.startHour,
+                  length: rink.endHour - rink.startHour,
+                  name: "Under maintenance"
+                }}
+                container={containerRef}
+                day={day}
+                rink={rink}
+                i={0}
+              />
+            )}
         </div>
       </div>
     );

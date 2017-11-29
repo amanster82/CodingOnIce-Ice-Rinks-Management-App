@@ -18,7 +18,7 @@ import Button from "material-ui/Button";
 
 const styles = theme => ({
   container: {
-    backgroundColor: theme.palette.grey[300],
+    backgroundColor: theme.palette.grey[200],
     height: "100%",
     display: "flex",
     flexDirection: "column"

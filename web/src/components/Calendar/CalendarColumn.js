@@ -38,6 +38,9 @@ const styles = theme => ({
   },
   expand: {
     boxShadow: theme.shadows[3]
+  },
+  maintenance: {
+    background: theme.palette.grey[100]
   }
 });
 
@@ -45,7 +48,8 @@ export default withStyles(styles)(
   ({ classes: c, name, days, selected, selectedSlot, setSelection, rink }) => (
     <div
       className={cx(c.container, {
-        [c.contract]: selected !== null && !selected
+        [c.contract]: selected !== null && !selected,
+        [c.maintenance]: rink.underMaintenance
       })}
     >
       <div className={c.name}>{name.slice(0, 3)}</div>
