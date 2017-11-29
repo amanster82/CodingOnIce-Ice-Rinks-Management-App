@@ -1,7 +1,8 @@
 import {
   getCurrentAccount,
   logout,
-  getUnapprovedAccounts
+  getUnapprovedAccounts,
+  approveAccount
 } from "lib/api/accounts";
 
 const initialState = {
@@ -88,7 +89,6 @@ export function fetchUnapprovedAccounts() {
   return function(dispatch) {
     return getUnapprovedAccounts().then(
       ({ res, json }) => {
-        console.log("unapproved", json);
         dispatch(setUnapprovedAccounts(json));
       },
       reject => dispatch(setUnapprovedAccounts([]))
@@ -96,14 +96,13 @@ export function fetchUnapprovedAccounts() {
   };
 }
 
-export function approveAccount(id) {
+export function doApproveAccount(id) {
   return function(dispatch) {
-    return getUnapprovedAccounts().then(
+    return approveAccount(id).then(
       ({ res, json }) => {
-        console.log("unapproved", json);
-        dispatch(setUnapprovedAccounts(json));
+        dispatch(fetchUnapprovedAccounts());
       },
-      reject => dispatch(setUnapprovedAccounts([]))
+      reject => {}
     );
   }; 
 }

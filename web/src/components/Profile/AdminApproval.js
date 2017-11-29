@@ -6,14 +6,15 @@ import { fetchUnapprovedAccounts } from "lib/accounts";
 import { connect } from "react-redux";
 import Loading from "components/UI/Loading";
 import Button from "material-ui/Button";
+import { doApproveAccount } from "lib/accounts";
 
 const styles = theme => ({
   container: {
-    padding: '1rem'
+    padding: "1rem"
   },
   row: {
-    display: 'flex',
-    '&:not(:last-child)': {
+    display: "flex",
+    "&:not(:last-child)": {
       borderBottom: `1px solid ${theme.palette.grey[500]}`,
       marginBottom: "1rem",
       paddingBottom: "1rem"
@@ -22,11 +23,15 @@ const styles = theme => ({
   name: {
     ...theme.typography.title,
     flex: 1,
-    display: 'flex',
+    display: "flex",
     alignItems: "center"
   },
   button: {
-    marginLeft: '1rem'
+    marginLeft: "1rem"
+  },
+  none: {
+    ...theme.typography.headline,
+    padding: '1.5rem'
   }
 });
 
@@ -45,7 +50,7 @@ const enhance = compose(
   branch(({ unapproved }) => !unapproved, renderComponent(() => <Loading />)),
   branch(
     ({ unapproved }) => unapproved.length === 0,
-    renderComponent(() => <div>No unapproved accounts in the queue.</div>)
+    renderComponent(({classes}) => <div className={classes.none}>No unapproved accounts in the queue.</div>)
   )
 );
 
@@ -55,7 +60,11 @@ export default enhance(({ classes: c, unapproved }) => (
       <div className={c.row}>
         <div className={c.name}>{acc.name}</div>
         <div className={c.button}>
-          <Button raised color="primary">
+          <Button
+            raised
+            color="primary"
+            onClick={() => store.dispatch(doApproveAccount(acc.id))}
+          >
             Approve
           </Button>
         </div>
