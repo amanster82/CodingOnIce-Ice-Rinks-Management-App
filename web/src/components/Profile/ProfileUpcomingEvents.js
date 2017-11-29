@@ -59,7 +59,7 @@ export default enhance(
       {all && all.length && all
         .map(el => el.bookings.map(b => ({ rink: el, booking: b })))
         .reduce((left, right) => left.concat(right))
-        //.filter(el => new Date(el.booking.startTime) > currentDate)
+        .filter(el => new Date(el.booking.startTime) > currentDate)
         .map(el => <UpcomingEvent rink={el.rink} booking={el.booking} key={el.rink.id + "-" + el.booking.id}/>)}
     </List>
   )
