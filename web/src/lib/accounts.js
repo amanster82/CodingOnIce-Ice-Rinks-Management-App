@@ -22,7 +22,8 @@ export default function accounts(state = initialState, action) {
         ...state,
         current: {
           ...action.account,
-          loggedIn: true
+          loggedIn: true,
+          loaded: true
         }
       };
 
