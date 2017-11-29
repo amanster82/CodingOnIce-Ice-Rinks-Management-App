@@ -1,8 +1,13 @@
-import { getCurrentAccount, logout } from "lib/api/accounts";
+import {
+  getCurrentAccount,
+  logout,
+  getUnapprovedAccounts
+} from "lib/api/accounts";
 
 const initialState = {
   current: {
-    loggedIn: false
+    loggedIn: false,
+    loaded: false
   }
 };
 
@@ -24,6 +29,9 @@ export default function accounts(state = initialState, action) {
     case "SET_LOGOUT":
       return initialState;
 
+    case "SET_LOADED":
+      return { ...state, current: { ...state.current, loaded: true } };
+
     default:
       return state;
   }
@@ -34,7 +42,11 @@ export function setAccount(account) {
 }
 
 export function setLogout() {
-  return { type: "SET_LOGOUT"};
+  return { type: "SET_LOGOUT" };
+}
+
+export function setLoaded() {
+  return { type: "SET_LOADED" };
 }
 
 export function fetchAccount() {
@@ -43,7 +55,7 @@ export function fetchAccount() {
       ({ res, json }) => {
         dispatch(setAccount(json));
       },
-      reject => {}
+      reject => dispatch(setLoaded())
     );
   };
 }
@@ -55,6 +67,17 @@ export function doLogout() {
         dispatch(setLogout());
       },
       reject => dispatch(setLogout())
+    );
+  };
+}
+
+export function fetchUnapprovedAccounts() {
+  return function(dispatch) {
+    return logout().then(
+      ({ res, json }) => {
+        dispatch(getUnapprovedAccounts());
+      },
+      reject => dispatch(getUnapprovedAccounts())
     );
   };
 }

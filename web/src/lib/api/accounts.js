@@ -15,3 +15,7 @@ export function getCurrentAccount() {
 export function logout() {
   return post("/accounts/logout");
 }
+
+export function getUnapprovedAccounts() {
+  return get("/accounts/actions/unapproved")
+}

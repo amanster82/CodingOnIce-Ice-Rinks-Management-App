@@ -6,7 +6,9 @@ import ProfileBills from "./ProfileBills";
 import ProfileInfo from "./ProfileInfo";
 import AdminApproval from "./AdminApproval";
 import { connect } from "react-redux";
-import { compose } from "recompose";
+import { compose, branch, renderComponent } from "recompose";
+import Redirect from "react-router-dom";
+
 
 const styles = theme => ({
   container: {
@@ -22,7 +24,10 @@ const mapStateToProps = store => ({
   account: store.accounts.current
 });
 
-const enhance = compose(withStyles(styles), connect(mapStateToProps));
+const enhance = compose(
+  withStyles(styles),
+  connect(mapStateToProps)
+);
 
 export default enhance(({ classes: c, account }) => (
   <div className={c.container}>
