@@ -133,7 +133,7 @@ public class AccountController {
         return ResponseEntity.ok(acc.getBills());
     }
 
-    @RequestMapping(value = "/{id}/bills/{billId}/pay", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/bills/{billId}/actions/pay", method = RequestMethod.POST)
     public ResponseEntity<Boolean> payBillsById(@SessionAttribute("account") Integer account,
             @PathVariable("id") int id, @PathVariable("billId") int billId) {
 

@@ -1,63 +1,70 @@
-/* eslint-disable flowtype/require-valid-file-annotation */
+import React from "react";
+import { withStyles } from "material-ui/styles";
+import { compose, lifecycle, renderComponent, branch } from "recompose";
+import store from "lib/store";
+import { fetchUnapprovedAccounts } from "lib/accounts";
+import { connect } from "react-redux";
+import Loading from "components/UI/Loading";
+import Button from "material-ui/Button";
+import { fetchBills, doPayBill } from "lib/accounts";
+import styles from "./ListStyles";
+import cx from "classnames";
+import { prettyDateInterval } from "lib/calendar";
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import ListSubheader from 'material-ui/List/ListSubheader';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import Collapse from 'material-ui/transitions/Collapse';
-import StarBorder from 'material-ui-icons/StarBorder';
-import MoneyIcon from 'material-ui-icons/AttachMoney';
-import InfoIcon from 'material-ui-icons/InfoOutline';
-import IconButton from "material-ui/IconButton";
-
-
-const styles = theme => ({
-  root: {
-    width: '100%',
-    background: theme.palette.background.paper,
-  },
-  nested: {
-    paddingLeft: theme.spacing.unit * 4,
-  },
+const mapStateToProps = store => ({
+  account: store.accounts.current,
+  bills: store.accounts.current.bills || []
 });
 
-class NestedList extends React.Component {
-  state = { open: true };
+const enhance = compose(
+  withStyles(styles),
+  connect(mapStateToProps),
+  lifecycle({
+    componentDidMount() {
+      store.dispatch(fetchBills(this.props.account.id));
+    }
+  }),
+  branch(
+    ({ account }) => !account || !account.loaded,
+    renderComponent(() => <Loading />)
+  ),
+  branch(
+    ({ bills }) => bills.length === 0,
+    renderComponent(({ classes }) => (
+      <div className={classes.none}>You have no bills on your account</div>
+    ))
+  )
+);
 
-  handleClick = () => {
-    this.setState({ open: !this.state.open });
-  };
-
-  render() {
-    const { classes } = this.props;
-
-    return (
-      <List className={classes.root} subheader={<ListSubheader>Payment Overview</ListSubheader>}>
-        <ListItem>
-          <ListItemIcon>
-            <MoneyIcon/>
-          </ListItemIcon>
-          <ListItemText primary="Arena XYZ, Outstanding: $20"/>
-          {this.state.open ? <IconButton> <InfoIcon onClick={this.handleClick}/> </IconButton> : <IconButton onClick={this.handleClick}> <InfoIcon/> </IconButton>}
-        </ListItem>
-        <Collapse component="li" in={this.state.open} transitionDuration="auto" unmountOnExit>
-          <List disablePadding>
-            <ListItem button className={classes.nested}>
-              <ListItemIcon>
-                <StarBorder />
-              </ListItemIcon>
-              <ListItemText inset primary="Starred" />
-            </ListItem>
-          </List>
-        </Collapse>
-      </List>
-    );
-  }
-}
-
-NestedList.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(NestedList);
+export default enhance(({ classes: c, bills, account }) => (
+  <div className={c.container}>
+    {bills.map(bill => (
+      <div className={c.row}>
+        <div className={c.name}>
+          <div className={c.inline}>${bill.balance.toFixed(2)}</div>
+          <div className={cx(c.inline, c.small)}>
+            issued {prettyDateInterval(bill.issueDate, "", " ago")}
+          </div>
+          <div
+            className={cx(c.inline, {
+              [c.paid]: bill.paid,
+              [c.unpaid]: !bill.paid
+            })}
+          >
+            {bill.paid ? "Paid" : "Unpaid"}
+          </div>
+        </div>
+        <div className={c.button}>
+          <Button
+            raised
+            color="primary"
+            onClick={() => store.dispatch(doPayBill(account.id, bill.id))}
+            disabled={bill.paid}
+          >
+            Pay Now
+          </Button>
+        </div>
+      </div>
+    ))}
+  </div>
+));

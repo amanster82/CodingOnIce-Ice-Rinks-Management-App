@@ -23,3 +23,11 @@ export function getUnapprovedAccounts() {
 export function approveAccount(id) {
   return post(`/accounts/${id}/actions/approve`);
 }
+
+export function getBills(id) {
+  return get(`/accounts/${id}/bills`);
+}
+
+export function payBill(accountId, billId) {
+  return post(`/accounts/${accountId}/bills/${billId}/actions/pay`);
+}

@@ -65,3 +65,46 @@ export const times = (day, startHour, endHour) =>
 [...Array.from(Array(endHour - startHour)).map((_v, i) => i + startHour)].map(hour => {
   return new Date(2017, currentMonth, day, hour, 0, 0, 0);
 });
+
+export function prettyDateInterval(time, intervalPrefix = "in", intervalPostfix = "") {
+  var date = time;
+
+  if (typeof date === "string") {
+    date = new Date(date);
+  }
+
+  let diff = (diff = (new Date().getTime() - date.getTime()) / 1000);
+
+  var day_diff = Math.floor(Math.abs(diff) / 86400);
+
+  if (isNaN(day_diff)) return;
+
+  const week_diff = Math.ceil(day_diff / 7);
+  const month_diff = Math.ceil(day_diff / 30);
+
+  return (
+    (day_diff == 0 &&
+      (
+        (diff < 60 && "just now") ||
+        (diff < 120 && "a minute ago") ||
+        (diff < 3600 && Math.floor(diff / 60) + ` minutes${intervalPostfix}`) ||
+        (diff < 7200 && `about an hour${intervalPostfix}`) ||
+        (diff < 86400 && `about ${Math.floor(diff / 3600)} hours${intervalPostfix}`))) ||
+    (day_diff < -7 && `${intervalPrefix} ${Math.abs(diff)} days${intervalPostfix}`) ||
+    (day_diff == -1 && `${intervalPrefix} a day${intervalPostfix}`) ||
+    (day_diff == 1 && `a day${intervalPostfix}`) ||
+    (day_diff < 7 && day_diff + ` days${intervalPostfix}`) ||
+    (day_diff < 31 &&
+      `${week_diff === 1 ? "a" : week_diff} week${
+        week_diff === 1 ? "" : "s"
+      }`) ||
+    `${month_diff === 1 ? "a" : month_diff} month${month_diff === 1 ? "" : "s"}`
+  );
+}
+
+export function prettyDateAbsolute(start) {
+
+  const date = typeof start === "string" ? new Date(start) : start;
+
+  return `${calendarMonths[date.getMonth()+1].slice(0, 3)} ${date.getDate()}, ${date.getFullYear()}`;
+};

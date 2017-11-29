@@ -1,5 +1,6 @@
 package codingonice;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -16,6 +17,7 @@ public class Bill {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private double balance;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "GMT")
     private Date issueDate;
     private boolean paid;
     @ManyToOne

@@ -2,7 +2,9 @@ import {
   getCurrentAccount,
   logout,
   getUnapprovedAccounts,
-  approveAccount
+  approveAccount,
+  getBills,
+  payBill
 } from "lib/api/accounts";
 
 const initialState = {
@@ -42,6 +44,12 @@ export default function accounts(state = initialState, action) {
 
       return { ...state, unapproved: action.accounts };
 
+    case "SET_BILLS":
+      if (!action.bills) {
+        return state;
+      }
+      return { ...state, current: { ...state.current, bills: action.bills } };
+
     default:
       return state;
   }
@@ -61,6 +69,10 @@ export function setLoaded() {
 
 export function setUnapprovedAccounts(accounts) {
   return { type: "SET_UNAPPROVED_ACCOUNTS", accounts };
+}
+
+export function setBills(bills) {
+  return { type: "SET_BILLS", bills };
 }
 
 export function fetchAccount() {
@@ -101,6 +113,29 @@ export function doApproveAccount(id) {
     return approveAccount(id).then(
       ({ res, json }) => {
         dispatch(fetchUnapprovedAccounts());
+      },
+      reject => {}
+    );
+  }; 
+}
+
+export function fetchBills(id) {
+  return function(dispatch) {
+    return getBills(id).then(
+      ({ res, json }) => {
+        console.log(json);
+        dispatch(setBills(json));
+      },
+      reject => {}
+    );
+  }; 
+}
+
+export function doPayBill(account, billId) {
+  return function(dispatch) {
+    return payBill(account, billId).then(
+      ({ res, json }) => {
+        dispatch(fetchBills(account));
       },
       reject => {}
     );
