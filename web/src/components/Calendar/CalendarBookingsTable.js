@@ -103,7 +103,8 @@ const allFreeTimes = (allBookings, day, week, currentMonth, startHour, endHour) 
 
 const mapStateToProps = store => ({
   allBookings: store.rinks.bookings,
-  currentMonth: store.rinks.currentMonth
+  currentMonth: store.rinks.currentMonth,
+  account: store.accounts.current
 });
 
 class CalendarBookingsTable extends React.PureComponent {
@@ -142,7 +143,7 @@ class CalendarBookingsTable extends React.PureComponent {
 
   render() {
     const containerRef = this.containerRef;
-    const { classes: c, rink, day, week, allBookings, currentMonth } = this.props;
+    const { classes: c, rink, day, week, allBookings, currentMonth, account } = this.props;
 
     const bookings = !allBookings[rink.id]
       ? rink.bookings
@@ -199,6 +200,7 @@ class CalendarBookingsTable extends React.PureComponent {
               ))}
           {containerRef &&
             !rink.underMaintenance &&
+            account.loggedIn &&
             freeTimes.map((block, i) => (
               <CalendarBookingsTableBlock
                 booking={{ ...block, start: block.start.getHours() }}
