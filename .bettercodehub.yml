@@ -1,0 +1,8 @@
+exclude:
+- /web/config/.*
+- /web/scripts/.*
+component_depth: 1
+languages:
+- java
+- javascript
+- script
