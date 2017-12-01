@@ -21,7 +21,9 @@ const enhance = compose(
   connect(mapStateToProps),
   lifecycle({
     componentDidMount() {
-      store.dispatch(fetchBills(this.props.account.id));
+      if (this.props.account.id) {
+        store.dispatch(fetchBills(this.props.account.id));
+      }
     }
   }),
   branch(
@@ -38,7 +40,7 @@ const enhance = compose(
 
 export default enhance(({ classes: c, bills, account }) => (
   <div className={c.container}>
-    {(bills || []).map(bill => (
+    {bills.map(bill => (
       <div className={c.row}>
         <div className={c.name}>
           <div className={c.inline}>${bill.balance.toFixed(2)}</div>
