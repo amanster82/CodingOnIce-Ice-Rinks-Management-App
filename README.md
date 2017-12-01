@@ -60,17 +60,52 @@ This will run the project on *http://localhost:3000* for development with hot mo
 
 ## Deployment
 
+The following sub sections can help deploy the application to a production server.
+
+### Prerequisites
+
+This project depends on both `MySQL` and `Redis` during production. They will need to be installed independently following specific instructions for your production environment.
+
+### Static web app
+
+The web application can be built for production with the following command:
+```
+npm run build
+```
+The production web app files will be in the `web/build` folder. These files are static and can be served by any web server including:
+
+* The Spring API server by placing the files in `src/main/webapp` before compiling
+* Nginx by serving a static directory
+
+### Spring APi server
+
 The project can be compiled into a single runnable JAR file using the following command.
 
 ```
 ./mvnw clean package
 ```
 
-The JAR file will be built in the *target* folder and can then be executed directly to run and serve the project.
+The JAR file will be built in the *target* folder and can then be executed directly to run and serve the project by using `java -jar target/codingonice-0.0.1.jar`.
+
+### Configuration
+
+Configuration for MySQL, Redis, or the application in general can be done by editing the `src/main/resources/application.properties` file and setting configuration there, or using environment variables.
+
+An example of using environment variables for configuration can be seen in the `Dockerfile`.
 
 ## Development
 
 The following resources can help aid development.
+
+### React Dev Server
+
+The react dev server can hot reload any saved files and preview the changes. The server can be started with the following command:
+
+```
+npm start
+```
+
+The development server will listen on `localhost:3000` and serve the web app.
 
 ### Style guides
 
