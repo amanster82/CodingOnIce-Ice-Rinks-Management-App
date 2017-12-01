@@ -1,17 +1,7 @@
+exclude:
+- /web/config/.*
+- /web/scripts/.*
+component_depth: 1
 languages:
-  - name: javascript
-    component_depth: 3
-    production:
-      include:
-        - .*/web/src/.*\.js
-    test:
-      include:
-        - .*/web/src/.*\.test.js
-  - name: java
-    component_depth: 4
-    production:
-      include:
-        - .*/main/java/.*\.java
-    test:
-      include:
-        - .*/test/java/.*\.java
+- java
+- javascript
