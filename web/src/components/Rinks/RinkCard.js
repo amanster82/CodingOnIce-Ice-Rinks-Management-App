@@ -8,6 +8,7 @@ import { Redirect } from "react-router-dom";
 
 const styles = theme => ({
   card: {
+    position: "relative",
     margin: "2rem",
     height: "auto",
     "&:hover": {
@@ -18,8 +19,7 @@ const styles = theme => ({
     "&:hover $view": {
       transition: "all 0.5s ease",
       visibility: "visible",
-      color: "white",
-      textAlign: "center"
+      color: "white"
     },
 
     "&:hover $media": {
@@ -30,13 +30,7 @@ const styles = theme => ({
 
   view: {
     visibility: "hidden",
-    position: "absolute",
     zIndex: "1000",
-    top: "50%",
-    left: "50%",
-    textAlign: "center",
-    transform: "translate(-50%, -50%)",
-    width: "100%",
     fontSize: "1.25rem"
   },
 
@@ -46,11 +40,11 @@ const styles = theme => ({
 
   container: {
     position: "absolute",
-    width: "150px",
-    height: "150px",
-    /* backgroundColor: '#808', */
-    marginLeft: "30%",
-    marginTop: "6%"
+    width: "100%",
+    height: "200px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
 
@@ -73,11 +67,8 @@ function RinkCard(props) {
   return (
     <div>
       <Card className={classes.card} onClick={() => setRedirect(true)}>
-        <div style={{ position: "relative" }}>
-          {" "}
-          <div className={classes.container}>
-            <div className={classes.view}>View Schedule</div>
-          </div>
+        <div className={classes.container}>
+          <div className={classes.view}>View Schedule</div>
         </div>
         <CardMedia className={classes.media} image={rinkImage} />
         <CardContent>
