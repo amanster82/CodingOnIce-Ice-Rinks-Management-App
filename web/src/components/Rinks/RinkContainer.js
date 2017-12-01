@@ -4,6 +4,7 @@ import { withStyles } from "material-ui/styles";
 import { compose, lifecycle, branch, renderComponent } from "recompose";
 import { getAllRinks } from "lib/api/rinks";
 import { CircularProgress } from "material-ui/Progress";
+import cx from "classnames";
 
 import rink1Image from "./images/rink1.jpg";
 import rink2Image from "./images/rink2.jpg";
@@ -36,7 +37,8 @@ const rinks = [
     info: "Wheelchair Accessible",
     capacity: "Groups of 1-50",
     hours: "8am-9pm Daily",
-    image: rink10Image
+    image: rink10Image,
+    
   },
   {
     name: "Celestial Rink",
@@ -45,7 +47,7 @@ const rinks = [
     info: "Wheelchair Accessible",
     capacity: "Groups of 1-20",
     hours: "8am-8pm Daily",
-    image: rink9Image
+    image: rink9Image,
   },
   {
     name: "Crown Rink",
@@ -54,7 +56,7 @@ const rinks = [
     info: "Wheelchair Accessible",
     capacity: "Groups of 1-30",
     hours: "10am-10pm Daily",
-    image: rink7Image
+    image: rink7Image, 
   },
   {
     name: "Dominion Rink",
@@ -63,7 +65,7 @@ const rinks = [
     info: "Wheelchair Accessible",
     capacity: "Groups of 1-30",
     hours: "6am-8pm Daily",
-    image: rink6Image
+    image: rink6Image,
   },
   {
     name: "Gold Rink",
@@ -73,7 +75,7 @@ const rinks = [
     info: "Wheelchair Accessible",
     capacity: "Groups of 1-20",
     hours: "8am-9pm Daily",
-    image: rink5Image
+    image: rink5Image,
   },
   {
     name: "Heart Rink",
@@ -83,7 +85,7 @@ const rinks = [
     info: "Wheelchair Accessible",
     capacity: "Groups of 1-40",
     hours: "8am-10pm Daily",
-    image: rink4Image
+    image: rink4Image,
   },
   {
     name: "Riverside Rink",
@@ -92,7 +94,7 @@ const rinks = [
     info: "Wheelchair Accessible",
     capacity: "Groups of 1-60",
     hours: "7am-9pm Daily",
-    image: rink3Image
+    image: rink3Image,
   },
   {
     name: "Azure Rink",
@@ -112,7 +114,7 @@ const rinks = [
     info: "Wheelchair Accessible",
     capacity: "Groups of 1-50",
     hours: "6am-10pm Daily",
-    image: rink1Image
+    image: rink1Image,
   }
 ];
 
@@ -127,6 +129,9 @@ const styles = theme => ({
     alignItems: "center",
     justifyContent: "center",
     height: "100%"
+  },  
+  cards: {
+    animationDelay: '1s',
   }
 });
 
@@ -147,8 +152,9 @@ export default compose(
       </div>
     )),
     renderComponent(({ classes: c, rinks }) => (
-      <div className={c.container}>
+      <div className={cx(c.container)}>
         {rinks.map((rink, i) => (
+          <div className={cx(c.cards, "animated fadeIn")}>
           <RinkCard
             key={rink.id}
             rinkId={rink.id}
@@ -161,6 +167,7 @@ export default compose(
             rinkStartHour={rink.startHour}
             rinkEndHour={rink.endHour}
           />
+          </div>
         ))}
       </div>
     ))

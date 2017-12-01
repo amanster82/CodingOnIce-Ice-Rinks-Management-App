@@ -43,6 +43,11 @@ const styles = theme => ({
     right: 0,
     top: 0,
     zIndex: 100
+  },
+
+  butn:{
+      animationDelay: '1.5s',
+      animationDuration:'1s'
   }
 });
 
@@ -61,10 +66,10 @@ export default enhance(({ classes: c, toggle, setToggle, redirect, setRedirect }
       <video autoplay="" loop src={videoClip} type="video/mp4" className={c.bgvid} />
     </div>
     <div className={cx(c.buttons, "animated", { fadeOut: toggle === true })}>
-      <Button color="primary" raised onClick={() => setToggle(true)}>
+      <Button className={cx(c.butn, "animated fadeInLeft")} color="primary" raised onClick={() => setToggle(true)}>
         Reserve a Rink
       </Button>
-      <Button color="primary" raised style={{ left: 10 }} onClick={() => setRedirect(true)}>
+      <Button className={cx(c.butn, "animated fadeInRight")} color="primary" raised style={{ left: 10 }} onClick={() => setRedirect(true)}>
         View Rinks
       </Button>
     </div>

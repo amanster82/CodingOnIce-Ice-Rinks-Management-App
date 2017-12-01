@@ -31,9 +31,9 @@ const enhance = compose(
 
 export default enhance(({ classes: c, account }) => (
   <div className={c.container}>
-    <ProfileBox title="My upcoming events" large={!account.admin}>
-      <ProfileUpcomingEvents />
-    </ProfileBox>
+      <ProfileBox className="animated fadeInLeft" title="My upcoming events" large={!account.admin}>
+        <ProfileUpcomingEvents />
+      </ProfileBox>
     <ProfileBox title="Profile Info">
       <ProfileInfo />
     </ProfileBox>

@@ -10,7 +10,6 @@ const styles = theme => ({
   card: {
     margin: "2rem",
     height: "auto",
-    opacity: 0.75,
     "&:hover": {
       transition: "all 0.5s ease",
       cursor: "pointer",
