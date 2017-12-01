@@ -58,9 +58,9 @@ const nextMonth = month =>
 
 export const daysForWeekDay = (month, weekDay) =>
   [
-    ...prevMonth(month),
-    ...Array.from(Array(daysInCurMonth(month))).map((_val, day) => day + 1),
-    ...Array.from(Array(nextMonth(month))).map((_val, day) => day + 1)
+    ...prevMonth(month).map(d => ({day: d, month: month - 1})),
+    ...Array.from(Array(daysInCurMonth(month))).map((_val, day) => ({day: day + 1, month})),
+    ...Array.from(Array(nextMonth(month))).map((_val, day) => ({day: day + 1, month: month + 1})),
   ].filter((_day, i) => i % 7 === weekDay);
 
 export const tagThemes = ["#27a9e8", "#63c799", "#f16737"];

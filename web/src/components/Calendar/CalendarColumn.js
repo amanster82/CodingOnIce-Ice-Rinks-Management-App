@@ -54,9 +54,10 @@ export default withStyles(styles)(
     >
       <div className={c.name}>{name.slice(0, 3)}</div>
       <div className={cx(c.days, { [c.expand]: selected })}>
-        {days.map((day, i) => (
+        {days.map(({day, month}, i) => (
           <CalendarSlot
             day={day}
+            month={month}
             key={i}
             index={i}
             week={name}

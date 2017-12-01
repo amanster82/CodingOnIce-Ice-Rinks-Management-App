@@ -3,6 +3,7 @@ import { withStyles } from "material-ui/styles";
 import cx from "classnames";
 import CalendarBookingsContainer from "./CalendarBookingsContainer";
 import { withState, compose } from "recompose";
+import { connect } from "react-redux";
 
 const styles = theme => ({
   container: {
@@ -43,7 +44,7 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    color: theme.palette.grey[700],
+    color: theme.palette.grey[800],
     "&:hover": {
       backgroundColor: theme.palette.primary[500],
 
@@ -72,6 +73,13 @@ const styles = theme => ({
       }
     )
   },
+  currentDate: {
+    color: theme.palette.common.white,
+    backgroundColor: theme.palette.primary[500]
+  },
+  greyed: {
+    color: theme.palette.grey[500]
+  },
   contract: {
     width: "1rem",
     height: "1rem",
@@ -90,9 +98,14 @@ const styles = theme => ({
   }
 });
 
+const mapStateToProps = store => ({
+  currentMonth: store.rinks.currentMonth
+});
+
 const enhance = compose(
   withStyles(styles),
-  withState("showDialog", "setShowDialog", false)
+  withState("showDialog", "setShowDialog", false),
+  connect(mapStateToProps)
 );
 
 export default enhance(
@@ -100,6 +113,8 @@ export default enhance(
     classes: c,
     index,
     day,
+    month,
+    currentMonth,
     week,
     selected,
     selectedWeek,
@@ -117,7 +132,9 @@ export default enhance(
       <div
         className={cx(c.date, {
           [c.contract]: selected !== null && !selected && selectedWeek,
-          [c.expandedDate]: selected
+          [c.expandedDate]: selected,
+          [c.currentDate]: new Date().getDate() === day && !selected && month === currentMonth,
+          [c.greyed]: !selected && month !== currentMonth
         })}
         onClick={() => setSelection(week, index)}
       >
