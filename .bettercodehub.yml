@@ -1,0 +1,21 @@
+languages:
+- javascript
+- java
+
+- name: javascript
+  component_depth: 3
+  production:
+    include:
+      - .*/web/src/.*\.js
+  test:
+    include:
+      - .*/web/src/.*\.test.js
+
+- name: java
+  component_depth: 4
+  production:
+    include:
+      - .*/main/java/.*\.java
+  test:
+    include:
+      - .*/test/java/.*\.java
