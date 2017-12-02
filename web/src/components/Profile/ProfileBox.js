@@ -43,6 +43,8 @@ const styles = theme => ({
   }
 });
 
+// Template for the containters used on the profile page
+
 export default withStyles(styles)(
   ({ classes: c, title, children, large, padded }) => (
     <div className={cx(c.container, { [c.large]: large })}>

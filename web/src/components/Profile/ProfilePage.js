@@ -29,6 +29,11 @@ const enhance = compose(
   connect(mapStateToProps)
 );
 
+/**
+ * Profile page with user info, upcoming evens, bills to pay
+ * For admins an additional box to approve accounts
+ */
+
 export default enhance(({ classes: c, account }) => (
   <div className={c.container}>
       <ProfileBox className="animated fadeInLeft" title="My upcoming events" large={!account.admin}>

@@ -50,6 +50,11 @@ const enhance = compose(
 
 const currentDate = new Date();
 
+/**
+ * Upcoming events section used to display any events added to the calendar
+ * imports the data from ./UpcomingEvent.js
+ */
+
 export default enhance(
   ({ classes: c, slide, setSlide, cancel, setCancel, all, account }) => (
     <div className={c.root}>

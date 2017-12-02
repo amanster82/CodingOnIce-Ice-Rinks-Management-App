@@ -53,10 +53,11 @@ const styles = theme => ({
   },
   column: {
     flex: 1,
-    //display: "inline-block"
     animationDelay: "0.5s"
   }
 });
+
+// General information about the arena with optional google maps add on
 
 function InfoSheet(props) {
   const { classes } = props;
@@ -123,7 +124,7 @@ function InfoSheet(props) {
                 <Map />
                 Map
               </Typography>
-              <img src={rinkMap} />
+              <img src={rinkMap} alt=""/>
             </Paper>
           </div>
         </div>

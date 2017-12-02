@@ -24,6 +24,8 @@ const mapStateToProps = store => ({
 
 const enhance = compose(withStyles(styles), connect(mapStateToProps));
 
+// Profile section used to display the accounts name, email and approval status
+
 export default enhance(({ classes: c, account }) => (
   <div className={c.container}>
     <List>

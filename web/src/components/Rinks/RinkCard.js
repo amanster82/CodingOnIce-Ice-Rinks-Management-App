@@ -64,6 +64,11 @@ function RinkCard(props) {
     setRedirect
   } = props;
 
+  /**
+   * A card template for all rinks to be loaded into, contains position for 
+   * an image, the rink name, description, address, info, capacity and hours
+   */
+
   return (
     <div>
       <Card className={classes.card} onClick={() => setRedirect(true)}>

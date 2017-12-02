@@ -30,7 +30,10 @@ const logout = () => {
   return <Redirect to="/" />;
 };
 
-// add menu links for: profile, logout
+/**
+* Icon that contains the users initials with a menu to a link to their 
+* profile and to log out
+*/
 
 class UserMenu extends React.Component {
   state = {

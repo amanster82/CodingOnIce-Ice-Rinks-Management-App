@@ -16,6 +16,8 @@ import rink7Image from "./images/rink7.jpg";
 import rink9Image from "./images/rink9.jpg";
 import rink10Image from "./images/rink10.jpg";
 
+// stored images used in the rink cards
+
 const images = [
   rink1Image,
   rink2Image,
@@ -27,6 +29,8 @@ const images = [
   rink9Image,
   rink10Image
 ];
+
+// stored information used in the rink cards
 
 const rinks = [
   {
@@ -134,6 +138,11 @@ const styles = theme => ({
     animationDelay: '1s',
   }
 });
+
+/**
+ * The rinks page, calls RinkCard for every rink added to the page 
+ * Can add as many rinks as needed
+ */
 
 export default compose(
   withStyles(styles),

@@ -67,6 +67,11 @@ const enhance = compose(
   connect(mapStateToProps)
 );
 
+/**
+ * Imports the events from the calender and puts it into a list for the users profile
+ * Includes option to cancel booking as well 
+ */
+
 export default enhance(
   ({ classes: c, all, expand, setExpand, rink, booking }) => (
     <ListItem>

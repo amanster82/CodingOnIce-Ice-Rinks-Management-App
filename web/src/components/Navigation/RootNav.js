@@ -38,6 +38,11 @@ const enhance = compose(
   connect(mapStateToProps)
 )
 
+/**
+* Navigational bar with links to home, rinks, info and either 
+* a login page or the users icon, depending on state
+*/
+
 export default enhance(({classes: c, account}) => (
   <div className={c.nav}>
     <List>

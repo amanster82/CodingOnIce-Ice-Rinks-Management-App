@@ -38,6 +38,8 @@ const enhance = compose(
   )
 );
 
+// Bills section used to display any bills with the option to pay
+
 export default enhance(({ classes: c, bills, account }) => (
   <div className={c.container}>
     {bills.map(bill => (
