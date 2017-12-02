@@ -106,14 +106,17 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
     }
 
+    //
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Account> register(@RequestBody AccountCreateEntity account) {
         boolean successful = AuthenticationService.getInstance().register(account.firstName, account.lastName,
                 account.email, account.password);
-        if (successful) {
-            return ResponseEntity.ok(AccountService.getInstance().getAccountByEmail(account.email));
+
+        if (!successful) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+
+        return ResponseEntity.ok(AccountService.getInstance().getAccountByEmail(account.email));
     }
 
     @RequestMapping(value = "/{id}/bills", method = RequestMethod.GET)

@@ -40,6 +40,7 @@ public class Bill {
         return issueDate;
     }
 
+    //Set date for the bill
     public Date setIssueDate(Date date) {
         this.issueDate = date;
         return this.issueDate;

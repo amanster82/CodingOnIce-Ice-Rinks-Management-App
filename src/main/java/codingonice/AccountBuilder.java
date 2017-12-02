@@ -11,6 +11,7 @@ public class AccountBuilder {
         return account;
     }
 
+    //A user profile will show the first and last name
     public AccountBuilder setName(String firstName, String lastName) {
         account.firstName = firstName;
         account.lastName = lastName;

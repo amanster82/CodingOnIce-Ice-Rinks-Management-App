@@ -33,7 +33,7 @@ public class BillingService {
 
         boolean successful = AccountService.getInstance().setBills(acc, bill);
         if (successful) {
-            AccountService.getInstance().getRepository().save(acc);
+            return AccountService.getInstance().getRepository().save(acc) != null;
         }
         return successful;
     }

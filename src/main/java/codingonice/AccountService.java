@@ -12,6 +12,7 @@ public class AccountService {
         this.accountRepository = repository;
     }
 
+    //Password encoder needed for Bcrypt to encrypt the users password
     public static void createInstance(AccountRepository repository, PasswordEncoder passwordEncoder) {
         if (instance == null) {
             instance = new AccountService(repository);
@@ -55,8 +56,7 @@ public class AccountService {
         }
 
         acc.setApproved(true);
-        this.accountRepository.save(acc);
-        return true;
+        return this.accountRepository.save(acc) != null;
     }
 
     public boolean setBills(Account acc, Bill bill) {

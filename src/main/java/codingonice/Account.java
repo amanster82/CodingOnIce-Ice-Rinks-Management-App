@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
+//Login uses email as username and must be unique
 @Table(name = "accounts", uniqueConstraints = { @UniqueConstraint(columnNames = "email") })
 public class Account {
     @Id
@@ -15,7 +16,6 @@ public class Account {
     protected String firstName;
     protected String lastName;
 
-    //PUBLIC - For authentication to compare with server
     private String password;
 
     @Column(name = "email", unique = true)
