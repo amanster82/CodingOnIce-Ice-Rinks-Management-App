@@ -64,9 +64,13 @@
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/config/jest/enzymeSetup.js",
     "moduleDirectories": [
       "node_modules",
       "src"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
     ],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,mjs}"
@@ -108,5 +112,12 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "devDependencies": {
+    "enzyme": "^3.2.0",
+    "enzyme-adapter-react-16": "^1.1.0",
+    "enzyme-to-json": "^3.2.2",
+    "react-addons-test-utils": "^15.6.2",
+    "react-test-renderer": "^16.2.0"
   }
 }
