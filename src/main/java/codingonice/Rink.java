@@ -11,7 +11,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
+/**
+ * A Rink entity is a single ice rink managed by this application. A rink can have
+ * maintenance state, a series of descriptions, and bookings scheduled at it.
+ */
 @Entity
 @Table(name = "rinks")
 public class Rink {
@@ -31,6 +34,11 @@ public class Rink {
     private int startHour;
     private int endHour;
 
+    /**
+     * Bookings will have a "rink_id" column as a foreign key reference to this rink.
+     * Orphaned Bookings withou a rink should not exist and be removed.
+     * All bookings for this rink will be loaded along with the rink.
+     */
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "rink_id")
     private List<Booking> bookings;

@@ -4,14 +4,14 @@ import java.util.Date;
 
 public class BookingBuilder {
 
+    // Builder will be responsible for this Booking instance
     private Booking booking = new Booking();
 
     public BookingBuilder() {
-
     }
 
+    // Return completed Booking entity
     public Booking build() {
-
         return booking;
     }
 

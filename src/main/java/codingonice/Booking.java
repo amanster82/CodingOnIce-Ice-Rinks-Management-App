@@ -23,6 +23,7 @@ public class Booking {
     @ManyToOne
     protected Account account;
 
+    // ISO 8601 extended date format as a string
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "GMT")
     protected Date startTime;
 

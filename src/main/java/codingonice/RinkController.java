@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/rinks")
 public class RinkController {
 
+    // The repository for Rinks is created by Spring Boot
     @Autowired
     private final RinkRepository rinkRepository;
 
@@ -29,20 +30,21 @@ public class RinkController {
         RinkService.createInstance(this.rinkRepository);
     }
 
+    // Retrieve the complete list of ice rinks and its properties
     @RequestMapping(method = RequestMethod.GET)
     public ArrayList<Rink> getRinks() {
-
-        System.out.print(RinkService.getInstance());
 
         return RinkService.getInstance().getRepository().findAll();
     }
 
+    // Route for retrieving a specific rink by its ID. Its bookings will be included
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Rink getRink(@PathVariable("id") Integer id) {
 
         return RinkService.getInstance().getRepository().findById(id);
     }
 
+    // Retrieve the maintenance state for a given ice rink
     @RequestMapping(value = "/{id}/maintenance", method = RequestMethod.GET)
     public boolean isUnderMaintenance(@PathVariable("id") Integer id) {
         Rink rink = RinkService.getInstance().getRepository().findById(id);
@@ -52,6 +54,7 @@ public class RinkController {
         return rink.getUnderMaintenance();
     }
 
+    // Start maintenance at this rink. Account must be an admin
     @RequestMapping(value = "/{id}/maintenance/actions/start", method = RequestMethod.POST)
     public ResponseEntity<Boolean> startMaintenance(@PathVariable("id") Integer id, @SessionAttribute("account") Integer account) {
         if (account == 0 || AuthenticationService.getInstance().isAdmin(account) == false) {
@@ -63,6 +66,7 @@ public class RinkController {
         return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 
+    // Stop maintenance at this rink. Account must be an admin
     @RequestMapping(value = "/{id}/maintenance/actions/stop", method = RequestMethod.POST)
     public ResponseEntity<Boolean> stopMaintenance(@PathVariable("id") Integer id, @SessionAttribute("account") Integer account) {
 

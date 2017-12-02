@@ -10,8 +10,6 @@ import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.jsoup.Jsoup;
-import org.jsoup.safety.Whitelist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +26,7 @@ public class BookingController {
 
     }
 
+    // Route for retrieving a list of bookings for a given ice rink by its rink ID
     @RequestMapping(value = "/rink/{id}", method = RequestMethod.GET)
     public List<Booking> getBookingsByRink(@PathVariable("id") int id) {
 
@@ -40,6 +39,7 @@ public class BookingController {
         return rink.getBookings();
     }
 
+    // Route for retrieving the list of bookings for an account
     @RequestMapping(value = "/account/{id}", method = RequestMethod.GET)
     public ResponseEntity<List<Booking>> getBookingsByAccount(@SessionAttribute("account") Integer account,
             @PathVariable("id") int id) {
@@ -57,7 +57,7 @@ public class BookingController {
      * Described the accepted input parameters than are used to create a booking
      * and their format. For example, startTime must be an ISO 8601 datetime with time zone
      */
-    private static class BookingCreateEntity {
+    public static class BookingCreateEntity {
 
         public int rinkId;
         public int length;
@@ -67,6 +67,7 @@ public class BookingController {
         public Date startTime;
     }
 
+    // Route for creating a booking using the parameter object BookingCreateEntity
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Booking> createBooking(@RequestBody BookingCreateEntity booking,
             @SessionAttribute("account") Integer accountId) {
@@ -75,87 +76,32 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
-        String name = Jsoup.clean(booking.name, Whitelist.simpleText());
+        Booking newBooking = null;
 
-        if (name == "" || name.length() > 64 || booking.length < 1 || booking.length > 3) {
+        // Attempt to create a booking and return the resulting booking object.
+        // The exception message will include a message telling why booking creation fails if it does.
+        // The message is not yet returned in the response.
+        try {
+            newBooking = BookingService.getInstance().createNewBooking(booking, accountId);
+        } catch(Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
-        Account account = AccountService.getInstance().getAccountById(accountId);
-
-        if (account == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-
-        //Check if account is approved - only approved accounts can book (or admin)
-        if (!account.getApproved() && !AuthenticationService.getInstance().isAdmin(accountId)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
-
-        Rink rink = RinkService.getInstance().getRepository().findById(booking.rinkId);
-
-        if (rink == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-
-        if (rink.getUnderMaintenance() == true) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-
-        Date endTime = (Date) booking.startTime.clone();
-        endTime.setHours(booking.startTime.getHours() + booking.length);
-
-        List<Booking> conflictedBookings = RinkService.getInstance().getRepository()
-                .findBookingsByRinkAndDateInbetween(booking.rinkId, booking.startTime, endTime);
-
-        for (Booking var : conflictedBookings) {
-            if (var.getId() == booking.rinkId) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-            }
-        }
-
-        List<Booking> bookings = new LinkedList<Booking>();
-
-        if (rink.getBookings() != null) {
-            bookings = rink.getBookings();
-        }
-
-        Booking newBooking = Booking.builder().setLength(booking.length).setRink(rink).setStartTime(booking.startTime)
-                .setName(name).setAccount(account).build();
-
-        bookings.add(newBooking);
-
-        rink.setBookings(bookings);
-
-        RinkService.getInstance().getRepository().save(rink);
-
-        //Create billing
-        Date now = new Date();
-        BillingService.getInstance().setBillByAccount(account, now);
         return ResponseEntity.ok(newBooking);
     }
 
+    // Route for cancelling a booking by its given ID. The requests account must be the creator or an admin
     @RequestMapping(value = "/{id}/actions/cancel", method = RequestMethod.POST)
     public ResponseEntity<Boolean> cancelBooking(@PathVariable("id") Integer id,
             @SessionAttribute("account") Integer accountId) {
 
         if (!AuthenticationService.getInstance().isAuthenticated(accountId)) {
-            System.out.println("auth");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
         }
 
         Booking booking = RinkService.getInstance().getRepository().findBookingById(id);
 
         if (booking == null || booking.rink == null || booking.account == null) {
-            if (booking == null) {
-                System.out.println("exists");
-            }
-            if (booking.rink == null) {
-                System.out.println("rink");
-            }
-            if (booking.account == null) {
-                System.out.println("acc");
-            }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
         }
 
