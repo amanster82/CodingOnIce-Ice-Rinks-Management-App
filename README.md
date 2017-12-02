@@ -43,7 +43,7 @@ To view the full web app, the project must be set up by following the next instr
 
 ### React
 
-Navigate to the web app folder *src/main/webapp*
+The following frontend commands should be run in the *web* directory.
 
 Now use NPM to download project dependencies.
 
@@ -68,6 +68,8 @@ The following sub sections can help deploy the application to a production serve
 This project depends on both `MySQL` and `Redis` during production. They will need to be installed independently following specific instructions for your production environment.
 
 ### Static web app
+
+The following frontend command should be run in the *web* directory.
 
 The web application can be built for production with the following command:
 ```
@@ -100,6 +102,8 @@ The following resources can help aid development.
 
 ### React Dev Server
 
+The following frontend command should be run in the *web* directory.
+
 The react dev server can hot reload any saved files and preview the changes. The server can be started with the following command:
 
 ```
@@ -120,6 +124,8 @@ Style guides can be useful for following best practices and writing maintainable
 The following commands can generate test results & code coverage reports.
 
 ### Frontend
+
+The following frontend commands should be run in the *web* directory.
 
 The react application can be tested with:
 ```
