@@ -37,8 +37,9 @@ The project can now be started by using spring boot.
 ./mvnw spring-boot:run
 ```
 
-The web server will start and be accessible from *http://localhost:8080*
-To view the full web app, the project must be set up by following the next React instructions
+The Spring API will start and be accessible from *http://localhost:8080*
+
+To view the full web app, the project must be set up by following the next instructions to run the React development server.
 
 ### React
 
@@ -113,6 +114,35 @@ Style guides can be useful for following best practices and writing maintainable
 
 **Java** - [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)
 **JavaScript** - [Airbnb Style Guide](https://github.com/airbnb/javascript)
+
+## Testing
+
+The following commands can generate test results & code coverage reports.
+
+### Frontend
+
+The react application can be tested with:
+```
+npm run test
+```
+
+And code coverage report generated using:
+
+```
+node scripts/test.js --env=jsdom --coverage
+```
+
+This coverage report will show how much of the application is affected by react tests.
+
+### Backend
+
+It is currently necessary to have MySQL and Redis available prior to running the Spring tests, as Spring will be ran and will attempt to connect to those services during testing.
+
+To run Spring tests, the following Maven command can be used:
+
+```
+./mvnw test
+```
 
 ## Built With
 
