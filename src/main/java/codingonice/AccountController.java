@@ -1,10 +1,7 @@
 package codingonice;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +23,6 @@ public class AccountController {
     private PasswordEncoder passwordEncoder;
 
     private static class AccountCreateEntity {
-
         public String firstName;
         public String lastName;
         public String email;
@@ -40,7 +36,6 @@ public class AccountController {
 
     @Autowired
     AccountController(AccountRepository repository, PasswordEncoder passwordEncoder) {
-
         this.accountRepository = repository;
         this.passwordEncoder = passwordEncoder;
         AccountService.createInstance(this.accountRepository, this.passwordEncoder);
@@ -137,13 +132,16 @@ public class AccountController {
     public ResponseEntity<Boolean> payBillsById(@SessionAttribute("account") Integer account,
             @PathVariable("id") int id, @PathVariable("billId") int billId) {
 
-        //TODO: AUTHENTICATION HERE
-
         Account acc = AccountService.getInstance().getAccountById(id);
         if (acc == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
+
         boolean successful = BillingService.getInstance().setPaidStatus(acc, billId);
+        if (!successful) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
         return ResponseEntity.ok(successful);
     }
 
@@ -159,6 +157,7 @@ public class AccountController {
         if (!successful) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
+
         return ResponseEntity.ok(true);
     }
 

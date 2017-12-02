@@ -1,10 +1,6 @@
 package codingonice;
 
-import org.springframework.security.access.method.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public class AccountService {
     private AccountRepository accountRepository;
@@ -36,12 +32,11 @@ public class AccountService {
     }
 
     public AccountRepository getRepository() {
-        System.out.print("account repository");
         return accountRepository;
     }
 
     public boolean addAccount(String firstName, String lastName, String email, String password) {
-
+        //Encrypt user password on creation
         Account newAccount = Account.builder().setName(firstName, lastName).setEmail(email)
                 .setPassword(passwordEncoders.encode(password)).build();
 
@@ -65,9 +60,7 @@ public class AccountService {
     }
 
     public boolean setBills(Account acc, Bill bill) {
-
         acc.setBill(bill);
         return this.accountRepository.save(acc) != null;
     }
-
 }

@@ -17,6 +17,7 @@ public class Bill {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private double balance;
+    //ISO8601 Date Format
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "GMT")
     private Date issueDate;
     private boolean paid;
@@ -57,5 +58,4 @@ public class Bill {
         this.paid = value;
         return this.paid;
     }
-
 }

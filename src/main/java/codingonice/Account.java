@@ -74,10 +74,10 @@ public class Account {
     }
 
     public String setPassword(String password) {
-        //should this be done in the builder or no
         this.password = password;
         return password;
     }
+
     public boolean setApproved(boolean value) {
         this.isApproved = value;
         return this.isApproved;

@@ -23,9 +23,7 @@ public class AccountBuilder {
     }
 
     public AccountBuilder setPassword(String password) {
-        //authentication
         account.setPassword(password);
         return this;
     }
-
 }

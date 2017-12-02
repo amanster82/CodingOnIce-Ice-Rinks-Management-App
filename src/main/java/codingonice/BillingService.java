@@ -1,8 +1,6 @@
 package codingonice;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
 public class BillingService {
@@ -15,17 +13,6 @@ public class BillingService {
             instance = new BillingService();
         }
         return instance;
-    }
-
-
-    public List<Bill> getBillsByAccount(int id) {
-        Account acc = AccountService.getInstance().getRepository().findById(id);
-
-        if (acc == null) {
-            return new ArrayList<Bill>();
-        }
-
-        return acc.getBills();
     }
 
     public boolean setBillByAccount(Account acc, Date issueDate) {
@@ -52,15 +39,14 @@ public class BillingService {
     }
 
     public boolean setPaidStatus(Account acc, int billId) {
-
+        //Use stream to find bill to be paid
         Bill bill = acc.getBills().stream().filter(b -> b.getId() == billId).findFirst().get();
 
         if (bill == null) {
             return false;
         }
         bill.setPaid(true);
+
         return AccountService.getInstance().getRepository().save(acc) != null;
-
     }
-
 }
