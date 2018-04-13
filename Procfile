@@ -1,0 +1,1 @@
+web: java -jar target/codingonice-0.0.1.jar
